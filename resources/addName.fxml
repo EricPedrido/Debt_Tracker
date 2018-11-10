@@ -7,47 +7,35 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="controller.AddNameController" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="674.0"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-   <Text fill="#14ab00" layoutX="85.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a new person"
-         textAlignment="CENTER" wrappingWidth="522.30126953125">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNameController">
+   <Text fill="#0c5b00" layoutX="85.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a new person" textAlignment="CENTER" wrappingWidth="522.30126953125">
       <font>
-         <Font name="System Bold" size="43.0"/>
+         <Font name="System Bold" size="43.0" />
       </font>
    </Text>
-   <Text fill="#14ab00" layoutX="27.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:"
-         textAlignment="RIGHT" wrappingWidth="115.68359375">
+   <Text fill="#14ab00" layoutX="27.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" textAlignment="RIGHT" wrappingWidth="115.68359375">
       <font>
-         <Font name="System Bold" size="24.0"/>
+         <Font name="System Bold" size="24.0" />
       </font>
    </Text>
-   <TextField fx:id="name" layoutX="156.0" layoutY="170.0" prefHeight="25.0" prefWidth="380.0"
-              promptText="e.g &quot;John Smith&quot;" style="-fx-background-radius: 0;"/>
-   <Button fx:id="add" disable="true" layoutX="179.0" layoutY="501.0" mnemonicParsing="false" onAction="#add"
-           prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;"
-           text="Add" textFill="WHITE">
+   <TextField fx:id="name" layoutX="156.0" layoutY="170.0" prefHeight="25.0" prefWidth="380.0" promptText="e.g &quot;John Smith&quot;" style="-fx-background-radius: 0;" />
+   <Button fx:id="add" disable="true" layoutX="179.0" layoutY="501.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="19.0"/>
+         <Font name="System Bold" size="19.0" />
       </font>
    </Button>
-   <Button fx:id="cancel" layoutX="369.0" layoutY="501.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0"
-           prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Cancel"
-           textFill="WHITE">
+   <Button fx:id="cancel" layoutX="369.0" layoutY="501.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Cancel" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="19.0"/>
+         <Font name="System Bold" size="19.0" />
       </font>
    </Button>
-   <TextField fx:id="itemName" layoutX="156.0" layoutY="221.0" prefHeight="25.0" prefWidth="278.0"
-              promptText="e.g &quot;3 Pepperoni Pizzas&quot;" style="-fx-background-radius: 0;"/>
-   <Text fill="#14ab00" layoutX="27.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items:"
-         textAlignment="RIGHT" wrappingWidth="115.68359375">
+   <TextField fx:id="itemName" layoutX="156.0" layoutY="221.0" prefHeight="25.0" prefWidth="278.0" promptText="e.g &quot;3 Pepperoni Pizzas&quot;" style="-fx-background-radius: 0;" />
+   <Text fill="#14ab00" layoutX="27.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items:" textAlignment="RIGHT" wrappingWidth="115.68359375">
       <font>
-         <Font name="System Bold" size="24.0"/>
+         <Font name="System Bold" size="24.0" />
       </font>
    </Text>
-   <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" prefHeight="225.0" prefWidth="278.0"/>
-   <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" prefHeight="25.0" prefWidth="102.0"
-              promptText="e.g &quot;$15&quot;" style="-fx-background-radius: 0;"/>
-   <ListView fx:id="priceList" layoutX="434.0" layoutY="245.0" prefHeight="225.0" prefWidth="102.0"/>
+   <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" prefHeight="225.0" prefWidth="278.0" />
+   <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;$15&quot;" style="-fx-background-radius: 0;" />
+   <ListView fx:id="priceList" layoutX="434.0" layoutY="245.0" prefHeight="225.0" prefWidth="102.0" />
 </AnchorPane>

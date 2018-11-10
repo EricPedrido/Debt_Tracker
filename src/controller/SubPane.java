@@ -6,7 +6,7 @@ package controller;
  * @author Eric Pedrido
  */
 public enum SubPane {
-    MAIN("/mainPame.fxml"),
+    MAIN("/mainPane.fxml"),
     ADD_NAME("/addName.fxml");
 
     String _name;

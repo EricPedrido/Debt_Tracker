@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -16,7 +18,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/mainFrame.fxml"));
+            // Create the data directory
+            if (Files.notExists(Paths.get("data"))) {
+                Files.createDirectory(Paths.get("data"));
+            }
+
+            // Load the window
+            root = FXMLLoader.load(getClass().getResource("mainFrame.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Debt Tracker");
@@ -25,6 +33,5 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
