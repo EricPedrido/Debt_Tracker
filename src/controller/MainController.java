@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.CustomListCell;
@@ -30,11 +31,13 @@ public class MainController implements Initializable {
     @FXML public ListView<CustomListCell> peopleList, itemList;
     @FXML public TextField search;
     @FXML public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
-    @FXML public Text peopleEmpty, itemEmpty, startingText;
+    @FXML public Text peopleEmpty, itemEmpty, startingText, selectPerson;
     @FXML public Pane subPane;
 
     private List<String> _names;
     private boolean _first;
+    private String _selectedName;
+
     private static MainController INSTANCE;
 
     @Override
@@ -52,6 +55,21 @@ public class MainController implements Initializable {
     public void addPeople(ActionEvent actionEvent) {
         startingText.setVisible(false);
         loadPane(SubPane.ADD_NAME);
+    }
+
+    @FXML
+    public void personSelected(MouseEvent mouseEvent) {
+        CustomListCell item = peopleList.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            _selectedName = null;
+            addItem.setDisable(true);
+            addItemEmpty.setDisable(true);
+            selectPerson.setVisible(true);
+        } else {
+            _selectedName = item.toString();
+            addItem.setDisable(false);
+            selectPerson.setVisible(false);
+        }
     }
 
     @FXML

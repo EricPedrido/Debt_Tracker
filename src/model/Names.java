@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Names {
-    private List<String> _names = new ArrayList<>();
+    private List<Name> _names = new ArrayList<>();
 
     private static final Path NAMES_DIR = Paths.get("data/Names.txt");
     private static final Names INSTANCE = new Names();
@@ -22,7 +22,11 @@ public class Names {
             if (Files.notExists(NAMES_DIR)) {
                 Files.createFile(NAMES_DIR);
             } else {
-                _names.addAll(Files.readAllLines(NAMES_DIR));
+                List<String> namesList = Files.readAllLines(NAMES_DIR);
+                for (String name : namesList) {
+
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,10 +34,10 @@ public class Names {
     }
 
     public void addName(String name) {
-        String nameTemp = "\n" + name;
+        String nameTemp = "\n &" + name + "&";
         try {
             Files.write(NAMES_DIR, nameTemp.getBytes(), StandardOpenOption.APPEND);
-            _names.add(name);
+            _names.add(new Name(name, new Items()));
             MainController.getInstance().updateNames(getNames());
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,9 +58,10 @@ public class Names {
 
     public List<String> getNames() {
         List<String> names = new ArrayList<>();
-        for (String name : _names) {
-            if (!name.equals("")) {
-                names.add(name);
+        for (Name name : _names) {
+            String nameText = name.toString();
+            if (!nameText.equals("")) {
+                names.add(nameText);
             }
         }
         return names;
@@ -64,7 +69,7 @@ public class Names {
 
     private int getLineNumber(String target) {
         for (int i = 0; i < _names.size(); i++) {
-            if(_names.get(i).equals(target)) {
+            if(_names.get(i).toString().equals(target)) {
                 return i;
             }
         }

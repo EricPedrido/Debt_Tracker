@@ -14,7 +14,7 @@
          <Font name="System Bold" size="50.0" />
       </font>
    </Text>
-   <ListView fx:id="peopleList" layoutY="151.0" prefHeight="569.0" prefWidth="303.0" />
+   <ListView fx:id="peopleList" layoutY="151.0" onMouseClicked="#personSelected" prefHeight="569.0" prefWidth="303.0" />
    <TextField fx:id="search" layoutY="120.0" prefHeight="29.0" prefWidth="303.0" promptText="Search" style="-fx-background-radius: 0;">
       <font>
          <Font size="15.0" />
@@ -41,7 +41,7 @@
          <Font name="System Bold" size="29.0" />
       </font>
    </Text>
-   <Text fx:id="itemEmpty" fill="GREY" layoutX="1052.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No items owing">
+   <Text fx:id="itemEmpty" fill="GREY" layoutX="1052.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No items owing" visible="false">
       <font>
          <Font size="22.0" />
       </font>
@@ -51,12 +51,12 @@
          <Font name="System Bold" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="addItemEmpty" layoutX="1082.0" layoutY="452.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add an item" textFill="WHITE">
+   <Button fx:id="addItemEmpty" disable="true" layoutX="1082.0" layoutY="452.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add an item" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="addItem" layoutX="977.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add new" textFill="WHITE">
+   <Button fx:id="addItem" disable="true" layoutX="977.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add new" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
@@ -67,4 +67,9 @@
       </font>
    </Text>
    <Pane fx:id="subPane" layoutX="303.0" layoutY="120.0" prefHeight="604.0" prefWidth="674.0" />
+   <Text fx:id="selectPerson" fill="GREY" layoutX="1055.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Person">
+      <font>
+         <Font size="22.0" />
+      </font>
+   </Text>
 </AnchorPane>

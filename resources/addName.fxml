@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNameController">
-   <Text fill="#0c5b00" layoutX="85.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a new person" textAlignment="CENTER" wrappingWidth="522.30126953125">
+   <Text fill="#0c5b00" layoutX="85.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add/Edit" textAlignment="CENTER" wrappingWidth="522.30126953125">
       <font>
          <Font name="System Bold" size="43.0" />
       </font>
@@ -18,7 +18,20 @@
          <Font name="System Bold" size="24.0" />
       </font>
    </Text>
-   <TextField fx:id="name" layoutX="156.0" layoutY="170.0" prefHeight="25.0" prefWidth="380.0" promptText="e.g &quot;John Smith&quot;" style="-fx-background-radius: 0;" />
+   <TextField fx:id="name" layoutX="156.0" layoutY="170.0" onAction="#nameEnterPressed" prefHeight="25.0" prefWidth="380.0" promptText="e.g &quot;John Smith&quot;" style="-fx-background-radius: 0;" />
+   <TextField fx:id="itemName" layoutX="156.0" layoutY="221.0" onAction="#itemEnterPressed" prefHeight="25.0" prefWidth="278.0" promptText="e.g &quot;3 Pepperoni Pizzas&quot;" style="-fx-background-radius: 0;" />
+   <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" onAction="#priceEnterPressed" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;15.99&quot;" style="-fx-background-radius: 0;" />
+   <Button fx:id="addItem" layoutX="546.0" layoutY="222.0" mnemonicParsing="false" onAction="#addNewItem" prefHeight="19.0" prefWidth="68.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="11.0" />
+      </font>
+   </Button>
+   <Button fx:id="delete" disable="true" layoutX="546.0" layoutY="254.0" mnemonicParsing="false" onAction="#delete" prefHeight="19.0" prefWidth="68.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Delete" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="11.0" />
+      </font>
+   </Button>
+   <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" onMouseClicked="#itemClicked" prefHeight="225.0" prefWidth="380.0" />
    <Button fx:id="add" disable="true" layoutX="179.0" layoutY="501.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add" textFill="WHITE">
       <font>
          <Font name="System Bold" size="19.0" />
@@ -29,16 +42,22 @@
          <Font name="System Bold" size="19.0" />
       </font>
    </Button>
-   <TextField fx:id="itemName" layoutX="156.0" layoutY="221.0" prefHeight="25.0" prefWidth="278.0" promptText="e.g &quot;3 Pepperoni Pizzas&quot;" style="-fx-background-radius: 0;" />
    <Text fill="#14ab00" layoutX="27.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items:" textAlignment="RIGHT" wrappingWidth="115.68359375">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
    </Text>
-   <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" prefHeight="225.0" prefWidth="278.0" />
-   <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;$15&quot;" style="-fx-background-radius: 0;" />
-   <ListView fx:id="priceList" layoutX="434.0" layoutY="245.0" prefHeight="225.0" prefWidth="102.0" />
    <Text fx:id="personExists" fill="RED" layoutX="156.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fx:id="itemNameEmpty" fill="RED" layoutX="156.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="277.9999980032444">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fx:id="priceEmpty" fill="RED" layoutX="434.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="188.9999980032444">
       <font>
          <Font size="14.0" />
       </font>
