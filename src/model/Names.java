@@ -3,6 +3,7 @@ package model;
 import controller.MainController;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,6 +40,18 @@ public class Names {
         }
     }
 
+    public void removeName(String name) {
+        try {
+            int lineNumber = getLineNumber(name);
+
+            // Rewrites entire file, replacing existing line.
+            _names.remove(lineNumber);
+            Files.write(NAMES_DIR, getNames(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<String> getNames() {
         List<String> names = new ArrayList<>();
         for (String name : _names) {
@@ -47,6 +60,16 @@ public class Names {
             }
         }
         return names;
+    }
+
+    private int getLineNumber(String target) {
+        for (int i = 0; i < _names.size(); i++) {
+            if(_names.get(i).equals(target)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public static Names getInstance() {

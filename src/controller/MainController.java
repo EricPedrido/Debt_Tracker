@@ -8,17 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import model.CustomListCell;
 import model.Names;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -27,22 +27,27 @@ import java.util.ResourceBundle;
  * @author Eric Pedrido
  */
 public class MainController implements Initializable {
-    @FXML public ListView<String> peopleList, itemList;
+    @FXML public ListView<CustomListCell> peopleList, itemList;
     @FXML public TextField search;
     @FXML public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
     @FXML public Text peopleEmpty, itemEmpty, startingText;
     @FXML public Pane subPane;
 
     private List<String> _names;
+    private boolean _first;
     private static MainController INSTANCE;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         INSTANCE = this;
         _names = Names.getInstance().getNames();
+        _first = true;
         updatePeople();
     }
 
+    /**
+     * Add a person to the list
+     */
     @FXML
     public void addPeople(ActionEvent actionEvent) {
         startingText.setVisible(false);
@@ -60,29 +65,80 @@ public class MainController implements Initializable {
     }
 
     private void updatePeople() {
-        if (!_names.isEmpty()) {
+        if (_names.isEmpty()) {
+            peopleEmpty.setVisible(true);
+            addPeopleEmpty.setVisible(true);
+        } else {
             peopleEmpty.setVisible(false);
             addPeopleEmpty.setVisible(false);
 
-            ObservableList<String> people = FXCollections.observableArrayList(_names);
-            FilteredList<String> filteredList = new FilteredList<>(people, s -> true);
+            List<CustomListCell> list = new ArrayList<>();
+            for (String name : _names) {
+                list.add(new CustomListCell(name));
+            }
+
+            ObservableList<CustomListCell> people = FXCollections.observableArrayList(list);
+            FilteredList<CustomListCell> filteredList = new FilteredList<>(people, s -> true);
             peopleList.setItems(filteredList);
             peopleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
+            setSearch(filteredList);
+        }
+    }
+
+    private void setSearch(FilteredList<CustomListCell> filteredList) {
+        if (_first) {
             search.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredList.setPredicate(s -> {
+                filteredList.setPredicate(customListCell -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
-                    return s.toUpperCase().contains(newValue.toUpperCase());
+                    return customListCell.toString().toUpperCase().contains(newValue.toUpperCase());
                 });
                 peopleList.setItems(filteredList);
             });
-
-        } else {
-            peopleEmpty.setVisible(true);
-            addPeopleEmpty.setVisible(true);
+            _first = false;
         }
+    }
+
+    public void deleteItem(CustomListCell item) {
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert alert = createPopUp("Delete",
+                "You are about to delete: " + item.toString(),
+                "Are you sure? This action cannot be undone.",
+                new ButtonType[] {yes, no});
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == yes) {
+            List<CustomListCell> names = new ArrayList<>(peopleList.getItems());
+            List<String> newList = new ArrayList<>();
+            names.remove(item);
+
+            for (CustomListCell name : names) {
+                newList.add(name.toString());
+            }
+
+            _names = newList;
+            updatePeople();
+
+            Names.getInstance().removeName(item.toString());
+        } else {
+            alert.close();
+        }
+    }
+
+    private Alert createPopUp(String title, String headerText, String contentText, ButtonType[] buttons) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+
+        alert.getButtonTypes().setAll(buttons);
+
+        return alert;
     }
 
     /**
