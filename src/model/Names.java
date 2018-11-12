@@ -33,7 +33,7 @@ public class Names {
         try {
             Files.write(NAMES_DIR, nameTemp.getBytes(), StandardOpenOption.APPEND);
             _names.add(name);
-            MainController.getInstance().updateNames(_names);
+            MainController.getInstance().updateNames(getNames());
         } catch (IOException e) {
             e.printStackTrace();
         }

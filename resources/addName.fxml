@@ -38,4 +38,9 @@
    <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" prefHeight="225.0" prefWidth="278.0" />
    <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;$15&quot;" style="-fx-background-radius: 0;" />
    <ListView fx:id="priceList" layoutX="434.0" layoutY="245.0" prefHeight="225.0" prefWidth="102.0" />
+   <Text fx:id="personExists" fill="RED" layoutX="156.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
 </AnchorPane>
