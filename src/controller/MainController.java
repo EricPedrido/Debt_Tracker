@@ -76,14 +76,17 @@ public class MainController implements Initializable {
             for (String name : _names) {
                 list.add(new CustomListCell(name));
             }
-
-            ObservableList<CustomListCell> people = FXCollections.observableArrayList(list);
-            FilteredList<CustomListCell> filteredList = new FilteredList<>(people, s -> true);
-            peopleList.setItems(filteredList);
-            peopleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-            setSearch(filteredList);
+            setPeopleList(list);
         }
+    }
+
+    private void setPeopleList(List<CustomListCell> list) {
+        ObservableList<CustomListCell> people = FXCollections.observableArrayList(list);
+        FilteredList<CustomListCell> filteredList = new FilteredList<>(people, s -> true);
+        peopleList.setItems(filteredList);
+        peopleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        setSearch(filteredList);
     }
 
     private void setSearch(FilteredList<CustomListCell> filteredList) {
@@ -114,16 +117,19 @@ public class MainController implements Initializable {
 
         if (result.get() == yes) {
             List<CustomListCell> names = new ArrayList<>(peopleList.getItems());
-            List<String> newList = new ArrayList<>();
             names.remove(item);
+            List<String> newList = new ArrayList<>();
 
-            for (CustomListCell name : names) {
-                newList.add(name.toString());
+            if (names.isEmpty()) {
+                setPeopleList(new ArrayList<>());
+            } else {
+                for (CustomListCell name : names) {
+                    newList.add(name.toString());
+                }
             }
 
             _names = newList;
             updatePeople();
-
             Names.getInstance().removeName(item.toString());
         } else {
             alert.close();
