@@ -23,8 +23,10 @@ public class Names {
                 Files.createFile(NAMES_DIR);
             } else {
                 List<String> namesList = Files.readAllLines(NAMES_DIR);
-                for (String name : namesList) {
-
+                for (String line : namesList) {
+                    if (line.startsWith("&")) {
+                        _names.add(new Name(line.substring(1)));
+                    }
                 }
 
             }
@@ -34,10 +36,12 @@ public class Names {
     }
 
     public void addName(String name) {
-        String nameTemp = "\n &" + name + "&";
+        String capitalName = capitalize(name);
+        String nameTemp = "\n&" + capitalName;
+
         try {
             Files.write(NAMES_DIR, nameTemp.getBytes(), StandardOpenOption.APPEND);
-            _names.add(new Name(name, new Items()));
+            _names.add(new Name(capitalName));
             MainController.getInstance().updateNames(getNames());
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,6 +58,43 @@ public class Names {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String capitalize(String name) {
+        String[] diffNames = name.split("[' -]");
+        List<Character> splits = extractSplits(name);
+        StringBuilder confirmed = new StringBuilder();
+        String output = null;
+
+        for (int i = 0; i < diffNames.length; i++) {
+            String singleName = diffNames[i];
+                singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
+                confirmed.append(singleName);
+
+                if (i >= splits.size()) {
+                    confirmed.append(" ");
+                } else {
+                    confirmed.append(splits.get(i));
+                }
+        }
+
+        String entered = name.toUpperCase() + " ";
+        if (entered.equals(confirmed.toString().toUpperCase())) {
+            output = confirmed.toString();
+        }
+
+        return output;
+    }
+
+    private List<Character> extractSplits(String s) {
+        char[] temp = s.toCharArray();
+        List<Character> output = new ArrayList<>();
+        for (char c : temp) {
+            if (c == ' ' || c == '-' || c == '\'') {
+                output.add(c);
+            }
+        }
+        return output;
     }
 
     public List<String> getNames() {
