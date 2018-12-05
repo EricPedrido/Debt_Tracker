@@ -2,33 +2,35 @@ package model;
 
 import controller.MainController;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Names {
     private List<Name> _names = new ArrayList<>();
 
-    private static final Path NAMES_DIR = Paths.get("data/Names.txt");
+    private static final Path NAMES_DIR = Paths.get("data");
     private static final Names INSTANCE = new Names();
 
     private Names() {
         try {
             if (Files.notExists(NAMES_DIR)) {
-                Files.createFile(NAMES_DIR);
+                Files.createDirectory(NAMES_DIR);
             } else {
-                List<String> namesList = Files.readAllLines(NAMES_DIR);
-                for (String line : namesList) {
-                    if (line.startsWith("&")) {
-                        _names.add(new Name(line.substring(1)));
+                File data = new File("data");
+                File[] namesList = data.listFiles();
+                assert namesList != null; // Non-null because if it gets created if it does not exist
+
+                for (File name : namesList) {
+                    if (name.isFile()) {
+                        String newName = name.getName();
+                        _names.add(new Name(newName.substring(0, newName.indexOf('.'))));
                     }
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,14 +39,16 @@ public class Names {
 
     public void addName(String name) {
         String capitalName = capitalize(name);
-        String nameTemp = "\n&" + capitalName;
+        List<String> allNames = getNames();
 
-        try {
-            Files.write(NAMES_DIR, nameTemp.getBytes(), StandardOpenOption.APPEND);
-            _names.add(new Name(capitalName));
-            MainController.getInstance().updateNames(getNames());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!allNames.contains(capitalName)) {
+            try {
+                Files.createFile(Paths.get("data/" + capitalName + ".txt"));
+                _names.add(new Name(capitalName));
+                MainController.getInstance().updateNames(getNames());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -52,9 +56,8 @@ public class Names {
         try {
             int lineNumber = getLineNumber(name);
 
-            // Rewrites entire file, replacing existing line.
+            Files.delete(Paths.get("data/" + name + ".txt"));
             _names.remove(lineNumber);
-            Files.write(NAMES_DIR, getNames(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,7 +117,6 @@ public class Names {
                 return i;
             }
         }
-
         return -1;
     }
 
