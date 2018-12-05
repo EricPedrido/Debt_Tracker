@@ -9,9 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Item;
+import model.Name;
 import model.Names;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -26,9 +29,12 @@ public class AddNameController extends MainController {
     @FXML public Text personExists, itemNameEmpty, priceEmpty;
 
     private String _selected;
+    private List<Item> _items;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        _items = new ArrayList<>();
+
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -87,7 +93,10 @@ public class AddNameController extends MainController {
 
     @FXML
     public void delete(ActionEvent actionEvent) {
+        int index = itemList.getItems().indexOf(_selected);
         itemList.getItems().remove(_selected);
+        _items.remove(index);
+
         delete.setDisable(true);
         itemName.requestFocus();
     }
@@ -115,7 +124,14 @@ public class AddNameController extends MainController {
         } else {
             itemNameEmpty.setVisible(false);
             priceEmpty.setVisible(false);
-            itemList.getItems().add(Item.convertItemName(itemName.getText(), itemPrice.getText()));
+
+            String nameOfItem = itemName.getText();
+            double priceOfItem = Double.parseDouble(itemPrice.getText());
+            Item item = new Item(nameOfItem, priceOfItem);
+
+            _items.add(item);
+
+            itemList.getItems().add(item.convertItemName());
             itemName.setText("");
             itemPrice.setText("");
             itemName.requestFocus();
@@ -123,7 +139,12 @@ public class AddNameController extends MainController {
     }
 
     private void done() {
-        Names.getInstance().addName(name.getText());
+        Name nameToAdd = Names.getInstance().addName(name.getText());
+
+        for (Item item : _items) {
+            nameToAdd.addItem(item);
+        }
+
         getInstance().clearPane();
     }
 }

@@ -37,19 +37,21 @@ public class Names {
         }
     }
 
-    public void addName(String name) {
+    public Name addName(String name) {
         String capitalName = capitalize(name);
         List<String> allNames = getNames();
+        Name finalName = new Name(capitalName);
 
         if (!allNames.contains(capitalName)) {
             try {
                 Files.createFile(Paths.get("data/" + capitalName + ".txt"));
-                _names.add(new Name(capitalName));
+                _names.add(finalName);
                 MainController.getInstance().updateNames(getNames());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return finalName;
     }
 
     public void removeName(String name) {
