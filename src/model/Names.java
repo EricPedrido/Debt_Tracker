@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,11 @@ public class Names {
 
         if (!allNames.contains(capitalName)) {
             try {
-                Files.createFile(Paths.get("data/" + capitalName + ".txt"));
+                Path path = Paths.get("data/" + capitalName + ".txt");
+                String text = capitalName + "\n";
+
+                Files.createFile(path);
+                Files.write(path, text.getBytes(), StandardOpenOption.APPEND);
                 _names.add(finalName);
                 MainController.getInstance().updateNames(getNames());
             } catch (IOException e) {
