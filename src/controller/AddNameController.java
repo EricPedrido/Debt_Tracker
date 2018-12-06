@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Item;
 import model.Name;
-import model.Names;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class AddNameController extends MainController {
         name.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.equals("")) {
                 // Disable and show text if the name already exists.
-                boolean disable = Names.getInstance().getNames().contains(newValue);
+                boolean disable = NAMES.getNames().contains(newValue);
                 add.setDisable(disable);
                 personExists.setVisible(disable);
             } else {
@@ -139,7 +138,7 @@ public class AddNameController extends MainController {
     }
 
     private void done() {
-        Name nameToAdd = Names.getInstance().addName(name.getText());
+        Name nameToAdd = NAMES.addName(name.getText());
 
         for (Item item : _items) {
             nameToAdd.addItem(item);

@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.CustomListCell;
+import model.Item;
+import model.Name;
 import model.Names;
 
 import java.io.IOException;
@@ -36,14 +38,14 @@ public class MainController implements Initializable {
 
     private List<String> _names;
     private boolean _first;
-    private String _selectedName;
 
     private static MainController INSTANCE;
+    protected final static Names NAMES = Names.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         INSTANCE = this;
-        _names = Names.getInstance().getNames();
+        _names = NAMES.getNames();
         _first = true;
         updatePeople();
     }
@@ -59,16 +61,25 @@ public class MainController implements Initializable {
 
     @FXML
     public void personSelected(MouseEvent mouseEvent) {
-        CustomListCell item = peopleList.getSelectionModel().getSelectedItem();
-        if (item == null) {
-            _selectedName = null;
+        CustomListCell selection = peopleList.getSelectionModel().getSelectedItem();
+
+        if (selection == null) {
             addItem.setDisable(true);
             addItemEmpty.setDisable(true);
             selectPerson.setVisible(true);
         } else {
-            _selectedName = item.toString();
             addItem.setDisable(false);
             selectPerson.setVisible(false);
+
+            Name name = NAMES.findName(selection.toString());
+            List<Item> items = name.getItems();
+            List<CustomListCell> list = new ArrayList<>();
+
+            for (Item item : items) {
+                list.add(new CustomListCell(item.convertItemName()));
+            }
+
+            setItemList(list);
         }
     }
 
@@ -101,10 +112,18 @@ public class MainController implements Initializable {
     private void setPeopleList(List<CustomListCell> list) {
         ObservableList<CustomListCell> people = FXCollections.observableArrayList(list);
         FilteredList<CustomListCell> filteredList = new FilteredList<>(people, s -> true);
+
         peopleList.setItems(filteredList);
         peopleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         setSearch(filteredList);
+    }
+
+    private void setItemList(List<CustomListCell> list) {
+        ObservableList<CustomListCell> items = FXCollections.observableArrayList(list);
+
+        itemList.setItems(items);
+        itemList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     private void setSearch(FilteredList<CustomListCell> filteredList) {
@@ -148,7 +167,7 @@ public class MainController implements Initializable {
 
             _names = newList;
             updatePeople();
-            Names.getInstance().removeName(item.toString());
+            NAMES.removeName(item.toString());
         } else {
             alert.close();
         }

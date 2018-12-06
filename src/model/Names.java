@@ -3,6 +3,7 @@ package model;
 import controller.MainController;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Names {
     private List<Name> _names = new ArrayList<>();
@@ -29,7 +31,11 @@ public class Names {
                 for (File name : namesList) {
                     if (name.isFile()) {
                         String newName = name.getName();
-                        _names.add(new Name(newName.substring(0, newName.indexOf('.'))));
+                        newName = newName.substring(0, newName.indexOf('.'));
+
+                        List<Item> items = getItems(name);
+
+                        _names.add(new Name(newName, items));
                     }
                 }
             }
@@ -118,6 +124,20 @@ public class Names {
         return names;
     }
 
+    private List<Item> getItems(File file) throws FileNotFoundException {
+        List<Item> out = new ArrayList<>();
+        Scanner scanner = new Scanner(file);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.startsWith("$")) {
+                out.add(Item.convertToItem(line));
+            }
+        }
+
+        return out;
+    }
+
     private int getLineNumber(String target) {
         for (int i = 0; i < _names.size(); i++) {
             if(_names.get(i).toString().equals(target)) {
@@ -126,6 +146,20 @@ public class Names {
         }
         return -1;
     }
+
+    public Name findName(String nameToFind) {
+        Name out = null;
+
+        for (Name name : _names) {
+            if (name.toString().equals(nameToFind)) {
+                out = name;
+            }
+        }
+
+        return out;
+    }
+
+
 
     public static Names getInstance() {
         return INSTANCE;

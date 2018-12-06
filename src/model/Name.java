@@ -15,6 +15,11 @@ public class Name {
         _name = name;
     }
 
+    public Name(String name, List<Item> items) {
+        _name = name;
+        _items = items;
+    }
+
     public void addItem(Item item) {
         String itemName = "\n" + item.convertItemName();
 
@@ -24,6 +29,10 @@ public class Name {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Item> getItems() {
+        return _items;
     }
 
     @Override
