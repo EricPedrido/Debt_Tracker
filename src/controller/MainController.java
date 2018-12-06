@@ -141,6 +141,7 @@ public class MainController implements Initializable {
         }
     }
 
+    // TODO: refactor this method to also be able to delete items on itemList
     public void deleteItem(CustomListCell item) {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
