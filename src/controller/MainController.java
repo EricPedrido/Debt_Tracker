@@ -167,6 +167,8 @@ public class MainController implements Initializable {
 
             _names = newList;
             updatePeople();
+            setItemList(new ArrayList<>());
+
             NAMES.removeName(item.toString());
         } else {
             alert.close();

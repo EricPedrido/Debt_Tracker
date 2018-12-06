@@ -135,6 +135,8 @@ public class Names {
             }
         }
 
+        scanner.close();
+
         return out;
     }
 

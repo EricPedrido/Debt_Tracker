@@ -22,6 +22,7 @@ public class Item {
 
         if ((_price == Math.floor(_price)) && !Double.isInfinite(_price)) {
             price = price.substring(0, price.indexOf('.'));
+            price = price + ".00";
         } else if (decimalLength == 1) {
             price = price + "0";
         }
