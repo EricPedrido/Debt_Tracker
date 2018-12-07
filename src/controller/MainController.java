@@ -123,7 +123,7 @@ public class MainController implements Initializable {
         ObservableList<CustomListCell> items = FXCollections.observableArrayList(list);
 
         itemList.setItems(items);
-        itemList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     private void setSearch(FilteredList<CustomListCell> filteredList) {
@@ -142,7 +142,7 @@ public class MainController implements Initializable {
     }
 
     // TODO: refactor this method to also be able to delete items on itemList
-    public void deleteItem(CustomListCell item) {
+    public void delete(CustomListCell item) {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -154,26 +154,47 @@ public class MainController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == yes) {
-            List<CustomListCell> names = new ArrayList<>(peopleList.getItems());
-            names.remove(item);
-            List<String> newList = new ArrayList<>();
-
-            if (names.isEmpty()) {
-                setPeopleList(new ArrayList<>());
-            } else {
-                for (CustomListCell name : names) {
-                    newList.add(name.toString());
-                }
-            }
-
-            _names = newList;
-            updatePeople();
-            setItemList(new ArrayList<>());
-
-            NAMES.removeName(item.toString());
+            // If it is an Item
+           if (item.toString().startsWith("$") && !itemList.getItems().isEmpty()) {
+               deleteItem(item);
+           } else { // It is a Name
+               deleteName(item);
+           }
         } else {
             alert.close();
         }
+    }
+
+    private void deleteItem(CustomListCell cellItem) {
+        List<CustomListCell> items = new ArrayList<>(itemList.getItems());
+        String personText = peopleList.getSelectionModel().getSelectedItem().toString();
+        Name person = NAMES.findName(personText);
+
+        person.removeItem(cellItem.toString());
+
+        items.remove(cellItem);
+        setItemList(items);
+    }
+
+    private void deleteName(CustomListCell cellItem) {
+        List<CustomListCell> names = new ArrayList<>(peopleList.getItems());
+        List<String> newList = new ArrayList<>();
+
+        names.remove(cellItem);
+
+        if (names.isEmpty()) {
+            setPeopleList(new ArrayList<>());
+        } else {
+            for (CustomListCell name : names) {
+                newList.add(name.toString());
+            }
+        }
+
+        _names = newList;
+        updatePeople();
+        setItemList(new ArrayList<>()); // Clear itemList
+
+        NAMES.removeName(cellItem.toString()); // Remove from database
     }
 
     private Alert createPopUp(String title, String headerText, String contentText, ButtonType[] buttons) {

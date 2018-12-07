@@ -1,7 +1,9 @@
 package model;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
@@ -9,26 +11,64 @@ import java.util.List;
 
 public class Name {
     private String _name;
-    private List<Item> _items = new ArrayList<>();
+    private List<Item> _items;
+    private String _path;
 
     public Name(String name) {
-        _name = name;
+        this(name, new ArrayList<>());
     }
 
     public Name(String name, List<Item> items) {
         _name = name;
         _items = items;
+        _path = "data/" + _name + ".txt";
     }
 
     public void addItem(Item item) {
         String itemName = "\n" + item.convertItemName();
 
         try {
-            Files.write(Paths.get("data/" + _name + ".txt"), itemName.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(_path), itemName.getBytes(), StandardOpenOption.APPEND);
             _items.add(item);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeItem(String item) {
+        try {
+            int lineNumber = getLineNumber(item);
+            Path path = Paths.get(_path);
+            List<String> fileContents = new ArrayList<>(Files.readAllLines(path));
+
+            fileContents.remove(lineNumber);
+            Files.write(path, fileContents, StandardCharsets.UTF_8);
+
+            _items.remove(lineNumber - 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Finds the line in the text file which the item is located at.
+     *
+     * @param item the item to match in the corresponding text file
+     * @return the line number
+     */
+    private int getLineNumber(String item) { //TODO: item keeps adding spaces. probably something to do with custom list cell
+        try {
+            List<String> fileContents = new ArrayList<>(Files.readAllLines(Paths.get(_path)));
+
+            for (int i = 0; i < fileContents.size(); i++) {
+                if(fileContents.get(i).equals(item)) {
+                    return i;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public List<Item> getItems() {

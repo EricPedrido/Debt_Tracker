@@ -35,11 +35,12 @@ public class AddNameController extends MainController {
         _items = new ArrayList<>();
 
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        List<String> allNames = NAMES.getNames();
 
         name.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.equals("")) {
                 // Disable and show text if the name already exists.
-                boolean disable = NAMES.getNames().contains(newValue);
+                boolean disable = allNames.contains(newValue);
                 add.setDisable(disable);
                 personExists.setVisible(disable);
             } else {

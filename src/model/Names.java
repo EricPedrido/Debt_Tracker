@@ -46,21 +46,17 @@ public class Names {
 
     public Name addName(String name) {
         String capitalName = capitalize(name);
-        List<String> allNames = getNames();
         Name finalName = new Name(capitalName);
+        try {
+            Path path = Paths.get("data/" + capitalName + ".txt");
+            String text = capitalName + "\n";
 
-        if (!allNames.contains(capitalName)) {
-            try {
-                Path path = Paths.get("data/" + capitalName + ".txt");
-                String text = capitalName + "\n";
-
-                Files.createFile(path);
-                Files.write(path, text.getBytes(), StandardOpenOption.APPEND);
-                _names.add(finalName);
-                MainController.getInstance().updateNames(getNames());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Files.createFile(path);
+            Files.write(path, text.getBytes(), StandardOpenOption.APPEND);
+            _names.add(finalName);
+            MainController.getInstance().updateNames(getNames());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return finalName;
     }
@@ -84,14 +80,14 @@ public class Names {
 
         for (int i = 0; i < diffNames.length; i++) {
             String singleName = diffNames[i];
-                singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
-                confirmed.append(singleName);
+            singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
+            confirmed.append(singleName);
 
-                if (i >= splits.size()) {
-                    confirmed.append(" ");
-                } else {
-                    confirmed.append(splits.get(i));
-                }
+            if (i >= splits.size()) {
+                confirmed.append(" ");
+            } else {
+                confirmed.append(splits.get(i));
+            }
         }
 
         String entered = name.toUpperCase() + " ";
@@ -142,7 +138,7 @@ public class Names {
 
     private int getLineNumber(String target) {
         for (int i = 0; i < _names.size(); i++) {
-            if(_names.get(i).toString().equals(target)) {
+            if (_names.get(i).toString().equals(target)) {
                 return i;
             }
         }
@@ -160,7 +156,6 @@ public class Names {
 
         return out;
     }
-
 
 
     public static Names getInstance() {

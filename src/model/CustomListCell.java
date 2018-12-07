@@ -30,7 +30,7 @@ public class CustomListCell extends HBox {
         setButton();
         _deleteButton.setOnMouseEntered(event -> setButton(Color.WHITE, "red"));
         _deleteButton.setOnMouseExited(event -> setButton());
-        _deleteButton.setOnAction(event -> MainController.getInstance().deleteItem(item));
+        _deleteButton.setOnAction(event -> MainController.getInstance().delete(item));
     }
 
     private void setButton() {
