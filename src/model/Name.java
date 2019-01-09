@@ -1,5 +1,7 @@
 package model;
 
+import controller.MainController;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,7 +27,7 @@ public class Name {
     }
 
     public void addItem(Item item) {
-        String itemName = "\n" + item.convertItemName();
+        String itemName = "\n" + item.toString();
 
         try {
             Files.write(_path, itemName.getBytes(), StandardOpenOption.APPEND);
@@ -33,6 +35,13 @@ public class Name {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        List<String> items = new ArrayList<>();
+        for (Item i : _items) {
+            items.add(i.toString());
+        }
+
+        MainController.getInstance().updateItems(items);
     }
 
     public void removeItem(String item) {

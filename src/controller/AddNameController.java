@@ -33,20 +33,25 @@ public class AddNameController extends MainController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _items = new ArrayList<>();
-
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        List<String> allNames = NAMES.getNames();
 
-        name.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals("")) {
-                // Disable and show text if the name already exists.
-                boolean disable = allNames.contains(newValue);
-                add.setDisable(disable);
-                personExists.setVisible(disable);
-            } else {
-                add.setDisable(true);
-            }
-        });
+        if (getInstance()._addName) {
+            List<String> allNames = NAMES.getNames();
+
+            name.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.equals("")) {
+                    // Disable and show text if the name already exists.
+                    boolean disable = allNames.contains(newValue);
+                    add.setDisable(disable);
+                    personExists.setVisible(disable);
+                } else {
+                    add.setDisable(true);
+                }
+            });
+        } else {
+            name.setText(getInstance()._selectedName);
+            name.setDisable(true);
+        }
 
         itemPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!(newValue.matches("[0-9]*[.][0-9]{0,2}") || newValue.matches("[0-9]*"))) {
@@ -99,6 +104,10 @@ public class AddNameController extends MainController {
 
         delete.setDisable(true);
         itemName.requestFocus();
+
+        if (!getInstance()._addName && itemList.getItems().isEmpty()) {
+            add.setDisable(true);
+        }
     }
 
     /**
@@ -131,15 +140,24 @@ public class AddNameController extends MainController {
 
             _items.add(item);
 
-            itemList.getItems().add(item.convertItemName());
+            itemList.getItems().add(item.toString());
             itemName.setText("");
             itemPrice.setText("");
             itemName.requestFocus();
+
+            if (!getInstance()._addName) {
+                add.setDisable(false);
+            }
         }
     }
 
     private void done() {
-        Name nameToAdd = NAMES.addName(name.getText());
+        Name nameToAdd;
+        if (getInstance()._addName) {
+            nameToAdd = NAMES.addName(name.getText());
+        } else {
+            nameToAdd = NAMES.findName(name.getText());
+        }
 
         for (Item item : _items) {
             nameToAdd.addItem(item);

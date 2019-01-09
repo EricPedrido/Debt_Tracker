@@ -39,6 +39,9 @@ public class MainController implements Initializable {
     private List<String> _names;
     private boolean _first;
 
+    protected boolean _addName;
+    protected String _selectedName;
+
     private static MainController INSTANCE;
     protected final static Names NAMES = Names.getInstance();
 
@@ -56,6 +59,7 @@ public class MainController implements Initializable {
     @FXML
     public void addPeople(ActionEvent actionEvent) {
         startingText.setVisible(false);
+        _addName = true;
         loadPane(SubPane.ADD_NAME);
     }
 
@@ -71,12 +75,14 @@ public class MainController implements Initializable {
             addItem.setDisable(false);
             selectPerson.setVisible(false);
 
-            Name name = NAMES.findName(selection.toString());
+            _selectedName = selection.toString();
+
+            Name name = NAMES.findName(_selectedName);
             List<Item> items = name.getItems();
             List<CustomListCell> list = new ArrayList<>();
 
             for (Item item : items) {
-                list.add(new CustomListCell(item.convertItemName()));
+                list.add(new CustomListCell(item.toString()));
             }
 
             setItemList(list);
@@ -85,7 +91,9 @@ public class MainController implements Initializable {
 
     @FXML
     public void addItem(ActionEvent actionEvent) {
-
+        startingText.setVisible(false);
+        _addName = false;
+        loadPane(SubPane.ADD_NAME);
     }
 
     public void updateNames(List<String> names) {
@@ -106,6 +114,22 @@ public class MainController implements Initializable {
                 list.add(new CustomListCell(name));
             }
             setPeopleList(list);
+        }
+    }
+
+    public void updateItems(List<String> items) {
+        if (items.isEmpty()) {
+            itemEmpty.setVisible(true);
+            addItemEmpty.setVisible(true);
+        } else {
+            itemEmpty.setVisible(false);
+            addItemEmpty.setVisible(false);
+
+            List<CustomListCell> list = new ArrayList<>();
+            for (String item : items) {
+                list.add(new CustomListCell(item));
+            }
+            setItemList(list);
         }
     }
 
