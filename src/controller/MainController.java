@@ -73,7 +73,7 @@ public class MainController implements Initializable {
             selectPerson.setVisible(true);
         } else {
             addItem.setDisable(false);
-            selectPerson.setVisible(false);;
+            selectPerson.setVisible(false);
 
             _selectedName = NAMES.findName(selection.toString());
             updateItems(_selectedName.getItems());
@@ -106,17 +106,20 @@ public class MainController implements Initializable {
     }
 
     public void updateItems(List<Item> items) {
+        List<CustomListCell> list;
         if (items.isEmpty()) {
             itemEmpty.setVisible(true);
             addItemEmpty.setVisible(true);
             addItemEmpty.setDisable(false);
+
+            list = new ArrayList<>();
         } else {
             itemEmpty.setVisible(false);
             addItemEmpty.setVisible(false);
 
-            List<CustomListCell> list = CustomListCell.convertToCustomList(items);
-            setItemList(list);
+            list = CustomListCell.convertToCustomList(items);
         }
+        setItemList(list);
     }
 
     private void setPeopleList(List<CustomListCell> list) {

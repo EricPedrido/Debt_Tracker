@@ -48,9 +48,12 @@ public class Name {
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
             _items.remove(findItem(item));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        MainController.getInstance().updateItems(_items);
     }
 
     private Item findItem(String itemText) {
