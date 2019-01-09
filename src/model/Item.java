@@ -11,7 +11,7 @@ public class Item {
     private final static String ITEM_NAME_REGEX = ": .*$";
 
     public Item(String itemName, double price) {
-        _itemName = itemName;
+        _itemName = ' ' + itemName;
         _price = price;
     }
 
@@ -27,7 +27,7 @@ public class Item {
             price = price + "0";
         }
 
-        return "$" + price + ": " + _itemName;
+        return "$" + price + ":" + _itemName;
     }
 
     public static Item convertToItem(String item) {

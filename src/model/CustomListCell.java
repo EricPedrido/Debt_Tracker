@@ -10,10 +10,13 @@ import javafx.scene.paint.Paint;
 
 public class CustomListCell extends HBox {
     private Label _label = new Label();
+    private String _text;
     private final Button _deleteButton = new Button("❌");
 
     public CustomListCell(String labelText) {
         super();
+
+        _text = labelText;
 
         _label.setText(labelText);
         _label.setMaxWidth(Double.MAX_VALUE);
@@ -44,7 +47,7 @@ public class CustomListCell extends HBox {
 
     @Override
     public String toString() {
-        return _label.getText();
+        return _text;
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 public class Name {
     private String _name;
     private List<Item> _items;
-    private String _path;
+    private Path _path;
 
     public Name(String name) {
         this(name, new ArrayList<>());
@@ -21,14 +21,14 @@ public class Name {
     public Name(String name, List<Item> items) {
         _name = name;
         _items = items;
-        _path = "data/" + _name + ".txt";
+        _path = Paths.get("data/" + _name + ".txt");
     }
 
     public void addItem(Item item) {
         String itemName = "\n" + item.convertItemName();
 
         try {
-            Files.write(Paths.get(_path), itemName.getBytes(), StandardOpenOption.APPEND);
+            Files.write(_path, itemName.getBytes(), StandardOpenOption.APPEND);
             _items.add(item);
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,13 +38,12 @@ public class Name {
     public void removeItem(String item) {
         try {
             int lineNumber = getLineNumber(item);
-            Path path = Paths.get(_path);
-            List<String> fileContents = new ArrayList<>(Files.readAllLines(path));
+            List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
 
             fileContents.remove(lineNumber);
-            Files.write(path, fileContents, StandardCharsets.UTF_8);
+            Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
-            _items.remove(lineNumber - 1);
+            _items.remove(Item.convertToItem(item));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,9 +55,9 @@ public class Name {
      * @param item the item to match in the corresponding text file
      * @return the line number
      */
-    private int getLineNumber(String item) { //TODO: item keeps adding spaces. probably something to do with custom list cell
+    private int getLineNumber(String item) {
         try {
-            List<String> fileContents = new ArrayList<>(Files.readAllLines(Paths.get(_path)));
+            List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
 
             for (int i = 0; i < fileContents.size(); i++) {
                 if(fileContents.get(i).equals(item)) {
