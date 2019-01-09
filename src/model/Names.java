@@ -44,9 +44,9 @@ public class Names {
         }
     }
 
-    public Name addName(String name) {
+    public Name addName(String name, boolean inDebt) {
         String capitalName = capitalize(name);
-        Name finalName = new Name(capitalName);
+        Name finalName = new Name(capitalName, inDebt);
         try {
             Path path = Paths.get("data/" + capitalName + ".txt");
             String text = capitalName + "\n";

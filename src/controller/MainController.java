@@ -74,9 +74,12 @@ public class MainController implements Initializable {
         } else {
             addItem.setDisable(false);
             selectPerson.setVisible(false);
+            startingText.setVisible(false);
 
             _selectedName = NAMES.findName(selection.toString());
             updateItems(_selectedName.getItems());
+
+            loadPane(SubPane.MAIN);
         }
     }
 

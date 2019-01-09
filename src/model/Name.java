@@ -15,15 +15,17 @@ public class Name {
     private String _name;
     private List<Item> _items;
     private Path _path;
+    private boolean _inDebt;
 
-    public Name(String name) {
-        this(name, new ArrayList<>());
+    public Name(String name, boolean inDebt) {
+        this(name, new ArrayList<>(), inDebt);
     }
 
-    public Name(String name, List<Item> items) {
+    public Name(String name, List<Item> items, boolean inDebt) { //TODO CHANGE FILENAMES TO BECOME "+" OR "-" TO IDENTIFY THE OWING STATUS
         _name = name;
         _items = items;
         _path = Paths.get("data/" + _name + ".txt");
+        _inDebt = inDebt;
     }
 
     public void addItem(Item item) {

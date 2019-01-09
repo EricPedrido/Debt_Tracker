@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Item;
@@ -28,6 +25,8 @@ public class AddNameController extends MainController {
     @FXML public Button add, cancel, addItem, delete;
     @FXML public ListView<String> itemList;
     @FXML public Text personExists, itemNameEmpty, priceEmpty;
+    @FXML public RadioButton oweMe, oweThem;
+    @FXML public ToggleGroup owing;
 
     private String _selected;
     private List<Item> _items;
@@ -167,7 +166,7 @@ public class AddNameController extends MainController {
     private void done() {
         Name nameToAdd;
         if (getInstance()._addName) {
-            nameToAdd = NAMES.addName(name.getText());
+            nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
 
             for (Item item : _items) {
                 nameToAdd.addItem(item);
@@ -183,4 +182,6 @@ public class AddNameController extends MainController {
 
         getInstance().clearPane();
     }
+
+
 }

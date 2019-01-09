@@ -20,6 +20,7 @@ public class MainPaneController extends MainController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nameLabel.setText(_selectedName + " owes you:");
     }
 
     @FXML
