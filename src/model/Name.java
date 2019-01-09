@@ -36,12 +36,7 @@ public class Name {
             e.printStackTrace();
         }
 
-        List<String> items = new ArrayList<>();
-        for (Item i : _items) {
-            items.add(i.toString());
-        }
-
-        MainController.getInstance().updateItems(items);
+        MainController.getInstance().updateItems(_items);
     }
 
     public void removeItem(String item) {
@@ -52,7 +47,44 @@ public class Name {
             fileContents.remove(lineNumber);
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
-            _items.remove(Item.convertToItem(item));
+            _items.remove(findItem(item));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Item findItem(String itemText) {
+        Item out = null;
+
+        for (Item item : _items) {
+            if (item.toString().equals(itemText)) {
+                out = item;
+            }
+        }
+        return out;
+    }
+
+    public void updateItems() {
+        try {
+            List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
+            fileContents.remove("");
+            fileContents.add(1, "");
+
+            for (Item item : _items) {
+                String text = item.toString();
+                if (!fileContents.contains(text)){
+                    fileContents.add(text);
+                }
+            }
+
+            for (int i = 2; i < fileContents.size(); i++) {
+                String line = fileContents.get(i);
+                if (findItem(line) == null) {
+                    fileContents.remove(line);
+                }
+            }
+
+            Files.write(_path, fileContents, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,6 +109,10 @@ public class Name {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public void setItems(List<Item> items) {
+        _items = items;
     }
 
     public List<Item> getItems() {

@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,8 +51,19 @@ public class AddNameController extends MainController {
                 }
             });
         } else {
-            name.setText(getInstance()._selectedName);
+            name.setText(getInstance()._selectedName.toString());
             name.setDisable(true);
+
+            List<Item> items = getInstance()._selectedName.getItems();
+            _items = new ArrayList<>(items);
+
+            List<String> list = new ArrayList<>();
+            for (Item item : _items) {
+                list.add(item.toString());
+            }
+
+            ObservableList<String> tableElements = FXCollections.observableArrayList(list);
+            itemList.setItems(tableElements);
         }
 
         itemPrice.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -155,12 +168,17 @@ public class AddNameController extends MainController {
         Name nameToAdd;
         if (getInstance()._addName) {
             nameToAdd = NAMES.addName(name.getText());
+
+            for (Item item : _items) {
+                nameToAdd.addItem(item);
+            }
         } else {
             nameToAdd = NAMES.findName(name.getText());
-        }
 
-        for (Item item : _items) {
-            nameToAdd.addItem(item);
+            nameToAdd.setItems(_items);
+
+            nameToAdd.updateItems();
+            getInstance().updateItems(_items);
         }
 
         getInstance().clearPane();

@@ -8,6 +8,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CustomListCell extends HBox {
     private Label _label = new Label();
     private String _text;
@@ -43,6 +46,16 @@ public class CustomListCell extends HBox {
     private void setButton(Paint color, String background) {
         _deleteButton.setTextFill(color);
         _deleteButton.setStyle("-fx-background-color: " + background);
+    }
+
+    public static <T> List<CustomListCell> convertToCustomList(List<T> list) {
+        List<CustomListCell> out = new ArrayList<>();
+
+        for (T element : list) {
+            out.add(new CustomListCell(element.toString()));
+        }
+
+        return out;
     }
 
     @Override

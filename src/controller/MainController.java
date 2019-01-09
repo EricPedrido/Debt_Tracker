@@ -40,7 +40,7 @@ public class MainController implements Initializable {
     private boolean _first;
 
     protected boolean _addName;
-    protected String _selectedName;
+    protected Name _selectedName;
 
     private static MainController INSTANCE;
     protected final static Names NAMES = Names.getInstance();
@@ -73,19 +73,10 @@ public class MainController implements Initializable {
             selectPerson.setVisible(true);
         } else {
             addItem.setDisable(false);
-            selectPerson.setVisible(false);
+            selectPerson.setVisible(false);;
 
-            _selectedName = selection.toString();
-
-            Name name = NAMES.findName(_selectedName);
-            List<Item> items = name.getItems();
-            List<CustomListCell> list = new ArrayList<>();
-
-            for (Item item : items) {
-                list.add(new CustomListCell(item.toString()));
-            }
-
-            setItemList(list);
+            _selectedName = NAMES.findName(selection.toString());
+            updateItems(_selectedName.getItems());
         }
     }
 
@@ -109,26 +100,21 @@ public class MainController implements Initializable {
             peopleEmpty.setVisible(false);
             addPeopleEmpty.setVisible(false);
 
-            List<CustomListCell> list = new ArrayList<>();
-            for (String name : _names) {
-                list.add(new CustomListCell(name));
-            }
+            List<CustomListCell> list = CustomListCell.convertToCustomList(_names);
             setPeopleList(list);
         }
     }
 
-    public void updateItems(List<String> items) {
+    public void updateItems(List<Item> items) {
         if (items.isEmpty()) {
             itemEmpty.setVisible(true);
             addItemEmpty.setVisible(true);
+            addItemEmpty.setDisable(false);
         } else {
             itemEmpty.setVisible(false);
             addItemEmpty.setVisible(false);
 
-            List<CustomListCell> list = new ArrayList<>();
-            for (String item : items) {
-                list.add(new CustomListCell(item));
-            }
+            List<CustomListCell> list = CustomListCell.convertToCustomList(items);
             setItemList(list);
         }
     }
@@ -165,7 +151,6 @@ public class MainController implements Initializable {
         }
     }
 
-    // TODO: refactor this method to also be able to delete items on itemList
     public void delete(CustomListCell item) {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
