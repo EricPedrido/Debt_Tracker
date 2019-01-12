@@ -31,11 +31,13 @@ public class Names {
                 for (File name : namesList) {
                     if (name.isFile()) {
                         String newName = name.getName();
-                        newName = newName.substring(0, newName.indexOf('.'));
+
+                        boolean inDebt = newName.startsWith("-");
+                        newName = newName.substring(1, newName.indexOf('.'));
 
                         List<Item> items = getItems(name);
 
-                        _names.add(new Name(newName, items));
+                        _names.add(new Name(newName, items, inDebt));
                     }
                 }
             }
@@ -44,11 +46,16 @@ public class Names {
         }
     }
 
+
     public Name addName(String name, boolean inDebt) {
         String capitalName = capitalize(name);
         Name finalName = new Name(capitalName, inDebt);
         try {
-            Path path = Paths.get("data/" + capitalName + ".txt");
+            String prefix = "+";
+            if (inDebt) {
+                prefix = "-";
+            }
+            Path path = Paths.get("data/" + prefix + capitalName + ".txt");
             String text = capitalName + "\n";
 
             Files.createFile(path);
@@ -65,7 +72,12 @@ public class Names {
         try {
             int lineNumber = getLineNumber(name);
 
-            Files.delete(Paths.get("data/" + name + ".txt"));
+            String prefix = "+";
+            if (findName(name).isInDebt()) {
+                prefix = "-";
+            }
+
+            Files.delete(Paths.get("data/" + prefix + name + ".txt"));
             _names.remove(lineNumber);
         } catch (IOException e) {
             e.printStackTrace();

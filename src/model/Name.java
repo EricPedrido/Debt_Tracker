@@ -21,11 +21,25 @@ public class Name {
         this(name, new ArrayList<>(), inDebt);
     }
 
-    public Name(String name, List<Item> items, boolean inDebt) { //TODO CHANGE FILENAMES TO BECOME "+" OR "-" TO IDENTIFY THE OWING STATUS
+    public Name(String name, List<Item> items, boolean inDebt) {
         _name = name;
         _items = items;
-        _path = Paths.get("data/" + _name + ".txt");
         _inDebt = inDebt;
+
+        String prefix = "+";
+        if (inDebt) {
+            prefix = "-";
+        }
+        _path = Paths.get("data/" + prefix + _name + ".txt");
+    }
+
+    public String getDebtAmount() {
+        double amount = 0.0;
+
+        for (Item item : _items) {
+            amount += item.getPrice();
+        }
+        return Item.convertPrice(amount);
     }
 
     public void addItem(Item item) {
@@ -122,6 +136,10 @@ public class Name {
 
     public List<Item> getItems() {
         return _items;
+    }
+
+    public boolean isInDebt() {
+        return _inDebt;
     }
 
     @Override

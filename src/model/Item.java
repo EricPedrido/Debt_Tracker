@@ -18,18 +18,7 @@ public class Item {
     }
 
     private String convertItemName() {
-        String price = Double.toString(_price);
-        String[] splitter = price.split("\\.");
-        int decimalLength = splitter[1].length();
-
-        if ((_price == Math.floor(_price)) && !Double.isInfinite(_price)) {
-            price = price.substring(0, price.indexOf('.'));
-            price = price + ".00";
-        } else if (decimalLength == 1) {
-            price = price + "0";
-        }
-
-        return "$" + price + ": " + _itemName;
+        return "$" + convertPrice(_price) + ": " + _itemName;
     }
 
     public static Item convertToItem(String item) {
@@ -41,6 +30,21 @@ public class Item {
         return new Item(itemName, price);
     }
 
+    public static String convertPrice(double price) {
+        String out = Double.toString(price);
+        String[] splitter = out.split("\\.");
+        int decimalLength = splitter[1].length();
+
+        if ((price == Math.floor(price)) && !Double.isInfinite(price)) {
+            out = out.substring(0, out.indexOf('.'));
+            out = out + ".00";
+        } else if (decimalLength == 1) {
+            out = out + "0";
+        }
+
+        return out;
+    }
+
     private static String extractSubstring(String s, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(s);
@@ -50,6 +54,10 @@ public class Item {
             out = matcher.group(0);
         }
         return out;
+    }
+
+    public double getPrice() {
+        return _price;
     }
 
     @Override
