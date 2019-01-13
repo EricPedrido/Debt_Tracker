@@ -20,10 +20,13 @@ public class MainPaneController extends MainController {
     @FXML public TableColumn date, details, amount;
     @FXML public ToggleButton edit;
 
-    private Name _currentName;
+    protected Name _currentName;
+
+    private static MainPaneController INSTANCE;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        INSTANCE = this;
         _currentName = getInstance()._selectedName;
 
         if (_currentName.isInDebt()) {
@@ -46,5 +49,9 @@ public class MainPaneController extends MainController {
 
     @FXML
     public void edit(ActionEvent actionEvent) {
+    }
+
+    public static MainPaneController getPaneInstance() {
+        return INSTANCE;
     }
 }

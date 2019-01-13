@@ -40,7 +40,7 @@ public class MainController extends Controller {
     protected final static Names NAMES = Names.getInstance();
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { //TODO WHEN ITEMS ARE ADDED/REMOVED, UPDATE MAIN PANE
         INSTANCE = this;
         _names = NAMES.getNames();
         _first = true;
