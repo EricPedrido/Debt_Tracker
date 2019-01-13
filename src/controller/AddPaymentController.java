@@ -1,10 +1,13 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Item;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -27,6 +30,15 @@ public class AddPaymentController extends MainPaneController {
         remainingText.setText("$" + getPaneInstance()._currentName.getDebtAmount());
 
         datePicker.setValue(LocalDate.now());
+
+        amountText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.equals("")) {
+                    setRemainingText(newValue);
+                }
+            }
+        });
     }
 
     @FXML
@@ -43,6 +55,11 @@ public class AddPaymentController extends MainPaneController {
     @FXML
     public void cancel(ActionEvent actionEvent) {
         close();
+    }
+
+    private void setRemainingText(String payment) {
+        double amount = _remaining - Double.parseDouble(payment);
+        remainingText.setText("$" + Item.convertPrice(amount));
     }
 
     private void close() {
