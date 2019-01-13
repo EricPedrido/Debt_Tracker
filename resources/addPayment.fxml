@@ -32,7 +32,7 @@
         </Text>
         <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" />
         <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" />
-        <Text fill="#0c5b00" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt:">
+        <Text fill="#4a4a4a" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt:">
             <font>
                 <Font size="19.0" />
             </font>
