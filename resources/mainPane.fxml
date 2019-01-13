@@ -15,7 +15,7 @@
           <Font name="System Bold" size="37.0" />
         </font>
     </Text>
-    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="87.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.58" style="-fx-accent: #aa0000;" />
+    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="87.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.03" style="-fx-accent: #14ab00;" />
     <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
         <font>
           <Font name="System Bold" size="35.0" />

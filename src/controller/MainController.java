@@ -5,19 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.CustomListCell;
 import model.Item;
 import model.Name;
 import model.Names;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +24,11 @@ import java.util.ResourceBundle;
  *
  * @author Eric Pedrido
  */
-public class MainController implements Initializable {
+public class MainController extends Controller {
     @FXML public ListView<CustomListCell> peopleList, itemList;
     @FXML public TextField search;
     @FXML public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
-    @FXML public Text peopleEmpty, itemEmpty, startingText, selectPerson;
-    @FXML public Pane subPane;
+    @FXML public Text peopleEmpty, itemEmpty, selectPerson;
 
     private List<String> _names;
     private boolean _first;
@@ -210,37 +204,6 @@ public class MainController implements Initializable {
         setItemList(new ArrayList<>()); // Clear itemList
 
         NAMES.removeName(cellItem.toString()); // Remove from database
-    }
-
-    private Alert createPopUp(String title, String headerText, String contentText, ButtonType[] buttons) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-
-        alert.getButtonTypes().setAll(buttons);
-
-        return alert;
-    }
-
-    /**
-     * Loads an FXML file into the {@link #subPane}
-     *
-     * @param pane which FXML file to load
-     */
-    protected void loadPane(SubPane pane) {
-        Parent newPane;
-        try {
-            newPane = FXMLLoader.load(getClass().getResource(pane.getName()));
-            subPane.getChildren().setAll(newPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void clearPane() {
-        startingText.setVisible(true);
-        subPane.getChildren().clear();
     }
 
     public static MainController getInstance() {

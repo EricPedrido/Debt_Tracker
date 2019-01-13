@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentController">
+    <children>
+        <Text fill="#0c5b00" layoutX="-23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Payment" textAlignment="CENTER" wrappingWidth="646.630859375">
+            <font>
+                <Font name="System Bold" size="37.0" />
+            </font>
+        </Text>
+        <Text fill="#14ab00" layoutX="126.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" textAlignment="CENTER" wrappingWidth="73.630859375">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Text>
+        <Text fill="#14ab00" layoutX="82.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" textAlignment="CENTER" wrappingWidth="117.630859375">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Text>
+        <Text fill="#14ab00" layoutX="40.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="CENTER" wrappingWidth="162.630859375">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Text>
+        <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" />
+        <Spinner fx:id="amountSpinner" editable="true" layoutX="213.0" layoutY="199.0" prefHeight="25.0" prefWidth="207.0">
+            <effect>
+                <ColorAdjust />
+            </effect>
+        </Spinner>
+        <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" />
+        <Text fx:id="remainingText" fill="#0c5b00" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt: $XXX.XX">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Button fx:id="add" disable="true" layoutX="133.0" layoutY="409.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="19.0" />
+            </font>
+        </Button>
+        <Button fx:id="cancel" layoutX="322.0" layoutY="409.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Cancel" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="19.0" />
+            </font>
+        </Button>
+      <Text fx:id="requiredText" fill="RED" layoutX="213.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

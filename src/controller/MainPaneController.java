@@ -40,7 +40,8 @@ public class MainPaneController extends MainController {
     }
 
     @FXML
-    public void addPayment(ActionEvent actionEvent) {
+    public void addPayment(ActionEvent actionEvent) { //TODO IMPLEMENT PAYMENT METHODS. INCLUDING SAVING TO TEXT FILE AND ALSO SWITCHING OWING STATUS
+        customPopUp(SubPane.ADD_PAYMENT, "Add Payment");
     }
 
     @FXML

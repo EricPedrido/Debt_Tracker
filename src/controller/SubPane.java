@@ -2,12 +2,16 @@ package controller;
 
 /**
  * Enumerates the difference .fxml files that can be loaded into {@link controller.MainController#subPane}
+ * or as a custom popup.
+ *
+ * @see Controller#customPopUp(SubPane, String)
  *
  * @author Eric Pedrido
  */
 public enum SubPane {
     MAIN("/mainPane.fxml"),
-    ADD_NAME("/addName.fxml");
+    ADD_NAME("/addName.fxml"),
+    ADD_PAYMENT("/addPayment.fxml");
 
     String _name;
 
