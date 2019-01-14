@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Item;
+import model.Payment;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -22,7 +23,6 @@ public class AddPaymentController extends MainPaneController {
     @FXML public TextArea descriptionText;
     @FXML public Text remainingText, requiredText;
     @FXML public Button add, cancel;
-
 
     private double _remaining;
 
@@ -52,7 +52,15 @@ public class AddPaymentController extends MainPaneController {
         if (text.equals("") || Double.parseDouble(text) == 0.0) {
             requiredText.setVisible(true);
         } else {
-            // TODO ADD THE PAYMENT
+            // TODO ADD THE PAYMENT TO THE TABLE IN PANE
+
+            Payment payment = new Payment(
+                    datePicker.getValue(),
+                    descriptionText.getText(),
+                    Double.parseDouble(amountText.getText()));
+
+            getPaneInstance().paymentTable.getItems().add(payment);
+
             close();
         }
     }
