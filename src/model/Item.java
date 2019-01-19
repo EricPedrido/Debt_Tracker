@@ -1,63 +1,47 @@
 package model;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class Item {
-    private String _itemName;
-    private double _price;
-    private String _displayableName;
+public class Item implements DebtElement {
+    protected LocalDate _date;
+    protected String _details;
+    protected double _price;
+    protected String _displayableName;
 
-    private final static String PRICE_REGEX = "\\$[0-9]*\\.[0-9]{2}:";
-    private final static String ITEM_NAME_REGEX = ": .*$";
+    private final static String IDENTIFIER = "$";
 
-    public Item(String itemName, double price) {
-        _itemName = itemName;
+    public Item(LocalDate date, String itemName, double price) {
+        _date = date;
+        _details = itemName;
         _price = price;
-        _displayableName = convertItemName();
+        _displayableName = convertToDisplayable();
     }
 
-    private String convertItemName() {
-        return "$" + convertPrice(_price) + ": " + _itemName;
+    Item(String line) { //TODO ADD A DATE TO THE TEXT
+        this(DebtElement.convertTextToDate(DebtElement.extractSubstring(line, DATE_REGEX)),
+                DebtElement.extractSubstring(line, ELEMENT_NAME_REGEX).substring(2),
+                DebtElement.convertTextToPrice(line));
     }
 
-    public static Item convertToItem(String item) {
-        String priceString = extractSubstring(item, PRICE_REGEX);
-        String itemName = extractSubstring(item, ITEM_NAME_REGEX).substring(2);
-
-        double price = Double.parseDouble(priceString.substring(1, priceString.length() - 1));
-
-        return new Item(itemName, price);
-    }
-
-    public static String convertPrice(double price) {
-        String out = Double.toString(price);
-        String[] splitter = out.split("\\.");
-        int decimalLength = splitter[1].length();
-
-        if ((price == Math.floor(price)) && !Double.isInfinite(price)) {
-            out = out.substring(0, out.indexOf('.'));
-            out = out + ".00";
-        } else if (decimalLength == 1) {
-            out = out + "0";
-        }
-
-        return out;
-    }
-
-    private static String extractSubstring(String s, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(s);
-        String out = null;
-
-        if (matcher.find()) {
-            out = matcher.group(0);
-        }
-        return out;
+    public String convertToDisplayable() {
+        return getDate() + " | $" + DebtElement.convertPriceToText(_price) + ": " + _details;
     }
 
     public double getPrice() {
         return _price;
+    }
+
+    public String getDate() {
+        return _date.format(DateTimeFormatter.ofPattern(DebtElement.DATE_FORMAT));
+    }
+
+    public String getDetails() {
+        return _details;
+    }
+
+    static String getIdentifier() {
+        return IDENTIFIER;
     }
 
     @Override

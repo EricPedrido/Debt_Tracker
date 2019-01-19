@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Item;
+import model.DebtElement;
 import model.Payment;
 
 import java.net.URL;
@@ -52,14 +52,13 @@ public class AddPaymentController extends MainPaneController {
         if (text.equals("") || Double.parseDouble(text) == 0.0) {
             requiredText.setVisible(true);
         } else {
-            // TODO ADD THE PAYMENT TO THE TABLE IN PANE
-
             Payment payment = new Payment(
                     datePicker.getValue(),
                     descriptionText.getText(),
                     Double.parseDouble(amountText.getText()));
 
             getPaneInstance().paymentTable.getItems().add(payment);
+            getPaneInstance()._currentName.addItem(payment);
 
             close();
         }
@@ -78,7 +77,7 @@ public class AddPaymentController extends MainPaneController {
         } else {
             remainingText.setFill(Color.valueOf("#155400"));
         }
-        remainingText.setText("$" + Item.convertPrice(amount));
+        remainingText.setText("$" + DebtElement.convertPriceToText(amount));
     }
 
     private void close() {

@@ -10,20 +10,26 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Name {
     private String _name;
     private List<Item> _items;
+    private List<Payment> _payments;
     private Path _path;
     private boolean _inDebt;
 
     public Name(String name, boolean inDebt) {
-        this(name, new ArrayList<>(), inDebt);
+        this(name, new ArrayList<>(), new ArrayList<>(), inDebt);
     }
 
-    public Name(String name, List<Item> items, boolean inDebt) {
+    public Name(String name, List<Item> items, List<Item> payments, boolean inDebt) {
         _name = name;
         _items = items;
+        _payments = payments.stream()  // Cast items from payments into a Payment object
+                .filter(Payment.class::isInstance)
+                .map(Payment.class::cast)
+                .collect(Collectors.toList());
         _inDebt = inDebt;
 
         String prefix = "+";
@@ -39,7 +45,7 @@ public class Name {
         for (Item item : _items) {
             amount += item.getPrice();
         }
-        return Item.convertPrice(amount);
+        return DebtElement.convertPriceToText(amount);
     }
 
     public void addItem(Item item) {
@@ -55,6 +61,7 @@ public class Name {
         MainController.getInstance().updateItems(_items);
     }
 
+
     public void removeItem(String item) {
         try {
             int lineNumber = getLineNumber(item);
@@ -64,7 +71,6 @@ public class Name {
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
             _items.remove(findItem(item));
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,6 +142,10 @@ public class Name {
 
     public List<Item> getItems() {
         return _items;
+    }
+
+    public List<Payment> getPayments() {
+        return _payments;
     }
 
     public boolean isInDebt() {

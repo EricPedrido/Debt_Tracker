@@ -11,6 +11,7 @@ import model.Item;
 import model.Name;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -139,16 +140,19 @@ public class AddNameController extends MainController {
     }
 
     private void addNewItem() {
-        if (itemName.getText().isEmpty() || itemPrice.getText().isEmpty()) {
-            itemNameEmpty.setVisible(itemName.getText().isEmpty());
-            priceEmpty.setVisible(itemPrice.getText().isEmpty());
+        boolean emptyItemName = itemName.getText().isEmpty();
+        boolean emptyItemPrice = itemPrice.getText().isEmpty();
+
+        if (emptyItemName || emptyItemPrice) {
+            itemNameEmpty.setVisible(emptyItemName);
+            priceEmpty.setVisible(emptyItemPrice);
         } else {
             itemNameEmpty.setVisible(false);
             priceEmpty.setVisible(false);
 
             String nameOfItem = itemName.getText();
             double priceOfItem = Double.parseDouble(itemPrice.getText());
-            Item item = new Item(nameOfItem, priceOfItem);
+            Item item = new Item(LocalDate.now(), nameOfItem, priceOfItem);
 
             _items.add(item);
 

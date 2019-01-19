@@ -35,9 +35,10 @@ public class Names {
                         boolean inDebt = newName.startsWith("-");
                         newName = newName.substring(1, newName.indexOf('.'));
 
-                        List<Item> items = getItems(name);
+                        List<Item> items = getItems(name, Item.getIdentifier());
+                        List<Item> payments = getItems(name, Payment.getIdentifier());
 
-                        _names.add(new Name(newName, items, inDebt));
+                        _names.add(new Name(newName, items, payments, inDebt));
                     }
                 }
             }
@@ -132,19 +133,21 @@ public class Names {
         return names;
     }
 
-    private List<Item> getItems(File file) throws FileNotFoundException {
+    private List<Item> getItems(File file, String identifier) throws FileNotFoundException {
         List<Item> out = new ArrayList<>();
         Scanner scanner = new Scanner(file);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (line.startsWith("$")) {
-                out.add(Item.convertToItem(line));
+
+            if (line.length() >= 13) {
+                if (line.substring(13).startsWith(identifier)) {
+                    out.add(DebtElement.itemFactory(line, identifier));
+                }
             }
         }
 
         scanner.close();
-
         return out;
     }
 

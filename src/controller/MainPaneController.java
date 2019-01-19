@@ -22,7 +22,6 @@ public class MainPaneController extends MainController {
     @FXML public TableColumn<Payment, String> amountColumn;
     @FXML public ToggleButton edit;
 
-
     protected Name _currentName;
 
     private static MainPaneController INSTANCE;
@@ -38,6 +37,9 @@ public class MainPaneController extends MainController {
 
         paymentTable.getColumns().clear();
         paymentTable.getColumns().addAll(dateColumn, detailsColumn, amountColumn);
+
+        paymentTable.setPlaceholder(new Label("No payments"));
+        paymentTable.getItems().addAll(_currentName.getPayments());
 
         if (_currentName.isInDebt()) {
             nameLabel.setText("You owe " + _currentName + ":");
@@ -60,7 +62,6 @@ public class MainPaneController extends MainController {
     @FXML
     public void edit(ActionEvent actionEvent) {
     }
-
 
     public static MainPaneController getPaneInstance() {
         return INSTANCE;

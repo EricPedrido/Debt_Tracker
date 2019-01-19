@@ -1,28 +1,29 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-public class Payment {
-    private LocalDate _date;
-    private String _details;
-    private double _amount;
+public class Payment extends Item {
 
-    public Payment(LocalDate date, String details, double amount) {
-        _date = date;
-        _details = details;
-        _amount = amount;
+    private final static String IDENTIFIER = "-";
+
+    public Payment(LocalDate date, String details, double price) {
+        super(date, details, price);
     }
 
-    public String getDate() {
-        return _date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    Payment(String line) {
+        super(line);
     }
 
-    public String getDetails() {
-        return _details;
+    @Override
+    public String convertToDisplayable() {
+        return getDate() + " | -$" + DebtElement.convertPriceToText(_price) + ": " + _details;
     }
 
     public String getAmount() {
-        return Item.convertPrice(_amount);
+        return DebtElement.convertPriceToText(_price);
+    }
+
+    static String getIdentifier() {
+        return IDENTIFIER;
     }
 }
