@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import model.DebtElement;
 import model.Name;
 import model.Payment;
 
@@ -26,6 +27,11 @@ public class MainPaneController extends MainController {
 
     private static MainPaneController INSTANCE;
 
+    private final static String RED = "#520000";
+    private final static String RED_PROGRESS_STYLE = "-fx-accent: #aa0000;";
+    private final static String GREEN = "#155400";
+    private final static String GREEN_PROGRESS_STYLE = "-fx-accent: #14ab00;";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         INSTANCE = this;
@@ -41,17 +47,7 @@ public class MainPaneController extends MainController {
         paymentTable.setPlaceholder(new Label("No payments"));
         paymentTable.getItems().addAll(_currentName.getPayments());
 
-        if (_currentName.isInDebt()) {
-            nameLabel.setText("You owe " + _currentName + ":");
-            amountLabel.setFill(Color.valueOf("#520000"));
-            owingProgress.setStyle("-fx-accent: #aa0000;");
-        } else {
-            nameLabel.setText(_currentName + " owes you:");
-            amountLabel.setFill(Color.valueOf("#155400"));
-            owingProgress.setStyle("-fx-accent: #14ab00;");
-        }
-
-        amountLabel.setText("$" + _currentName.getDebtAmount());
+        updateRemainingDebt();
     }
 
     @FXML
@@ -61,6 +57,31 @@ public class MainPaneController extends MainController {
 
     @FXML
     public void edit(ActionEvent actionEvent) {
+    }
+
+    protected void updateRemainingDebt() {
+        double debt = _currentName.getDebtAmount();
+        double payments = _currentName.getPaymentsAmount();
+
+        amountLabel.setText("$" + DebtElement.convertPriceToText(_currentName.getNetDebt()));
+        owingProgress.setProgress(payments/debt);
+
+        _currentName.updateDebtStatus();
+
+        if (_currentName.isInDebt()) {
+            setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
+        } else if (_currentName.getNetDebt() == 0.0) {
+            setStyle("You and " + _currentName + "are even", GREEN, GREEN_PROGRESS_STYLE);
+            amountLabel.setVisible(false);
+        } else {
+            setStyle(_currentName + "owes you:", GREEN, GREEN_PROGRESS_STYLE);
+        }
+    }
+
+    private void setStyle(String text, String colour, String progressColour) {
+        nameLabel.setText(text);
+        amountLabel.setFill(Color.valueOf(colour));
+        owingProgress.setStyle(progressColour);
     }
 
     public static MainPaneController getPaneInstance() {

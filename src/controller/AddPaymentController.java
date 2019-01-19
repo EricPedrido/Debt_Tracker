@@ -28,8 +28,8 @@ public class AddPaymentController extends MainPaneController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        _remaining = Double.parseDouble(getPaneInstance()._currentName.getDebtAmount());
-        remainingText.setText("$" + getPaneInstance()._currentName.getDebtAmount());
+        _remaining = getPaneInstance()._currentName.getNetDebt();
+        remainingText.setText("$" + DebtElement.convertPriceToText(_remaining));
 
         datePicker.setValue(LocalDate.now());
 
@@ -58,7 +58,8 @@ public class AddPaymentController extends MainPaneController {
                     Double.parseDouble(amountText.getText()));
 
             getPaneInstance().paymentTable.getItems().add(payment);
-            getPaneInstance()._currentName.addItem(payment);
+            getPaneInstance()._currentName.addPayment(payment);
+            getPaneInstance().updateRemainingDebt();
 
             close();
         }

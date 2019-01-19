@@ -32,28 +32,39 @@ public class Name {
                 .collect(Collectors.toList());
         _inDebt = inDebt;
 
-        String prefix = "+";
+        String prefix = Item.getIdentifier();
         if (inDebt) {
-            prefix = "-";
+            prefix = Payment.getIdentifier();
         }
         _path = Paths.get("data/" + prefix + _name + ".txt");
     }
 
-    public String getDebtAmount() {
+    private double sumItemPrices(List<? extends Item> items) {
         double amount = 0.0;
 
-        for (Item item : _items) {
+        for (Item item : items) {
             amount += item.getPrice();
         }
-        return DebtElement.convertPriceToText(amount);
+        return amount;
     }
 
-    public void addItem(Item item) {
+    public double getDebtAmount() {
+        return sumItemPrices(_items);
+    }
+
+    public double getPaymentsAmount() {
+        return sumItemPrices(_payments);
+    }
+
+    public double getNetDebt() {
+        return getDebtAmount() - getPaymentsAmount();
+    }
+
+    private void writeItem(Item item) {
         String itemName = "\n" + item.toString();
 
         try {
             Files.write(_path, itemName.getBytes(), StandardOpenOption.APPEND);
-            _items.add(item);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,6 +72,15 @@ public class Name {
         MainController.getInstance().updateItems(_items);
     }
 
+    public void addItem(Item item) {
+        writeItem(item);
+        _items.add(item);
+    }
+
+    public void addPayment(Payment payment) {
+        writeItem(payment);
+        _payments.add(payment);
+    }
 
     public void removeItem(String item) {
         try {
@@ -146,6 +166,10 @@ public class Name {
 
     public List<Payment> getPayments() {
         return _payments;
+    }
+
+    public void updateDebtStatus() {
+        _inDebt = getPaymentsAmount() < getDebtAmount();
     }
 
     public boolean isInDebt() {
