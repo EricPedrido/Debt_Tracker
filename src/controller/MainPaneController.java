@@ -59,7 +59,7 @@ public class MainPaneController extends MainController {
     public void edit(ActionEvent actionEvent) {
     }
 
-    protected void updateRemainingDebt() {
+    public void updateRemainingDebt() {
         double debt = _currentName.getDebtAmount();
         double payments = _currentName.getPaymentsAmount();
 

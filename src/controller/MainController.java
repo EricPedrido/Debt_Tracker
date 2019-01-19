@@ -164,8 +164,9 @@ public class MainController extends Controller {
 
         if (result.get() == yes) {
             // If it is an Item
-           if (item.toString().startsWith("$") && !itemList.getItems().isEmpty()) {
+           if (item.toString().contains("$") && !itemList.getItems().isEmpty()) {
                deleteItem(item);
+               MainPaneController.getPaneInstance().updateRemainingDebt();
            } else { // It is a Name
                deleteName(item);
            }

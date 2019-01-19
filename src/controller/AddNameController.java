@@ -175,6 +175,7 @@ public class AddNameController extends MainController {
             for (Item item : _items) {
                 nameToAdd.addItem(item);
             }
+            getInstance().clearPane();
         } else {
             nameToAdd = NAMES.findName(name.getText());
 
@@ -182,9 +183,13 @@ public class AddNameController extends MainController {
 
             nameToAdd.updateItems();
             getInstance().updateItems(_items);
+
+            if (getInstance()._selectedName != null) {
+                getInstance().loadPane(SubPane.MAIN);
+            }
         }
 
-        getInstance().clearPane();
+
     }
 
 
