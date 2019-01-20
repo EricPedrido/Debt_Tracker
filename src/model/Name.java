@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,7 +59,8 @@ public class Name {
     }
 
     public double getNetDebt() {
-        return getDebtAmount() - getPaymentsAmount();
+        return new Double(
+                new DecimalFormat("#.##").format(getDebtAmount() - getPaymentsAmount()));
     }
 
     private void writeItem(Item item) {

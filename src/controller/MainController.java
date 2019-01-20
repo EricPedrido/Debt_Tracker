@@ -208,8 +208,8 @@ public class MainController extends Controller {
         selectPerson.setVisible(noName);
 
         addItemEmpty.setVisible(true);
-        addItemEmpty.setDisable(true);
-        addItem.setDisable(true);
+        addItemEmpty.setDisable(noName);
+        addItem.setDisable(noName);
 
         setItemList(new ArrayList<>());
     }

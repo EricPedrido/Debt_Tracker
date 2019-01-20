@@ -53,6 +53,8 @@ public class AddNameController extends MainController {
         } else {
             name.setText(getInstance()._selectedName.toString());
             name.setDisable(true);
+            oweMe.setVisible(false);
+            oweThem.setVisible(false);
 
             List<Item> items = getInstance()._selectedName.getItems();
             _items = new ArrayList<>(items);

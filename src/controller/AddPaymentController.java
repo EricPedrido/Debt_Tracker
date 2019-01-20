@@ -13,6 +13,7 @@ import model.DebtElement;
 import model.Payment;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -41,7 +42,7 @@ public class AddPaymentController extends MainPaneController {
                     amountText.setText(amountText.getText().substring(0, amountText.getText().length() - 1));
                 }
             } else if (!newValue.equals("")){
-                setRemainingText(newValue);
+                setRemainingText(Double.parseDouble(newValue));
             }
         });
     }
@@ -70,8 +71,10 @@ public class AddPaymentController extends MainPaneController {
         close();
     }
 
-    private void setRemainingText(String payment) {
-        double amount = _remaining - Double.parseDouble(payment);
+    private void setRemainingText(double payment) {
+
+        double net = _remaining - payment;
+        double amount = new Double(new DecimalFormat("#.##").format(net));
 
         if (amount < 0.0) {
             remainingText.setFill(Color.valueOf("#520000"));
