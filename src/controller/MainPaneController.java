@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.DebtElement;
@@ -11,19 +12,20 @@ import model.Name;
 import model.Payment;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainPaneController extends MainController {
     @FXML public Text nameLabel, amountLabel;
     @FXML public ProgressIndicator owingProgress;
-    @FXML public Button addPayment;
+    @FXML public Button addPayment, delete;
     @FXML public TableView<Payment> paymentTable;
     @FXML public TableColumn<Payment, String> dateColumn;
     @FXML public TableColumn<Payment, String> detailsColumn;
     @FXML public TableColumn<Payment, String> amountColumn;
-    @FXML public ToggleButton edit;
 
     protected Name _currentName;
+    private Payment _selected;
 
     private static MainPaneController INSTANCE;
 
@@ -56,7 +58,30 @@ public class MainPaneController extends MainController {
     }
 
     @FXML
-    public void edit(ActionEvent actionEvent) {
+    public void tableClicked(MouseEvent mouseEvent) {
+        _selected = paymentTable.getSelectionModel().getSelectedItem();
+        delete.setDisable(_selected == null);
+    }
+
+    @FXML
+    public void delete(ActionEvent actionEvent) {
+        if (_selected != null) {
+            ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            Alert alert = createPopUp("Delete",
+                    "You are about to delete the payment: \"" + _selected.getDetails() + "\" for $" + _selected.getAmount(),
+                    "Are you sure? This action will permanently change the debt amount.",
+                    new ButtonType[] {yes, no});
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == yes) {
+                paymentTable.getItems().remove(_selected);
+            } else {
+                alert.close();
+            }
+        }
     }
 
     public void updatePayments() {

@@ -20,12 +20,12 @@
          <Font size="15.0" />
       </font>
    </TextField>
-   <Text fill="#14ab00" layoutX="14.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="People">
+   <Text fill="#515151" layoutX="14.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="People">
       <font>
          <Font name="System Bold" size="29.0" />
       </font>
    </Text>
-   <Button fx:id="addPeople" layoutX="230.0" layoutY="86.0" mnemonicParsing="false" onAction="#addPeople" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add new" textFill="WHITE">
+   <Button fx:id="addPeople" layoutX="230.0" layoutY="86.0" mnemonicParsing="false" onAction="#addPeople" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
@@ -36,7 +36,7 @@
       </font>
    </Text>
    <ListView fx:id="itemList" layoutX="977.0" layoutY="117.0" prefHeight="604.0" prefWidth="303.0" />
-   <Text fill="#14ab00" layoutX="1190.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+   <Text fill="#515151" layoutX="1190.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
       <font>
          <Font name="System Bold" size="29.0" />
       </font>
@@ -46,17 +46,17 @@
          <Font size="22.0" />
       </font>
    </Text>
-   <Button fx:id="addPeopleEmpty" layoutX="102.0" layoutY="452.0" mnemonicParsing="false" onAction="#addPeople" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add a person" textFill="WHITE">
+   <Button fx:id="addPeopleEmpty" layoutX="102.0" layoutY="452.0" mnemonicParsing="false" onAction="#addPeople" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add a person" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="addItemEmpty" disable="true" layoutX="1082.0" layoutY="452.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add an item" textFill="WHITE">
+   <Button fx:id="addItemEmpty" disable="true" layoutX="1082.0" layoutY="452.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add an item" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="addItem" disable="true" layoutX="977.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add new" textFill="WHITE">
+   <Button fx:id="addItem" disable="true" layoutX="977.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>

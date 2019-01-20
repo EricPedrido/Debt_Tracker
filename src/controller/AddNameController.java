@@ -34,6 +34,8 @@ public class AddNameController extends MainController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        getInstance().clearItemList(true);
+
         _items = new ArrayList<>();
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -139,6 +141,7 @@ public class AddNameController extends MainController {
     @FXML
     public void cancel(ActionEvent actionEvent) {
         getInstance().clearPane();
+        getInstance().clearItemList(true);
     }
 
     private void addNewItem() {

@@ -203,7 +203,7 @@ public class MainController extends Controller {
         NAMES.removeName(cellItem.toString()); // Remove from database
     }
 
-    private void clearItemList(boolean noName) {
+    protected void clearItemList(boolean noName) {
         itemEmpty.setVisible(!noName);
         selectPerson.setVisible(noName);
 

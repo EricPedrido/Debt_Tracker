@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -15,32 +14,31 @@
           <Font name="System Bold" size="37.0" />
         </font>
     </Text>
-    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="87.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.03" style="-fx-accent: #14ab00;" />
+    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="87.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" style="-fx-accent: #14ab00;" />
     <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
         <font>
           <Font name="System Bold" size="35.0" />
         </font>
     </Text>
-    <Button fx:id="addPayment" layoutX="237.0" layoutY="324.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Add new payment" textFill="WHITE">
+    <Button fx:id="addPayment" layoutX="237.0" layoutY="324.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
         <font>
           <Font name="System Bold" size="18.0" />
         </font>
     </Button>
-    <TableView fx:id="paymentTable" layoutY="421.0" prefHeight="183.0" prefWidth="674.0">
+    <TableView fx:id="paymentTable" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0">
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="detailsColumn" editable="false" prefWidth="511.0" text="Details" />
           <TableColumn fx:id="amountColumn" editable="false" minWidth="0.0" prefWidth="87.0" text="Amount" />
         </columns>
     </TableView>
-    <Text fill="#14ab00" layoutX="262.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment History">
+    <Text fill="#515151" layoutX="262.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment History">
         <font>
           <Font name="System Bold" size="19.0" />
         </font>
     </Text>
-    <ToggleButton fx:id="edit" layoutX="613.0" layoutY="393.0" mnemonicParsing="false" onAction="#edit" style="-fx-background-radius: 0; -fx-background-color: #14ab00;" text="Edit" textFill="WHITE">
-        <font>
-          <Font name="System Bold" size="11.0" />
-        </font>
-    </ToggleButton>
+   <Button fx:id="delete" disable="true" layoutX="604.0" layoutY="393.0" mnemonicParsing="false" onAction="#delete" style="-fx-base: #aa0000; -fx-background-radius: 0;" text="Delete">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Button>
 </AnchorPane>
