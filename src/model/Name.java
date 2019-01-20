@@ -85,20 +85,29 @@ public class Name {
         _payments.add(payment);
     }
 
-    public void removeItem(String item) {
+    private void removeItem(Item item, String text, List<? extends Item> list) {
         try {
-            int lineNumber = getLineNumber(item);
+            int lineNumber = getLineNumber(text);
             List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
 
             fileContents.remove(lineNumber);
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
-            _items.remove(findItem(item));
+            list.remove(item);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeItem(String text) {
+        removeItem(findItem(text), text, _items);
         MainController.getInstance().updateItems(_items);
+    }
+
+    public void removePayment(Payment payment) {
+        removeItem(payment, payment.toString(), _payments);
+        MainPaneController.getPaneInstance().updateRemainingDebt();
     }
 
     private Item findItem(String itemText, List<? extends Item> list) {

@@ -77,11 +77,16 @@ public class MainPaneController extends MainController {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == yes) {
-                paymentTable.getItems().remove(_selected);
+                delete(_selected);
             } else {
                 alert.close();
             }
         }
+    }
+
+    private void delete(Payment payment) {
+        paymentTable.getItems().remove(payment);
+        _currentName.removePayment(payment);
     }
 
     public void updatePayments() {
