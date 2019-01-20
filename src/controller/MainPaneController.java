@@ -45,8 +45,8 @@ public class MainPaneController extends MainController {
         paymentTable.getColumns().addAll(dateColumn, detailsColumn, amountColumn);
 
         paymentTable.setPlaceholder(new Label("No payments"));
-        paymentTable.getItems().addAll(_currentName.getPayments());
 
+        updatePayments();
         updateRemainingDebt();
     }
 
@@ -59,15 +59,20 @@ public class MainPaneController extends MainController {
     public void edit(ActionEvent actionEvent) {
     }
 
+    public void updatePayments() {
+        paymentTable.getItems().clear();
+        paymentTable.getItems().addAll(_currentName.getPayments());
+    }
+
     public void updateRemainingDebt() {
+        _currentName.updateDebtStatus();
+
         double debt = _currentName.getDebtAmount();
         double payments = _currentName.getPaymentsAmount();
         double netDebt = _currentName.getNetDebt();
 
         amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
         owingProgress.setProgress(payments/debt);
-
-        _currentName.updateDebtStatus();
 
         if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);

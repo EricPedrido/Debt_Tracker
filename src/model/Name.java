@@ -1,6 +1,7 @@
 package model;
 
 import controller.MainController;
+import controller.MainPaneController;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -142,6 +143,8 @@ public class Name {
             }
 
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
+            MainController.getInstance().updateItems(_items);
+            MainPaneController.getPaneInstance().updatePayments();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -239,6 +242,7 @@ public class Name {
 
         updateItems();
         updatePayments();
+
     }
 
     public boolean isInDebt() {

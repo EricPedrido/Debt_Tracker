@@ -40,7 +40,7 @@ public class MainController extends Controller {
     protected final static Names NAMES = Names.getInstance();
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { //TODO WHEN ITEMS ARE ADDED/REMOVED, UPDATE MAIN PANE
+    public void initialize(URL location, ResourceBundle resources) {
         INSTANCE = this;
         _names = NAMES.getNames();
         _first = true;
@@ -103,20 +103,15 @@ public class MainController extends Controller {
     }
 
     public void updateItems(List<Item> items) {
-        List<CustomListCell> list;
-        if (items.isEmpty()) {
-            itemEmpty.setVisible(true);
-            addItemEmpty.setVisible(true);
-            addItemEmpty.setDisable(false);
 
-            list = new ArrayList<>();
+        if (items.isEmpty()) {
+            clearItemList(_selectedName == null);
         } else {
             itemEmpty.setVisible(false);
             addItemEmpty.setVisible(false);
 
-            list = CustomListCell.convertToCustomList(items);
+            setItemList(CustomListCell.convertToCustomList(items));
         }
-        setItemList(list);
     }
 
     private void setPeopleList(List<CustomListCell> list) {
@@ -169,6 +164,7 @@ public class MainController extends Controller {
                MainPaneController.getPaneInstance().updateRemainingDebt();
            } else { // It is a Name
                deleteName(item);
+               clearPane();
            }
         } else {
             alert.close();
@@ -202,9 +198,20 @@ public class MainController extends Controller {
 
         _names = newList;
         updatePeople();
-        setItemList(new ArrayList<>()); // Clear itemList
+        clearItemList(true);
 
         NAMES.removeName(cellItem.toString()); // Remove from database
+    }
+
+    private void clearItemList(boolean noName) {
+        itemEmpty.setVisible(!noName);
+        selectPerson.setVisible(noName);
+
+        addItemEmpty.setVisible(true);
+        addItemEmpty.setDisable(true);
+        addItem.setDisable(true);
+
+        setItemList(new ArrayList<>());
     }
 
     public static MainController getInstance() {
