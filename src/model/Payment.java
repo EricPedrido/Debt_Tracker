@@ -19,6 +19,10 @@ public class Payment extends Item {
         return getDate() + " | -$" + DebtElement.convertPriceToText(_price) + ": " + _details;
     }
 
+    public Item switchToItem() {
+        return new Item(_date, _details, _price);
+    }
+
     public String getAmount() {
         return DebtElement.convertPriceToText(_price);
     }

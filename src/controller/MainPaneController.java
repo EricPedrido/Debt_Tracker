@@ -62,8 +62,9 @@ public class MainPaneController extends MainController {
     public void updateRemainingDebt() {
         double debt = _currentName.getDebtAmount();
         double payments = _currentName.getPaymentsAmount();
+        double netDebt = _currentName.getNetDebt();
 
-        amountLabel.setText("$" + DebtElement.convertPriceToText(_currentName.getNetDebt()));
+        amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
         owingProgress.setProgress(payments/debt);
 
         _currentName.updateDebtStatus();
@@ -72,6 +73,7 @@ public class MainPaneController extends MainController {
             setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
         } else if (_currentName.getNetDebt() == 0.0) {
             setStyle("You and " + _currentName + "are even", GREEN, GREEN_PROGRESS_STYLE);
+            owingProgress.setProgress(1);
             amountLabel.setVisible(false);
         } else {
             setStyle(_currentName + "owes you:", GREEN, GREEN_PROGRESS_STYLE);

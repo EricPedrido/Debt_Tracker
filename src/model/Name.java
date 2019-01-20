@@ -32,9 +32,9 @@ public class Name {
                 .collect(Collectors.toList());
         _inDebt = inDebt;
 
-        String prefix = Item.getIdentifier();
+        String prefix = "+";
         if (inDebt) {
-            prefix = Payment.getIdentifier();
+            prefix = "-";
         }
         _path = Paths.get("data/" + prefix + _name + ".txt");
     }
@@ -98,10 +98,10 @@ public class Name {
         MainController.getInstance().updateItems(_items);
     }
 
-    private Item findItem(String itemText) {
+    private Item findItem(String itemText, List<? extends Item> list) {
         Item out = null;
 
-        for (Item item : _items) {
+        for (Item item : list) {
             if (item.toString().equals(itemText)) {
                 out = item;
             }
@@ -109,22 +109,34 @@ public class Name {
         return out;
     }
 
-    public void updateItems() {
+    private Item findItem(String itemText) {
+        return findItem(itemText, _items);
+    }
+
+    private Item findPayment(String itemText) {
+        return findItem(itemText, _payments);
+    }
+
+    private void updateItems(List<? extends Item> list) {
         try {
             List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
             fileContents.remove("");
             fileContents.add(1, "");
 
-            for (Item item : _items) {
+            for (Item item : list) {
                 String text = item.toString();
-                if (!fileContents.contains(text)){
+                if (!fileContents.contains(text)) {
                     fileContents.add(text);
                 }
             }
 
             for (int i = 2; i < fileContents.size(); i++) {
                 String line = fileContents.get(i);
-                if (findItem(line) == null) {
+
+                boolean itemNull = findItem(line) == null;
+                boolean paymentNull = findPayment(line) == null;
+
+                if ((itemNull && paymentNull)) {
                     fileContents.remove(line);
                 }
             }
@@ -133,6 +145,14 @@ public class Name {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateItems() {
+        updateItems(_items);
+    }
+
+    public void updatePayments() {
+        updateItems(_payments);
     }
 
     /**
@@ -146,7 +166,7 @@ public class Name {
             List<String> fileContents = new ArrayList<>(Files.readAllLines(_path));
 
             for (int i = 0; i < fileContents.size(); i++) {
-                if(fileContents.get(i).equals(item)) {
+                if (fileContents.get(i).equals(item)) {
                     return i;
                 }
             }
@@ -169,7 +189,56 @@ public class Name {
     }
 
     public void updateDebtStatus() {
-        _inDebt = getPaymentsAmount() < getDebtAmount();
+        if (getNetDebt() < 0) {
+            _inDebt = !_inDebt;
+
+            try {
+                String prefix;
+                if (_inDebt) {
+                    prefix = "-";
+                } else {
+                    prefix = "+";
+                }
+                Files.delete(_path);
+
+                _path = Paths.get("data/" + prefix + _name + ".txt");
+                Files.createFile(_path);
+
+                reloadFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void reloadFile() {
+        try {
+            String text = _name + "\n";
+            Files.write(_path, text.getBytes(), StandardOpenOption.APPEND);
+
+            switchDebtStatus();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void switchDebtStatus() {
+        List<Item> newItems = new ArrayList<>();
+        List<Payment> newPayments = new ArrayList<>();
+
+        for (Item item : _items) {
+            newPayments.add(item.switchToPayment());
+        }
+
+        for (Payment payment : _payments) {
+            newItems.add(payment.switchToItem());
+        }
+
+        _items = newItems;
+        _payments = newPayments;
+
+        updateItems();
+        updatePayments();
     }
 
     public boolean isInDebt() {

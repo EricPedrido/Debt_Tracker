@@ -188,9 +188,5 @@ public class AddNameController extends MainController {
                 getInstance().loadPane(SubPane.MAIN);
             }
         }
-
-
     }
-
-
 }

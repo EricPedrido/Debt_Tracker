@@ -18,7 +18,7 @@ public class Item implements DebtElement {
         _displayableName = convertToDisplayable();
     }
 
-    Item(String line) { //TODO ADD A DATE TO THE TEXT
+    Item(String line) {
         this(DebtElement.convertTextToDate(DebtElement.extractSubstring(line, DATE_REGEX)),
                 DebtElement.extractSubstring(line, ELEMENT_NAME_REGEX).substring(2),
                 DebtElement.convertTextToPrice(line));
@@ -26,6 +26,10 @@ public class Item implements DebtElement {
 
     public String convertToDisplayable() {
         return getDate() + " | $" + DebtElement.convertPriceToText(_price) + ": " + _details;
+    }
+
+    public Payment switchToPayment() {
+        return new Payment(_date, _details, _price);
     }
 
     public double getPrice() {

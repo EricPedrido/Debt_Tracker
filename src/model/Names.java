@@ -48,6 +48,7 @@ public class Names {
     }
 
 
+
     public Name addName(String name, boolean inDebt) {
         String capitalName = capitalize(name);
         Name finalName = new Name(capitalName, inDebt);
@@ -171,7 +172,6 @@ public class Names {
 
         return out;
     }
-
 
     public static Names getInstance() {
         return INSTANCE;
