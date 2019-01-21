@@ -8,23 +8,33 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import model.AmountTableCell;
 import model.DebtElement;
 import model.Name;
 import model.Payment;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainPaneController extends MainController {
-    @FXML public Text nameLabel, amountLabel;
-    @FXML public ProgressIndicator owingProgress;
-    @FXML public Button addPayment, delete;
-    @FXML public TableView<Payment> paymentTable;
-    @FXML public TableColumn<Payment, String> dateColumn;
-    @FXML public TableColumn<Payment, String> detailsColumn;
-    @FXML public TableColumn<Payment, String> amountColumn;
+    @FXML
+    public Text nameLabel, amountLabel;
+    @FXML
+    public ProgressIndicator owingProgress;
+    @FXML
+    public Button addPayment, delete, export;
+    @FXML
+    public TableView<Payment> paymentTable;
+    @FXML
+    public TableColumn<Payment, String> dateColumn;
+    @FXML
+    public TableColumn<Payment, String> detailsColumn;
+    @FXML
+    public TableColumn<Payment, String> amountColumn;
 
     protected Name _currentName;
     private Payment _selected;
@@ -63,18 +73,23 @@ public class MainPaneController extends MainController {
     }
 
     @FXML
+    public void export(ActionEvent actionEvent) {
+        export();
+    }
+
+    @FXML
     public void tableClicked(MouseEvent mouseEvent) {
         _selected = paymentTable.getSelectionModel().getSelectedItem();
         delete.setDisable(_selected == null);
     }
 
     @FXML
-    public void editDetails(TableColumn.CellEditEvent<Payment,String> paymentStringCellEditEvent) {
+    public void editDetails(TableColumn.CellEditEvent<Payment, String> paymentStringCellEditEvent) {
         _currentName.editPayment(_selected, paymentStringCellEditEvent.getNewValue());
     }
 
     @FXML
-    public void editAmount(TableColumn.CellEditEvent<Payment,String> paymentStringCellEditEvent) {
+    public void editAmount(TableColumn.CellEditEvent<Payment, String> paymentStringCellEditEvent) {
         _currentName.editPayment(_selected, Double.parseDouble(paymentStringCellEditEvent.getNewValue()));
     }
 
@@ -87,12 +102,48 @@ public class MainPaneController extends MainController {
             Alert alert = createPopUp("Delete",
                     "You are about to delete the payment: \"" + _selected.getDetails() + "\" for $" + _selected.getAmount(),
                     "Are you sure? This action will permanently change the debt amount.",
-                    new ButtonType[] {yes, no});
+                    new ButtonType[]{yes, no});
 
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == yes) {
                 delete(_selected);
+            } else {
+                alert.close();
+            }
+        }
+    }
+
+    private void export() {
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Export Debt");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setInitialFileName(_currentName.toString() + ".txt");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text file", "*.txt"));
+
+        File file = fileChooser.showSaveDialog(getInstance().getStage());
+        if (file != null) {
+
+            Alert alert;
+            ButtonType retry = new ButtonType("Try again", ButtonBar.ButtonData.OK_DONE);
+
+            try {
+                _currentName.exportTo(file.getPath());
+                alert = createPopUp("Export Success",
+                        file.getName() + " has been exported",
+                        "All debt information has been saved in a text file",
+                        new ButtonType[]{new ButtonType("Okay", ButtonBar.ButtonData.CANCEL_CLOSE)});
+            } catch (IOException e) {
+                alert = createPopUp("Export Failed",
+                        "An error occured while exporting " + file.getName(),
+                        "Please try again",
+                        new ButtonType[]{retry, new ButtonType("Back", ButtonBar.ButtonData.CANCEL_CLOSE)});
+            }
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == retry) {
+                export();
             } else {
                 alert.close();
             }
@@ -108,6 +159,8 @@ public class MainPaneController extends MainController {
     public void updatePayments() {
         paymentTable.getItems().clear();
         paymentTable.getItems().addAll(_currentName.getPayments());
+
+        updateRemainingDebt();
     }
 
     public void updateRemainingDebt() {
@@ -118,7 +171,7 @@ public class MainPaneController extends MainController {
         double netDebt = _currentName.getNetDebt();
 
         amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
-        owingProgress.setProgress(payments/debt);
+        owingProgress.setProgress(payments / debt);
 
         if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);

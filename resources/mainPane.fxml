@@ -20,7 +20,7 @@
           <Font name="System Bold" size="35.0" />
         </font>
     </Text>
-    <Button fx:id="addPayment" layoutX="237.0" layoutY="324.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
+    <Button fx:id="addPayment" layoutX="236.0" layoutY="313.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
         <font>
           <Font name="System Bold" size="18.0" />
         </font>
@@ -29,7 +29,7 @@
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="detailsColumn" onEditCommit="#editDetails" prefWidth="511.0" text="Details" />
-          <TableColumn fx:id="amountColumn" onEditCommit="#editAmount" minWidth="0.0" prefWidth="87.0" text="Amount" />
+          <TableColumn fx:id="amountColumn" minWidth="0.0" onEditCommit="#editAmount" prefWidth="87.0" text="Amount" />
         </columns>
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -44,4 +44,9 @@
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
+   <Button fx:id="export" layoutX="305.0" layoutY="364.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #515151;" text="Export" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Button>
 </AnchorPane>

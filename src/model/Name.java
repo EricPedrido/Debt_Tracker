@@ -41,6 +41,10 @@ public class Name {
         _path = Paths.get("data/" + prefix + _name + ".txt");
     }
 
+    public void exportTo(String newPath) throws IOException{
+        Files.copy(_path, Paths.get(newPath));
+    }
+
     private double sumItemPrices(List<? extends Item> items) {
         double amount = 0.0;
 

@@ -17,6 +17,8 @@ public abstract class Controller implements Initializable {
     @FXML public Pane subPane;
     @FXML public Text startingText;
 
+    protected Stage _stage;
+
     protected Alert createPopUp(String title, String headerText, String contentText, ButtonType[] buttons) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -31,12 +33,12 @@ public abstract class Controller implements Initializable {
     protected void customPopUp(SubPane pane, String title) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(pane.getName()));
-            Stage stage = new Stage();
+            _stage = new Stage();
 
-            stage.setTitle(title);
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
+            _stage.setTitle(title);
+            _stage.setScene(new Scene(root));
+            _stage.setResizable(false);
+            _stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,6 +62,10 @@ public abstract class Controller implements Initializable {
     protected void clearPane() {
         startingText.setVisible(true);
         subPane.getChildren().clear();
+    }
+
+    protected Stage getStage() {
+        return _stage;
     }
 
 }
