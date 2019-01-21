@@ -28,7 +28,7 @@
          <Font name="System Bold" size="11.0" />
       </font>
    </Button>
-   <Button fx:id="delete" disable="true" layoutX="546.0" layoutY="254.0" mnemonicParsing="false" onAction="#delete" prefHeight="19.0" prefWidth="68.0" style="-fx-background-radius: 0; -fx-base: #520000;" text="Delete" textFill="WHITE">
+   <Button fx:id="delete" disable="true" layoutX="546.0" layoutY="254.0" mnemonicParsing="false" onAction="#delete" prefHeight="19.0" prefWidth="68.0" style="-fx-background-radius: 0; -fx-base: #aa0000;" text="Delete" textFill="WHITE">
       <font>
          <Font name="System Bold" size="11.0" />
       </font>

@@ -14,8 +14,9 @@ import java.util.List;
 public class CustomListCell extends HBox {
     private Label _label = new Label();
     private String _text;
+
+    private final Button _editButton = new Button("Edit");
     private final Button _deleteButton = new Button("❌");
-    private final Button _editButton = new Button("✏");
 
     public CustomListCell(String labelText) {
         super();
@@ -28,7 +29,7 @@ public class CustomListCell extends HBox {
 
         setupButtons();
 
-        this.getChildren().addAll(_label, _deleteButton, _editButton);
+        this.getChildren().addAll(_label, _editButton, _deleteButton);
     }
 
     private void setupButtons() {
@@ -40,7 +41,7 @@ public class CustomListCell extends HBox {
         _deleteButton.setOnAction(event -> MainController.getInstance().delete(item));
 
         defaultEditButton(Color.GRAY, "transparent");
-        _editButton.setOnMouseEntered(event -> defaultEditButton(Color.WHITE, "yellow"));
+        _editButton.setOnMouseEntered(event -> defaultEditButton(Color.WHITE, "#4286f4"));
         _editButton.setOnMouseExited(event -> defaultEditButton(Color.GRAY, "transparent"));
         _editButton.setOnAction(event -> MainController.getInstance().edit(item));
     }

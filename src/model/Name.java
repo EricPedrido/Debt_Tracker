@@ -93,6 +93,11 @@ public class Name {
         MainController.getInstance().updateItems(_items);
     }
 
+    public void removeItem(Item item) {
+        removeItem(item, item.toString(), _items);
+        MainController.getInstance().updateItems(_items);
+    }
+
     public void removePayment(Payment payment) {
         removeItem(payment, payment.toString(), _payments);
     }
@@ -101,6 +106,15 @@ public class Name {
         removePayment(payment);
         payment.setField(newField);
         addPayment(payment);
+    }
+
+    public Item editItem(Item item, String details, double price) {
+        removeItem(item);
+        item.setField(details);
+        item.setField(price);
+        addItem(item);
+
+        return item;
     }
 
     private Item findItem(String itemText, List<? extends Item> list) {
@@ -114,7 +128,7 @@ public class Name {
         return out;
     }
 
-    private Item findItem(String itemText) {
+    public Item findItem(String itemText) {
         return findItem(itemText, _items);
     }
 

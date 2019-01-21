@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import model.CustomListCell;
-import model.Item;
-import model.Name;
-import model.Names;
+import model.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,6 +33,7 @@ public class MainController extends Controller {
     protected boolean _personRequested;
     protected boolean _editRequested;
     protected String _nameRequested;
+    protected Item _itemRequested;
     protected Name _selectedName;
 
     private static MainController INSTANCE;
@@ -153,8 +151,14 @@ public class MainController extends Controller {
     public void edit(CustomListCell item) {
         _personRequested = !item.toString().contains("$") || itemList.getItems().isEmpty();
        _editRequested = true;
-       _nameRequested = item.toString();
-       selectPerson.setVisible(false);
+
+       if (_personRequested) {
+           _nameRequested = item.toString();
+       } else {
+           _itemRequested = getInstance()._selectedName.findItem(item.toString());
+
+       }
+       startingText.setVisible(false);
 
         loadPane(SubPane.ADD_NAME);
     }

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import model.DebtElement;
 import model.Item;
 import model.Name;
 
@@ -40,7 +41,7 @@ public class AddNameController extends MainController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getInstance().clearItemList(true);
+        getInstance().clearItemList(getInstance()._personRequested);
 
         _items = new ArrayList<>();
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -48,10 +49,6 @@ public class AddNameController extends MainController {
 
         if (getInstance()._personRequested) {
             List<String> allNames = NAMES.getNames();
-
-            if (edit) {
-                name.setText(getInstance()._nameRequested);
-            }
 
             itemName.setDisable(edit);
             itemPrice.setDisable(edit);
@@ -71,6 +68,10 @@ public class AddNameController extends MainController {
                     add.setDisable(true);
                 }
             });
+
+            if (edit) {
+                name.setText(getInstance()._nameRequested);
+            }
         } else {
             name.setText(getInstance()._selectedName.toString());
             name.setDisable(true);
@@ -87,6 +88,18 @@ public class AddNameController extends MainController {
 
             ObservableList<String> tableElements = FXCollections.observableArrayList(list);
             itemList.setItems(tableElements);
+
+            if (edit) {
+                itemName.setText(getInstance()._itemRequested.getDetails());
+                itemPrice.setText(DebtElement.convertPriceToText(getInstance()._itemRequested.getPrice()));
+
+                itemList.getItems().remove(getInstance()._itemRequested.convertToDisplayable());
+                itemList.setDisable(true);
+
+                _items.remove(getInstance()._itemRequested);
+
+                addItem.setText("Confirm");
+            }
         }
 
         itemPrice.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -176,17 +189,27 @@ public class AddNameController extends MainController {
 
             String nameOfItem = itemName.getText();
             double priceOfItem = Double.parseDouble(itemPrice.getText());
-            Item item = new Item(LocalDate.now(), nameOfItem, priceOfItem);
 
-            _items.add(item);
+            Item item;
 
-            itemList.getItems().add(item.toString());
-            itemName.setText("");
-            itemPrice.setText("");
-            itemName.requestFocus();
+            if (getInstance()._editRequested) {
+                item = getInstance()._selectedName.editItem(getInstance()._itemRequested, nameOfItem, priceOfItem);
+                _items.add(item);
 
-            if (!getInstance()._personRequested) {
-                add.setDisable(false);
+                done();
+            } else {
+                item = new Item(LocalDate.now(), nameOfItem, priceOfItem);
+
+                _items.add(item);
+
+                itemList.getItems().add(item.toString());
+                itemName.setText("");
+                itemPrice.setText("");
+                itemName.requestFocus();
+
+                if (!getInstance()._personRequested) {
+                    add.setDisable(false);
+                }
             }
         }
     }
@@ -225,6 +248,7 @@ public class AddNameController extends MainController {
 
             nameToAdd.updateItems();
             getInstance().updateItems(_items);
+            getInstance().selectPerson.setVisible(false);
 
             if (getInstance()._selectedName != null) {
                 getInstance().loadPane(SubPane.MAIN);

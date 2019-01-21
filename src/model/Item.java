@@ -28,6 +28,15 @@ public class Item implements DebtElement {
         return getDate() + " | $" + DebtElement.convertPriceToText(_price) + ": " + _details;
     }
 
+    public <T> void setField(T fieldValue) {
+        if (fieldValue instanceof String) {
+            _details = (String) fieldValue;
+        } else {
+            _price = (Double) fieldValue;
+        }
+        _displayableName = convertToDisplayable();
+    }
+
     public Payment switchToPayment() {
         return new Payment(_date, _details, _price);
     }
@@ -44,7 +53,7 @@ public class Item implements DebtElement {
         return _details;
     }
 
-    static String getIdentifier() {
+    public static String getIdentifier() {
         return IDENTIFIER;
     }
 
