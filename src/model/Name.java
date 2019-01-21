@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,22 @@ public class Name {
 
     public void exportTo(String newPath) throws IOException{
         Files.copy(_path, Paths.get(newPath));
+    }
+
+    public void reset() {
+        removeAll(_items);
+        removeAll(_payments);
+
+        MainController.getInstance().updateItems(_items);
+        MainPaneController.getPaneInstance().updatePayments();
+    }
+
+    private void removeAll(List<? extends Item> list) {
+        for (Iterator<? extends Item> iterator = list.iterator(); iterator.hasNext(); ) {
+            Item item = iterator.next();
+            iterator.remove();
+            removeItem(item, item.toString(), list);
+        }
     }
 
     private double sumItemPrices(List<? extends Item> items) {
@@ -99,7 +116,6 @@ public class Name {
 
     public void removeItem(Item item) {
         removeItem(item, item.toString(), _items);
-        MainController.getInstance().updateItems(_items);
     }
 
     public void removePayment(Payment payment) {
@@ -117,6 +133,8 @@ public class Name {
         item.setField(details);
         item.setField(price);
         addItem(item);
+
+        MainController.getInstance().updateItems(_items);
 
         return item;
     }

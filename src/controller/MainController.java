@@ -164,12 +164,12 @@ public class MainController extends Controller {
     }
 
     public void delete(CustomListCell item) {
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType yes = new ButtonType("Delete", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         Alert alert = createPopUp("Delete",
                 "You are about to delete: " + item.toString(),
-                "Are you sure? This action cannot be undone.",
+                "All records will be deleted. This cannot be undone.",
                 new ButtonType[] {yes, no});
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -183,8 +183,6 @@ public class MainController extends Controller {
                deleteName(item);
                clearPane();
            }
-        } else {
-            alert.close();
         }
     }
 
@@ -194,6 +192,7 @@ public class MainController extends Controller {
         Name person = NAMES.findName(personText);
 
         person.removeItem(cellItem.toString());
+
 
         items.remove(cellItem);
         setItemList(items);

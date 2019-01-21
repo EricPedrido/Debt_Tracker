@@ -26,7 +26,7 @@ public class MainPaneController extends MainController {
     @FXML
     public ProgressIndicator owingProgress;
     @FXML
-    public Button addPayment, delete, export;
+    public Button addPayment, delete, export, reset;
     @FXML
     public TableView<Payment> paymentTable;
     @FXML
@@ -43,8 +43,15 @@ public class MainPaneController extends MainController {
 
     private final static String RED = "#520000";
     private final static String RED_PROGRESS_STYLE = "-fx-accent: #aa0000;";
+    private final static String RED_BUTTON = "-fx-background-radius: 0; -fx-base: #aa0000;";
+
     private final static String GREEN = "#155400";
     private final static String GREEN_PROGRESS_STYLE = "-fx-accent: #14ab00;";
+    private final static String GREEN_BUTTON = "-fx-background-radius: 0; -fx-base: #14ab00;";
+
+    private final static String WHITE = "#eeeeee";
+    private final static String GRAY = "#515151";
+    private final static String DEFAULT_BUTTON = "-fx-background-radius: 0; -fx-base: #eeeeee;";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,18 +70,43 @@ public class MainPaneController extends MainController {
         paymentTable.getColumns().addAll(dateColumn, detailsColumn, amountColumn);
         paymentTable.setPlaceholder(new Label("No payments"));
 
+        reset.setOnMouseEntered(event -> {
+            reset.setStyle(RED_BUTTON);
+            reset.setTextFill(Color.valueOf(WHITE));
+        });
+
+        reset.setOnMouseExited(event -> {
+            reset.setStyle(DEFAULT_BUTTON);
+            reset.setTextFill(Color.valueOf(GRAY));
+        });
+
+        export.setOnMouseEntered(event -> {
+            export.setStyle(GREEN_BUTTON);
+            export.setTextFill(Color.valueOf(WHITE));
+        });
+
+        export.setOnMouseExited(event -> {
+            export.setStyle(DEFAULT_BUTTON);
+            export.setTextFill(Color.valueOf(GRAY));
+        });
+
         updatePayments();
         updateRemainingDebt();
     }
 
     @FXML
-    public void addPayment(ActionEvent actionEvent) { //TODO IMPLEMENT PAYMENT METHODS. INCLUDING SAVING TO TEXT FILE AND ALSO SWITCHING OWING STATUS
+    public void addPayment(ActionEvent actionEvent) {
         customPopUp(SubPane.ADD_PAYMENT, "Add Payment");
     }
 
     @FXML
     public void export(ActionEvent actionEvent) {
         export();
+    }
+
+    @FXML
+    public void reset(ActionEvent actionEvent) {
+        reset();
     }
 
     @FXML
@@ -126,7 +158,7 @@ public class MainPaneController extends MainController {
         if (file != null) {
 
             Alert alert;
-            ButtonType retry = new ButtonType("Try again", ButtonBar.ButtonData.OK_DONE);
+            ButtonType retry = new ButtonType("Try again", ButtonBar.ButtonData.YES);
 
             try {
                 _currentName.exportTo(file.getPath());
@@ -136,7 +168,7 @@ public class MainPaneController extends MainController {
                         new ButtonType[]{new ButtonType("Okay", ButtonBar.ButtonData.CANCEL_CLOSE)});
             } catch (IOException e) {
                 alert = createPopUp("Export Failed",
-                        "An error occured while exporting " + file.getName(),
+                        "An error occurred while exporting " + file.getName(),
                         "Please try again",
                         new ButtonType[]{retry, new ButtonType("Back", ButtonBar.ButtonData.CANCEL_CLOSE)});
             }
@@ -144,9 +176,22 @@ public class MainPaneController extends MainController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == retry) {
                 export();
-            } else {
-                alert.close();
             }
+        }
+    }
+
+    private void reset() {
+        ButtonType reset = new ButtonType("Reset", ButtonBar.ButtonData.YES);
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert alert = createPopUp("Reset", "You are about to reset: " + _currentName.toString(),
+                "Doing this clears all items and payments and cannot be undone",
+                new ButtonType[]{reset, cancel});
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == reset) {
+            _currentName.reset();
         }
     }
 
@@ -176,12 +221,12 @@ public class MainPaneController extends MainController {
         if (_currentName.getNetDebt() == 0) {
             setStyle("You and " + _currentName + "are even", GREEN, GREEN_PROGRESS_STYLE);
             owingProgress.setProgress(1);
-            amountLabel.setVisible(false);
         } else if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
         } else {
             setStyle(_currentName + "owes you:", GREEN, GREEN_PROGRESS_STYLE);
         }
+        amountLabel.setVisible(_currentName.getNetDebt() != 0);
     }
 
     private void setStyle(String text, String colour, String progressColour) {

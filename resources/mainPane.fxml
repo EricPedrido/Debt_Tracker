@@ -44,7 +44,12 @@
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <Button fx:id="export" layoutX="305.0" layoutY="364.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
+   <Button fx:id="export" layoutX="256.0" layoutY="367.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Button>
+   <Button fx:id="reset" layoutX="356.0" layoutY="367.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Reset" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
