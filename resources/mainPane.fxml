@@ -8,8 +8,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="604.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
-    <Text fx:id="nameLabel" fill="#515151" layoutX="14.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XXX owes you:" textAlignment="CENTER" wrappingWidth="646.630859375">
+<AnchorPane prefHeight="604.0" prefWidth="674.0" style="-fx-background-color: #515151;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
+    <Text fx:id="nameLabel" fill="#eeeeee" layoutX="14.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XXX owes you:" textAlignment="CENTER" wrappingWidth="646.630859375">
         <font>
           <Font name="System Bold" size="37.0" />
         </font>
@@ -25,7 +25,7 @@
           <Font name="System Bold" size="18.0" />
         </font>
     </Button>
-    <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0">
+    <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0" style="-fx-base: #414141;">
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="detailsColumn" onEditCommit="#editDetails" prefWidth="511.0" text="Details" />
@@ -44,7 +44,7 @@
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <Button fx:id="export" layoutX="305.0" layoutY="364.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #515151;" text="Export" textFill="WHITE">
+   <Button fx:id="export" layoutX="305.0" layoutY="364.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>

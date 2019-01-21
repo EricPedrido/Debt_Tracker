@@ -77,9 +77,9 @@ public class AddPaymentController extends MainPaneController {
         double amount = new Double(new DecimalFormat("#.##").format(net));
 
         if (amount < 0.0) {
-            remainingText.setFill(Color.valueOf("#520000"));
+            remainingText.setFill(Color.RED);
         } else {
-            remainingText.setFill(Color.valueOf("#155400"));
+            remainingText.setFill(Color.valueOf("#14ab00"));
         }
         remainingText.setText("$" + DebtElement.convertPriceToText(amount));
     }

@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="600.0" style="-fx-background-color: #515151;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentController">
     <children>
-        <Text fill="#515151" layoutX="-23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Payment" textAlignment="CENTER" wrappingWidth="646.630859375">
+        <Text fill="#eeeeee" layoutX="-23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Payment" textAlignment="CENTER" wrappingWidth="646.630859375">
             <font>
                 <Font name="System Bold" size="37.0" />
             </font>
@@ -30,9 +30,9 @@
                 <Font name="System Bold" size="28.0" />
             </font>
         </Text>
-        <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" style="-fx-colour: #14ab00;" />
-        <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" />
-        <Text fill="#4a4a4a" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt:">
+        <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" style="-fx-base: #515151;" />
+        <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" style="-fx-base: #515151;" />
+        <Text fill="#eeeeee" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt:">
             <font>
                 <Font size="19.0" />
             </font>
@@ -52,11 +52,11 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="remainingText" fill="#0c5b00" layoutX="355.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX">
+      <Text fx:id="remainingText" fill="#14ab00" layoutX="355.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <TextField fx:id="amountText" layoutX="213.0" layoutY="199.0" prefHeight="25.0" prefWidth="207.0" promptText="e.g &quot;25.99&quot;" />
+      <TextField fx:id="amountText" layoutX="213.0" layoutY="199.0" prefHeight="25.0" prefWidth="207.0" promptText="e.g &quot;25.99&quot;" style="-fx-base: #515151;" />
     </children>
 </AnchorPane>

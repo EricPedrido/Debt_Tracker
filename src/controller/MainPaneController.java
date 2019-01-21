@@ -173,12 +173,12 @@ public class MainPaneController extends MainController {
         amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
         owingProgress.setProgress(payments / debt);
 
-        if (_currentName.isInDebt()) {
-            setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
-        } else if (_currentName.getNetDebt() == 0.0) {
+        if (_currentName.getNetDebt() == 0) {
             setStyle("You and " + _currentName + "are even", GREEN, GREEN_PROGRESS_STYLE);
             owingProgress.setProgress(1);
             amountLabel.setVisible(false);
+        } else if (_currentName.isInDebt()) {
+            setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
         } else {
             setStyle(_currentName + "owes you:", GREEN, GREEN_PROGRESS_STYLE);
         }
