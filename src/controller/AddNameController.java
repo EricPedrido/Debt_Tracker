@@ -112,12 +112,14 @@ public class AddNameController extends MainController {
 
         itemPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!(newValue.matches("[0-9]*[.][0-9]{0,2}") || newValue.matches("[0-9]*"))) {
+
                 // Ignore the input if it does not match price format.
                 if (itemPrice.getText().isEmpty()) {
                     itemPrice.setText("");
                 } else {
                     itemPrice.setText(itemPrice.getText().substring(0, itemPrice.getText().length() - 1));
                 }
+                add.setDisable(itemPrice.getText().equals(""));
             }
         });
     }
