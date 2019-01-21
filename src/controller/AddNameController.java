@@ -65,10 +65,17 @@ public class AddNameController extends MainController {
                 if (!newValue.equals("")) {
                     // Disable and show text if the name already exists.
                     boolean disable = containsText(newValue, allNames) || containsText(newValue + " ", allNames);
-                    add.setDisable(disable);
-                    personExists.setVisible(disable);
-                    if (disable) {
+                    boolean maxLength = newValue.length() > 40;
+
+                    add.setDisable(disable || maxLength);
+                    personExists.setVisible(disable || maxLength);
+                    if (disable || maxLength) {
                         name.setStyle(REQUIRED_STYLE);
+                        if (maxLength) {
+                            personExists.setText("*Character limit has been met!");
+                        } else {
+                            personExists.setText("*This person already exists!");
+                        }
                     } else {
                         name.setStyle(DEFAULT_STYLE);
                     }

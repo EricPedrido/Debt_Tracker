@@ -35,6 +35,8 @@ public class MainPaneController extends MainController {
     public TableColumn<Payment, String> detailsColumn;
     @FXML
     public TableColumn<Payment, String> amountColumn;
+    @FXML
+    public Label label;
 
     protected Name _currentName;
     private Payment _selected;
@@ -230,7 +232,7 @@ public class MainPaneController extends MainController {
     }
 
     private void setStyle(String text, String colour, String progressColour) {
-        nameLabel.setText(text);
+        label.setText(text);
         amountLabel.setFill(Color.valueOf(colour));
         owingProgress.setStyle(progressColour);
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -9,18 +10,13 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="604.0" prefWidth="674.0" style="-fx-background-color: #515151;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
-    <Text fx:id="nameLabel" fill="#eeeeee" layoutX="14.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XXX owes you:" textAlignment="CENTER" wrappingWidth="646.630859375">
-        <font>
-          <Font name="System Bold" size="37.0" />
-        </font>
-    </Text>
-    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="87.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" style="-fx-accent: #14ab00;" />
-    <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
+    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="101.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" style="-fx-accent: #14ab00;" />
+    <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
         <font>
           <Font name="System Bold" size="35.0" />
         </font>
     </Text>
-    <Button fx:id="addPayment" layoutX="236.0" layoutY="313.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
+    <Button fx:id="addPayment" layoutX="236.0" layoutY="327.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
         <font>
           <Font name="System Bold" size="18.0" />
         </font>
@@ -44,14 +40,19 @@
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <Button fx:id="export" layoutX="256.0" layoutY="367.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
+   <Button fx:id="export" layoutX="256.0" layoutY="381.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
-   <Button fx:id="reset" layoutX="356.0" layoutY="367.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Reset" textFill="#515151">
+   <Button fx:id="reset" layoutX="356.0" layoutY="381.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Reset" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
+   <Label fx:id="label" alignment="CENTER" contentDisplay="TOP" layoutX="1.0" prefHeight="108.0" prefWidth="674.0" text="MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" textAlignment="CENTER" textFill="#eeeeee" wrapText="true">
+      <font>
+         <Font name="System Bold" size="37.0" />
+      </font>
+   </Label>
 </AnchorPane>
