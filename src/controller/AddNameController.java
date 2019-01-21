@@ -105,7 +105,6 @@ public class AddNameController extends MainController {
                 itemList.setDisable(true);
 
                 _items.remove(getInstance()._itemRequested);
-
                 addItem.setText("Confirm");
             }
         }
@@ -190,8 +189,6 @@ public class AddNameController extends MainController {
         boolean emptyItemName = itemName.getText().isEmpty();
         boolean emptyItemPrice = itemPrice.getText().isEmpty();
 
-
-
         if (emptyItemName || emptyItemPrice) {
             itemNameEmpty.setVisible(emptyItemName);
             priceEmpty.setVisible(emptyItemPrice);
@@ -213,7 +210,6 @@ public class AddNameController extends MainController {
             if (getInstance()._editRequested) {
                 item = getInstance()._selectedName.editItem(getInstance()._itemRequested, nameOfItem, priceOfItem);
                 _items.add(item);
-
                 done();
             } else {
                 item = new Item(LocalDate.now(), nameOfItem, priceOfItem);
@@ -251,6 +247,10 @@ public class AddNameController extends MainController {
 
                 nameToAdd.updateItems();
                 nameToAdd.updatePayments();
+
+                if (MainPaneController.getPaneInstance() != null) {
+                    MainPaneController.getPaneInstance().updatePayments();
+                }
             } else {
                 nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
 

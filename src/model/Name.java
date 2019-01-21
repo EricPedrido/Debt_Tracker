@@ -134,8 +134,6 @@ public class Name {
         item.setField(price);
         addItem(item);
 
-        MainController.getInstance().updateItems(_items);
-
         return item;
     }
 
@@ -185,10 +183,6 @@ public class Name {
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
             MainController.getInstance().updateItems(_items);
-
-            if (MainPaneController.getPaneInstance() != null) {
-                MainPaneController.getPaneInstance().updatePayments();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,6 +194,9 @@ public class Name {
 
     public void updatePayments() {
         updateItems(_payments);
+        if (MainPaneController.getPaneInstance() != null) {
+            MainPaneController.getPaneInstance().updatePayments();
+        }
     }
 
     /**
