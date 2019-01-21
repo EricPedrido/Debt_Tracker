@@ -42,8 +42,15 @@ public class Name {
         _path = Paths.get("data/" + prefix + _name + ".txt");
     }
 
-    public void exportTo(String newPath) throws IOException{
-        Files.copy(_path, Paths.get(newPath));
+    public void exportTo(String pathText) throws IOException{
+        Path newPath = Paths.get(pathText);
+        Files.copy(_path, newPath);
+
+        List<String> fileContents = new ArrayList<>(Files.readAllLines(newPath));
+        fileContents.add("");
+        fileContents.add("Total: $" + DebtElement.convertPriceToText(getNetDebt()));
+
+        Files.write(newPath, fileContents, StandardCharsets.UTF_8);
     }
 
     public void reset() {
