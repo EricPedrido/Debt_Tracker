@@ -22,13 +22,16 @@ import java.util.ResourceBundle;
  * @author Eric Pedrido
  */
 public class MainController extends Controller {
-    @FXML public ListView<CustomListCell> peopleList, itemList;
-    @FXML public TextField search;
-    @FXML public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
-    @FXML public Text peopleEmpty, itemEmpty, selectPerson;
+    @FXML
+    public ListView<CustomListCell> peopleList, itemList;
+    @FXML
+    public TextField search;
+    @FXML
+    public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
+    @FXML
+    public Text peopleEmpty, itemEmpty, selectPerson;
 
     private List<String> _names;
-    private boolean _first;
 
     protected boolean _personRequested;
     protected boolean _editRequested;
@@ -43,7 +46,6 @@ public class MainController extends Controller {
     public void initialize(URL location, ResourceBundle resources) {
         INSTANCE = this;
         _names = NAMES.getNames();
-        _first = true;
         updatePeople();
     }
 
@@ -126,6 +128,18 @@ public class MainController extends Controller {
         setSearch(filteredList);
     }
 
+    private void setSearch(FilteredList<CustomListCell> filteredList) {
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(customListCell -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                return customListCell.toString().toUpperCase().contains(newValue.toUpperCase());
+            });
+            peopleList.setItems(filteredList);
+        });
+    }
+
     private void setItemList(List<CustomListCell> list) {
         ObservableList<CustomListCell> items = FXCollections.observableArrayList(list);
 
@@ -133,32 +147,18 @@ public class MainController extends Controller {
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-    private void setSearch(FilteredList<CustomListCell> filteredList) {
-        if (_first) {
-            search.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredList.setPredicate(customListCell -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    return customListCell.toString().toUpperCase().contains(newValue.toUpperCase());
-                });
-                peopleList.setItems(filteredList);
-            });
-            _first = false;
-        }
-    }
 
     public void edit(CustomListCell item) {
         _personRequested = !item.toString().contains("$") || itemList.getItems().isEmpty();
-       _editRequested = true;
+        _editRequested = true;
 
-       if (_personRequested) {
-           _nameRequested = item.toString();
-       } else {
-           _itemRequested = getInstance()._selectedName.findItem(item.toString());
+        if (_personRequested) {
+            _nameRequested = item.toString();
+        } else {
+            _itemRequested = getInstance()._selectedName.findItem(item.toString());
 
-       }
-       startingText.setVisible(false);
+        }
+        startingText.setVisible(false);
 
         loadPane(SubPane.ADD_NAME);
     }
@@ -170,19 +170,19 @@ public class MainController extends Controller {
         Alert alert = createPopUp("Delete",
                 "You are about to delete: " + item.toString(),
                 "All records will be deleted. This cannot be undone.",
-                new ButtonType[] {yes, no});
+                new ButtonType[]{yes, no});
 
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == yes) {
             // If it is an Item
-           if (item.toString().contains("$") && !itemList.getItems().isEmpty()) {
-               deleteItem(item);
-               MainPaneController.getPaneInstance().updateRemainingDebt();
-           } else { // It is a Name
-               deleteName(item);
-               clearPane();
-           }
+            if (item.toString().contains("$") && !itemList.getItems().isEmpty()) {
+                deleteItem(item);
+                MainPaneController.getPaneInstance().updateRemainingDebt();
+            } else { // It is a Name
+                deleteName(item);
+                clearPane();
+            }
         }
     }
 
