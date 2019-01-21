@@ -149,7 +149,10 @@ public class Name {
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
 
             MainController.getInstance().updateItems(_items);
-            MainPaneController.getPaneInstance().updatePayments();
+
+            if (MainPaneController.getPaneInstance() != null) {
+                MainPaneController.getPaneInstance().updatePayments();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -186,6 +189,11 @@ public class Name {
 
     public void setItems(List<Item> items) {
         _items = items;
+    }
+
+    public void setItems(List<Item> items, List<Payment> payments) {
+        setItems(items);
+        _payments = payments;
     }
 
     public List<Item> getItems() {

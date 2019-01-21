@@ -15,6 +15,7 @@ public class CustomListCell extends HBox {
     private Label _label = new Label();
     private String _text;
     private final Button _deleteButton = new Button("❌");
+    private final Button _editButton = new Button("✏");
 
     public CustomListCell(String labelText) {
         super();
@@ -25,27 +26,36 @@ public class CustomListCell extends HBox {
         _label.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(_label, Priority.ALWAYS);
 
-        setupButton();
+        setupButtons();
 
-        this.getChildren().addAll(_label, _deleteButton);
+        this.getChildren().addAll(_label, _deleteButton, _editButton);
     }
 
-    private void setupButton() {
+    private void setupButtons() {
         CustomListCell item = this;
 
-        setButton();
-        _deleteButton.setOnMouseEntered(event -> setButton(Color.WHITE, "red"));
-        _deleteButton.setOnMouseExited(event -> setButton());
+        setDeleteButtonStyle(Color.RED, "transparent");
+        _deleteButton.setOnMouseEntered(event -> setDeleteButtonStyle(Color.WHITE, "red"));
+        _deleteButton.setOnMouseExited(event -> setDeleteButtonStyle(Color.RED, "transparent"));
         _deleteButton.setOnAction(event -> MainController.getInstance().delete(item));
+
+        defaultEditButton(Color.GRAY, "transparent");
+        _editButton.setOnMouseEntered(event -> defaultEditButton(Color.WHITE, "yellow"));
+        _editButton.setOnMouseExited(event -> defaultEditButton(Color.GRAY, "transparent"));
+        _editButton.setOnAction(event -> MainController.getInstance().edit(item));
     }
 
-    private void setButton() {
-        setButton(Color.RED, "transparent");
+    private void setDeleteButtonStyle(Paint color, String background) {
+        setButtonStyle(_deleteButton, color, background);
     }
 
-    private void setButton(Paint color, String background) {
-        _deleteButton.setTextFill(color);
-        _deleteButton.setStyle("-fx-background-color: " + background);
+    private void defaultEditButton(Paint color, String background) {
+        setButtonStyle(_editButton, color, background);
+    }
+
+    private void setButtonStyle(Button button, Paint color, String background) {
+        button.setTextFill(color);
+        button.setStyle("-fx-background-color: " + background);
     }
 
     public static <T> List<CustomListCell> convertToCustomList(List<T> list) {

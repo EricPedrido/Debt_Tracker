@@ -22,12 +22,18 @@ import java.util.ResourceBundle;
  * @author Eric Pedrido
  */
 public class AddNameController extends MainController {
-    @FXML public TextField name, itemName, itemPrice;
-    @FXML public Button add, cancel, addItem, delete;
-    @FXML public ListView<String> itemList;
-    @FXML public Text personExists, itemNameEmpty, priceEmpty;
-    @FXML public RadioButton oweMe, oweThem;
-    @FXML public ToggleGroup owing;
+    @FXML
+    public TextField name, itemName, itemPrice;
+    @FXML
+    public Button add, cancel, addItem, delete;
+    @FXML
+    public ListView<String> itemList;
+    @FXML
+    public Text itemText, personExists, itemNameEmpty, priceEmpty;
+    @FXML
+    public RadioButton oweMe, oweThem;
+    @FXML
+    public ToggleGroup owing;
 
     private String _selected;
     private List<Item> _items;
@@ -38,9 +44,22 @@ public class AddNameController extends MainController {
 
         _items = new ArrayList<>();
         itemList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        boolean edit = getInstance()._editRequested;
 
-        if (getInstance()._addName) {
+        if (getInstance()._personRequested) {
             List<String> allNames = NAMES.getNames();
+
+            if (edit) {
+                name.setText(getInstance()._nameRequested);
+            }
+
+            itemName.setDisable(edit);
+            itemPrice.setDisable(edit);
+            addItem.setDisable(edit);
+            itemList.setDisable(edit);
+            oweMe.setVisible(!edit);
+            oweThem.setVisible(!edit);
+            itemText.setOpacity(0.5);
 
             name.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.equals("")) {
@@ -122,7 +141,7 @@ public class AddNameController extends MainController {
         delete.setDisable(true);
         itemName.requestFocus();
 
-        if (!getInstance()._addName && itemList.getItems().isEmpty()) {
+        if (!getInstance()._personRequested && itemList.getItems().isEmpty()) {
             add.setDisable(true);
         }
     }
@@ -166,7 +185,7 @@ public class AddNameController extends MainController {
             itemPrice.setText("");
             itemName.requestFocus();
 
-            if (!getInstance()._addName) {
+            if (!getInstance()._personRequested) {
                 add.setDisable(false);
             }
         }
@@ -174,13 +193,31 @@ public class AddNameController extends MainController {
 
     private void done() {
         Name nameToAdd;
-        if (getInstance()._addName) {
-            nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
+        if (getInstance()._personRequested) {
+            if (getInstance()._editRequested) {
+                Name originalName = NAMES.findName(getInstance()._nameRequested);
 
-            for (Item item : _items) {
-                nameToAdd.addItem(item);
+                nameToAdd = NAMES.addName(name.getText(), originalName.isInDebt());
+                nameToAdd.setItems(originalName.getItems(), originalName.getPayments());
+
+
+                NAMES.removeName(getInstance()._nameRequested);
+                getInstance().updateNames(NAMES.getNames());
+
+                getInstance().peopleList.getSelectionModel().selectLast();
+                getInstance()._selectedName = nameToAdd;
+                getInstance().loadPane(SubPane.MAIN);
+
+                nameToAdd.updateItems();
+                nameToAdd.updatePayments();
+            } else {
+                nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
+
+                for (Item item : _items) {
+                    nameToAdd.addItem(item);
+                }
+                getInstance().clearPane();
             }
-            getInstance().clearPane();
         } else {
             nameToAdd = NAMES.findName(name.getText());
 

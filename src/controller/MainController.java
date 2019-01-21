@@ -33,7 +33,9 @@ public class MainController extends Controller {
     private List<String> _names;
     private boolean _first;
 
-    protected boolean _addName;
+    protected boolean _personRequested;
+    protected boolean _editRequested;
+    protected String _nameRequested;
     protected Name _selectedName;
 
     private static MainController INSTANCE;
@@ -53,7 +55,8 @@ public class MainController extends Controller {
     @FXML
     public void addPeople(ActionEvent actionEvent) {
         startingText.setVisible(false);
-        _addName = true;
+        _personRequested = true;
+        _editRequested = false;
         loadPane(SubPane.ADD_NAME);
     }
 
@@ -80,7 +83,8 @@ public class MainController extends Controller {
     @FXML
     public void addItem(ActionEvent actionEvent) {
         startingText.setVisible(false);
-        _addName = false;
+        _personRequested = false;
+        _editRequested = false;
         loadPane(SubPane.ADD_NAME);
     }
 
@@ -144,6 +148,15 @@ public class MainController extends Controller {
             });
             _first = false;
         }
+    }
+
+    public void edit(CustomListCell item) {
+        _personRequested = !item.toString().contains("$") || itemList.getItems().isEmpty();
+       _editRequested = true;
+       _nameRequested = item.toString();
+       selectPerson.setVisible(false);
+
+        loadPane(SubPane.ADD_NAME);
     }
 
     public void delete(CustomListCell item) {

@@ -47,8 +47,6 @@ public class Names {
         }
     }
 
-
-
     public Name addName(String name, boolean inDebt) {
         String capitalName = capitalize(name);
         Name finalName = new Name(capitalName, inDebt);
