@@ -25,12 +25,15 @@
           <Font name="System Bold" size="18.0" />
         </font>
     </Button>
-    <TableView fx:id="paymentTable" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0">
+    <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0">
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
-          <TableColumn fx:id="detailsColumn" editable="false" prefWidth="511.0" text="Details" />
-          <TableColumn fx:id="amountColumn" editable="false" minWidth="0.0" prefWidth="87.0" text="Amount" />
+          <TableColumn fx:id="detailsColumn" onEditCommit="#editDetails" prefWidth="511.0" text="Details" />
+          <TableColumn fx:id="amountColumn" onEditCommit="#editAmount" minWidth="0.0" prefWidth="87.0" text="Amount" />
         </columns>
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
     </TableView>
     <Text fill="#515151" layoutX="262.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment History">
         <font>

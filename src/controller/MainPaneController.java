@@ -4,9 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import model.AmountTableCell;
 import model.DebtElement;
 import model.Name;
 import model.Payment;
@@ -40,12 +42,15 @@ public class MainPaneController extends MainController {
         _currentName = getInstance()._selectedName;
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        detailsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         detailsColumn.setCellValueFactory(new PropertyValueFactory<>("details"));
+
+        amountColumn.setCellFactory((TableColumn<Payment, String> p) -> new AmountTableCell());
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         paymentTable.getColumns().clear();
         paymentTable.getColumns().addAll(dateColumn, detailsColumn, amountColumn);
-
         paymentTable.setPlaceholder(new Label("No payments"));
 
         updatePayments();
@@ -61,6 +66,16 @@ public class MainPaneController extends MainController {
     public void tableClicked(MouseEvent mouseEvent) {
         _selected = paymentTable.getSelectionModel().getSelectedItem();
         delete.setDisable(_selected == null);
+    }
+
+    @FXML
+    public void editDetails(TableColumn.CellEditEvent<Payment,String> paymentStringCellEditEvent) {
+        _currentName.editPayment(_selected, paymentStringCellEditEvent.getNewValue());
+    }
+
+    @FXML
+    public void editAmount(TableColumn.CellEditEvent<Payment,String> paymentStringCellEditEvent) {
+        _currentName.editPayment(_selected, Double.parseDouble(paymentStringCellEditEvent.getNewValue()));
     }
 
     @FXML
@@ -87,6 +102,7 @@ public class MainPaneController extends MainController {
     private void delete(Payment payment) {
         paymentTable.getItems().remove(payment);
         _currentName.removePayment(payment);
+        updateRemainingDebt();
     }
 
     public void updatePayments() {

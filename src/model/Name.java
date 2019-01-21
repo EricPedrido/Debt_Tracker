@@ -63,26 +63,14 @@ public class Name {
                 new DecimalFormat("#.##").format(getDebtAmount() - getPaymentsAmount()));
     }
 
-    private void writeItem(Item item) {
-        String itemName = "\n" + item.toString();
-
-        try {
-            Files.write(_path, itemName.getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        MainController.getInstance().updateItems(_items);
-    }
-
     public void addItem(Item item) {
-        writeItem(item);
         _items.add(item);
+        updateItems(_items);
     }
 
     public void addPayment(Payment payment) {
-        writeItem(payment);
         _payments.add(payment);
+        updateItems(_payments);
     }
 
     private void removeItem(Item item, String text, List<? extends Item> list) {
@@ -107,7 +95,12 @@ public class Name {
 
     public void removePayment(Payment payment) {
         removeItem(payment, payment.toString(), _payments);
-        MainPaneController.getPaneInstance().updateRemainingDebt();
+    }
+
+    public <T> void editPayment(Payment payment, T newField) {
+        removePayment(payment);
+        payment.setField(newField);
+        addPayment(payment);
     }
 
     private Item findItem(String itemText, List<? extends Item> list) {
@@ -154,6 +147,7 @@ public class Name {
             }
 
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
+
             MainController.getInstance().updateItems(_items);
             MainPaneController.getPaneInstance().updatePayments();
         } catch (IOException e) {
@@ -218,21 +212,13 @@ public class Name {
                 _path = Paths.get("data/" + prefix + _name + ".txt");
                 Files.createFile(_path);
 
-                reloadFile();
+                String text = _name + "\n";
+                Files.write(_path, text.getBytes(), StandardOpenOption.APPEND);
+
+                switchDebtStatus();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void reloadFile() {
-        try {
-            String text = _name + "\n";
-            Files.write(_path, text.getBytes(), StandardOpenOption.APPEND);
-
-            switchDebtStatus();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -253,7 +239,6 @@ public class Name {
 
         updateItems();
         updatePayments();
-
     }
 
     public boolean isInDebt() {

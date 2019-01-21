@@ -27,6 +27,15 @@ public class Payment extends Item {
         return DebtElement.convertPriceToText(_price);
     }
 
+    public <T> void setField(T fieldValue) {
+        if (fieldValue instanceof String) {
+            _details = (String) fieldValue;
+        } else {
+            _price = (Double) fieldValue;
+        }
+        _displayableName = convertToDisplayable();
+    }
+
     static String getIdentifier() {
         return IDENTIFIER;
     }
