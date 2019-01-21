@@ -28,6 +28,8 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Debt Tracker");
+            primaryStage.setWidth(1280);
+            primaryStage.setHeight(720);
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {

@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public abstract class Controller implements Initializable {
     @FXML public Pane subPane;
@@ -42,6 +43,10 @@ public abstract class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean containsText(String text, List<String> list){
+        return list.stream().anyMatch(x -> x.equalsIgnoreCase(text));
     }
 
     /**

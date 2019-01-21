@@ -49,17 +49,17 @@
          <Font name="System Bold" size="24.0" />
       </font>
    </Text>
-   <Text fx:id="personExists" fill="RED" layoutX="156.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
+   <Text fx:id="personExists" fill="WHITE" layoutX="156.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text fx:id="itemNameEmpty" fill="RED" layoutX="156.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="277.9999980032444">
+   <Text fx:id="itemNameEmpty" fill="WHITE" layoutX="156.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="277.9999980032444">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text fx:id="priceEmpty" fill="RED" layoutX="434.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="188.9999980032444">
+   <Text fx:id="priceEmpty" fill="WHITE" layoutX="434.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="188.9999980032444">
       <font>
          <Font size="14.0" />
       </font>

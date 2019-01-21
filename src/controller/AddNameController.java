@@ -39,6 +39,9 @@ public class AddNameController extends MainController {
     private String _selected;
     private List<Item> _items;
 
+    private final static String DEFAULT_STYLE = "-fx-background-radius: 0; -fx-base: #515151";
+    private final static String REQUIRED_STYLE = "-fx-background-radius: 0; -fx-base: RED";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getInstance().clearItemList(getInstance()._personRequested);
@@ -61,9 +64,14 @@ public class AddNameController extends MainController {
             name.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.equals("")) {
                     // Disable and show text if the name already exists.
-                    boolean disable = allNames.contains(newValue);
+                    boolean disable = containsText(newValue, allNames) || containsText(newValue + " ", allNames);
                     add.setDisable(disable);
                     personExists.setVisible(disable);
+                    if (disable) {
+                        name.setStyle(REQUIRED_STYLE);
+                    } else {
+                        name.setStyle(DEFAULT_STYLE);
+                    }
                 } else {
                     add.setDisable(true);
                 }
@@ -180,12 +188,20 @@ public class AddNameController extends MainController {
         boolean emptyItemName = itemName.getText().isEmpty();
         boolean emptyItemPrice = itemPrice.getText().isEmpty();
 
+
+
         if (emptyItemName || emptyItemPrice) {
             itemNameEmpty.setVisible(emptyItemName);
             priceEmpty.setVisible(emptyItemPrice);
+
+            if (emptyItemName) itemName.setStyle(REQUIRED_STYLE);
+            if (emptyItemPrice) itemPrice.setStyle(REQUIRED_STYLE);
         } else {
             itemNameEmpty.setVisible(false);
             priceEmpty.setVisible(false);
+
+            itemName.setStyle(DEFAULT_STYLE);
+            itemPrice.setStyle(DEFAULT_STYLE);
 
             String nameOfItem = itemName.getText();
             double priceOfItem = Double.parseDouble(itemPrice.getText());
