@@ -210,7 +210,7 @@ public class MainPaneController extends MainController {
         updateRemainingDebt();
     }
 
-    public void updateRemainingDebt() {         //TODO bug where debt switch does not update itemList
+    public void updateRemainingDebt() {
         getInstance().updateItems(_currentName.updateDebtStatus());
 
         double debt = _currentName.getDebtAmount();
