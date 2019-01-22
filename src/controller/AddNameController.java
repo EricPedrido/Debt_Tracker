@@ -62,7 +62,9 @@ public class AddNameController extends MainController {
             itemText.setOpacity(0.5);
 
             name.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.equals("")) {
+                if (newValue.equals("")) {
+                    add.setDisable(true);
+                } else {
                     // Disable and show text if the name already exists.
                     boolean disable = containsText(newValue, allNames) || containsText(newValue + " ", allNames);
                     boolean maxLength = newValue.length() > 40;
@@ -79,8 +81,6 @@ public class AddNameController extends MainController {
                     } else {
                         name.setStyle(DEFAULT_STYLE);
                     }
-                } else {
-                    add.setDisable(true);
                 }
             });
 
@@ -124,7 +124,7 @@ public class AddNameController extends MainController {
                 } else {
                     itemPrice.setText(itemPrice.getText().substring(0, itemPrice.getText().length() - 1));
                 }
-            } else if (newValue.equals("")){
+            } else if (newValue.equals("")) {
                 add.setDisable(true);
             } else {
                 add.setDisable(false);
@@ -230,55 +230,61 @@ public class AddNameController extends MainController {
                 itemPrice.setText("");
                 itemName.requestFocus();
 
-                if (!getInstance()._personRequested) {
-                    add.setDisable(false);
-                }
+                add.setDisable(false);
             }
         }
     }
 
     private void done() {
         Name nameToAdd;
-        if (getInstance()._personRequested) {
-            if (getInstance()._editRequested) {
-                Name originalName = NAMES.findName(getInstance()._nameRequested);
 
-                nameToAdd = NAMES.addName(name.getText(), originalName.isInDebt());
-                nameToAdd.setItems(originalName.getItems(), originalName.getPayments());
+        if (name.getText().isEmpty()) {
+            name.setStyle(REQUIRED_STYLE);
+            personExists.setVisible(true);
+            personExists.setText("*Required");
+        } else {
+            if (getInstance()._personRequested) {
+                if (getInstance()._editRequested) {
+                    Name originalName = NAMES.findName(getInstance()._nameRequested);
+
+                    nameToAdd = NAMES.addName(name.getText(), originalName.isInDebt());
+                    nameToAdd.setItems(originalName.getItems(), originalName.getPayments());
 
 
-                NAMES.removeName(getInstance()._nameRequested);
-                getInstance().updateNames(NAMES.getNames());
+                    NAMES.removeName(getInstance()._nameRequested);
+                    getInstance().updateNames(NAMES.getNames());
 
-                getInstance().peopleList.getSelectionModel().selectLast();
-                getInstance()._selectedName = nameToAdd;
-                getInstance().loadPane(SubPane.MAIN);
+                    getInstance().peopleList.getSelectionModel().selectLast();
+                    getInstance()._selectedName = nameToAdd;
+                    getInstance().loadPane(SubPane.MAIN);
 
-                nameToAdd.updateItems();
-                nameToAdd.updatePayments();
+                    nameToAdd.updateItems();
+                    nameToAdd.updatePayments();
 
-                if (MainPaneController.getPaneInstance() != null) {
-                    MainPaneController.getPaneInstance().updatePayments();
+                    if (MainPaneController.getPaneInstance() != null) {
+                        MainPaneController.getPaneInstance().updatePayments();
+                    }
+                } else {
+                    nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
+
+                    for (Item item : _items) {
+                        nameToAdd.addItem(item);
+                    }
+                    getInstance().clearPane();
+                    getInstance().clearItemList(true);
                 }
             } else {
-                nameToAdd = NAMES.addName(name.getText(), oweThem.isSelected());
+                nameToAdd = NAMES.findName(name.getText());
 
-                for (Item item : _items) {
-                    nameToAdd.addItem(item);
+                nameToAdd.setItems(_items);
+                nameToAdd.updateItems();
+
+                getInstance().updateItems(_items);
+                getInstance().selectPerson.setVisible(false);
+
+                if (getInstance()._selectedName != null) {
+                    getInstance().loadPane(SubPane.MAIN);
                 }
-                getInstance().clearPane();
-            }
-        } else {
-            nameToAdd = NAMES.findName(name.getText());
-
-            nameToAdd.setItems(_items);
-
-            nameToAdd.updateItems();
-            getInstance().updateItems(_items);
-            getInstance().selectPerson.setVisible(false);
-
-            if (getInstance()._selectedName != null) {
-                getInstance().loadPane(SubPane.MAIN);
             }
         }
     }

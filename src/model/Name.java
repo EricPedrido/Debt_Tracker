@@ -188,8 +188,6 @@ public class Name {
             }
 
             Files.write(_path, fileContents, StandardCharsets.UTF_8);
-
-            MainController.getInstance().updateItems(_items);
         } catch (IOException e) {
             e.printStackTrace();
         }
