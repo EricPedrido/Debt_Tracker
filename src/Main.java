@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class Main extends Application {
             primaryStage.setWidth(1280);
             primaryStage.setHeight(720);
             primaryStage.setResizable(false);
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Icon.png")));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
