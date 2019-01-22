@@ -242,7 +242,7 @@ public class Name {
         return _payments;
     }
 
-    public void updateDebtStatus() {
+    public List<Item> updateDebtStatus() {
         if (getNetDebt() < 0) {
             _inDebt = !_inDebt;
 
@@ -266,6 +266,7 @@ public class Name {
                 e.printStackTrace();
             }
         }
+        return _items;
     }
 
     private void switchDebtStatus() {
