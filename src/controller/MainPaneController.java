@@ -6,10 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import model.AmountTableCell;
+import model.listCell.AmountTableCell;
 import model.DebtElement;
 import model.Name;
 import model.Payment;
@@ -38,22 +37,47 @@ public class MainPaneController extends MainController {
     @FXML
     public Label label;
 
+//    private final static String GREY_BUTTON = "grey-button";
+//    private final static String RED_BUTTON = "red-button";
+//
+//    private final static String RED_PROGRESS_STYLE = "red-progress";
+//    private final static String RED_TEXT = "red-progress-text";
+//    private final static String RED_LABEL = "red-name-label";
+//
+//    private final static String DEFAULT_TEXT = "progress-text";
+//    private final static String DEFAULT_PROGRESS = "progress-indicator";
+//    private final static String DEFAULT_LABEL= "name-label";
+
     protected Name _currentName;
     private Payment _selected;
 
     private static MainPaneController INSTANCE;
 
-    private final static String RED = "#520000";
-    private final static String RED_PROGRESS_STYLE = "-fx-accent: #aa0000;";
-    private final static String RED_BUTTON = "-fx-background-radius: 0; -fx-base: #aa0000;";
+    private enum Styles{
+        RED("red-button", "red-progress", "red-progress-text", "red-name-label"),
+        GREY("grey-button"),
+        DEFAULT("progress-indicator", "progress-text","name-label");
 
-    private final static String GREEN = "#155400";
-    private final static String GREEN_PROGRESS_STYLE = "-fx-accent: #14ab00;";
-    private final static String GREEN_BUTTON = "-fx-background-radius: 0; -fx-base: #14ab00;";
+        String button;
+        String progress;
+        String text;
+        String label;
 
-    private final static String WHITE = "#eeeeee";
-    private final static String GRAY = "#515151";
-    private final static String DEFAULT_BUTTON = "-fx-background-radius: 0; -fx-base: #eeeeee;";
+        Styles(String button, String progress, String text, String label) {
+            this.button = button;
+            this.progress = progress;
+            this.text = text;
+            this.label = label;
+        }
+
+        Styles(String button) {
+            this(button, "", "", "");
+        }
+
+        Styles(String progress, String text, String label) {
+            this("", progress, text, label);
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,25 +96,11 @@ public class MainPaneController extends MainController {
         paymentTable.getColumns().addAll(dateColumn, detailsColumn, amountColumn);
         paymentTable.setPlaceholder(new Label("No payments"));
 
-        reset.setOnMouseEntered(event -> {
-            reset.setStyle(RED_BUTTON);
-            reset.setTextFill(Color.valueOf(WHITE));
-        });
+        reset.setOnMouseEntered(event -> reset.getStyleClass().add(Styles.RED.button));
+        reset.setOnMouseExited(event -> reset.getStyleClass().remove(Styles.RED.button));
 
-        reset.setOnMouseExited(event -> {
-            reset.setStyle(DEFAULT_BUTTON);
-            reset.setTextFill(Color.valueOf(GRAY));
-        });
-
-        export.setOnMouseEntered(event -> {
-            export.setStyle(GREEN_BUTTON);
-            export.setTextFill(Color.valueOf(WHITE));
-        });
-
-        export.setOnMouseExited(event -> {
-            export.setStyle(DEFAULT_BUTTON);
-            export.setTextFill(Color.valueOf(GRAY));
-        });
+        export.setOnMouseEntered(event -> export.getStyleClass().remove(Styles.GREY.button));
+        export.setOnMouseExited(event -> export.getStyleClass().add(Styles.GREY.button));
 
         updatePayments();
         updateRemainingDebt();
@@ -221,20 +231,22 @@ public class MainPaneController extends MainController {
         owingProgress.setProgress(payments / debt);
 
         if (_currentName.getNetDebt() == 0) {
-            setStyle("You and " + _currentName + "are even", GREEN, GREEN_PROGRESS_STYLE);
+            setStyle("You and " + _currentName + "are even", Styles.DEFAULT);
             owingProgress.setProgress(1);
         } else if (_currentName.isInDebt()) {
-            setStyle("You owe " + _currentName + ":", RED, RED_PROGRESS_STYLE);
+            setStyle("You owe " + _currentName + ":", Styles.RED);
         } else {
-            setStyle(_currentName + "owes you:", GREEN, GREEN_PROGRESS_STYLE);
+            setStyle(_currentName + "owes you:", Styles.DEFAULT);
         }
         amountLabel.setVisible(_currentName.getNetDebt() != 0);
     }
 
-    private void setStyle(String text, String colour, String progressColour) {
+    private void setStyle(String text, Styles style) {
         label.setText(text);
-        amountLabel.setFill(Color.valueOf(colour));
-        owingProgress.setStyle(progressColour);
+        label.getStyleClass().add(style.label);
+        amountLabel.getStyleClass().add(style.text);
+        owingProgress.getStyleClass().add(style.progress);
+        addPayment.getStyleClass().add(style.button);
     }
 
     public static MainPaneController getPaneInstance() {

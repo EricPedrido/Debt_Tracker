@@ -1,8 +1,9 @@
-package model;
+package model.listCell;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import model.Payment;
 
 public class AmountTableCell extends TableCell<Payment, String> {
 

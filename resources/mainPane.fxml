@@ -9,19 +9,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="604.0" prefWidth="674.0" style="-fx-background-color: #515151;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
-    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="101.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" style="-fx-accent: #14ab00;" />
-    <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
+<AnchorPane prefHeight="576.0" prefWidth="675.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
+    <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="101.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" />
+    <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="progress-text" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
         <font>
           <Font name="System Bold" size="35.0" />
         </font>
     </Text>
-    <Button fx:id="addPayment" layoutX="236.0" layoutY="327.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add new payment" textFill="WHITE">
+    <Button fx:id="addPayment" layoutX="236.0" layoutY="327.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" styleClass="payment-button" text="Add new payment" textFill="WHITE">
         <font>
           <Font name="System Bold" size="18.0" />
         </font>
     </Button>
-    <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="183.0" prefWidth="674.0" style="-fx-base: #414141;">
+    <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="155.0" prefWidth="674.0" styleClass="right-list-view">
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="detailsColumn" onEditCommit="#editDetails" prefWidth="511.0" text="Details" />
@@ -31,26 +31,26 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
     </TableView>
-    <Text fill="#515151" layoutX="262.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment History">
+    <Text fill="#515151" layoutX="6.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment History">
         <font>
           <Font name="System Bold" size="19.0" />
         </font>
     </Text>
-   <Button fx:id="delete" disable="true" layoutX="604.0" layoutY="393.0" mnemonicParsing="false" onAction="#delete" style="-fx-base: #aa0000; -fx-background-radius: 0;" text="Delete">
+   <Button fx:id="delete" disable="true" layoutX="604.0" layoutY="393.0" mnemonicParsing="false" onAction="#delete" styleClass="red-button" text="Delete">
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <Button fx:id="export" layoutX="256.0" layoutY="381.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Export" textFill="#515151">
+   <Button fx:id="export" layoutX="256.0" layoutY="381.0" mnemonicParsing="false" onAction="#export" prefHeight="25.0" prefWidth="63.0" styleClass="grey-button" text="Export" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
-   <Button fx:id="reset" layoutX="356.0" layoutY="381.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" style="-fx-background-radius: 0; -fx-base: #eeeeee;" text="Reset" textFill="#515151">
+   <Button fx:id="reset" layoutX="356.0" layoutY="381.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" styleClass="grey-button" text="Reset" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
-   <Label fx:id="label" alignment="CENTER" contentDisplay="TOP" layoutX="1.0" prefHeight="108.0" prefWidth="674.0" text="MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" textAlignment="CENTER" textFill="#eeeeee" wrapText="true">
+   <Label fx:id="label" alignment="CENTER" contentDisplay="TOP" layoutX="1.0" prefHeight="108.0" prefWidth="674.0" styleClass="name-label" text="MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" textAlignment="CENTER" textFill="#eeeeee" wrapText="true">
       <font>
          <Font name="System Bold" size="37.0" />
       </font>

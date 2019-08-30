@@ -8,41 +8,41 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="600.0" style="-fx-background-color: #515151;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="600.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentController">
     <children>
-        <Text fill="#eeeeee" layoutX="-23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Payment" textAlignment="CENTER" wrappingWidth="646.630859375">
+        <Text fill="#eeeeee" layoutX="-23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Add Payment" textAlignment="CENTER" wrappingWidth="646.630859375">
             <font>
                 <Font name="System Bold" size="37.0" />
             </font>
         </Text>
-        <Text fill="#14ab00" layoutX="126.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" textAlignment="CENTER" wrappingWidth="73.630859375">
+        <Text fill="#14ab00" layoutX="126.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Date:" textAlignment="CENTER" wrappingWidth="73.630859375">
             <font>
                 <Font name="System Bold" size="28.0" />
             </font>
         </Text>
-        <Text fill="#14ab00" layoutX="82.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" textAlignment="CENTER" wrappingWidth="117.630859375">
+        <Text fill="#14ab00" layoutX="82.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Amount:" textAlignment="CENTER" wrappingWidth="117.630859375">
             <font>
                 <Font name="System Bold" size="28.0" />
             </font>
         </Text>
-        <Text fill="#14ab00" layoutX="40.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="CENTER" wrappingWidth="162.630859375">
+        <Text fill="#14ab00" layoutX="40.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Description:" textAlignment="CENTER" wrappingWidth="162.630859375">
             <font>
                 <Font name="System Bold" size="28.0" />
             </font>
         </Text>
-        <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" style="-fx-base: #515151;" />
-        <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" style="-fx-base: #515151;" />
-        <Text fill="#eeeeee" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining debt:">
+        <DatePicker fx:id="datePicker" layoutX="213.0" layoutY="133.0" prefHeight="32.0" prefWidth="207.0" promptText="dd/mm/yyyy" />
+        <TextArea fx:id="descriptionText" layoutX="213.0" layoutY="288.0" prefHeight="77.0" prefWidth="207.0" promptText="e.g: &quot;Bank transfer&quot;" />
+        <Text fill="#eeeeee" layoutX="213.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="grey-text" text="Remaining debt:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Button fx:id="add" layoutX="133.0" layoutY="409.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Add" textFill="WHITE">
+        <Button fx:id="add" layoutX="133.0" layoutY="409.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" style="-fx-base: ;" text="Add" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="19.0" />
             </font>
         </Button>
-        <Button fx:id="cancel" layoutX="322.0" layoutY="409.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" style="-fx-background-radius: 0; -fx-base: #14ab00;" text="Cancel" textFill="WHITE">
+        <Button fx:id="cancel" layoutX="322.0" layoutY="409.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" style="-fx-base: ;" text="Cancel" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="19.0" />
             </font>
@@ -52,11 +52,11 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="remainingText" fill="#14ab00" layoutX="355.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXX.XX">
+      <Text fx:id="remainingText" fill="#14ab00" layoutX="355.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="\$XXX.XX">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <TextField fx:id="amountText" layoutX="213.0" layoutY="199.0" prefHeight="25.0" prefWidth="207.0" promptText="e.g &quot;25.99&quot;" style="-fx-base: #515151;" />
+      <TextField fx:id="amountText" layoutX="213.0" layoutY="199.0" prefHeight="25.0" prefWidth="207.0" promptText="e.g &quot;25.99&quot;" />
     </children>
 </AnchorPane>

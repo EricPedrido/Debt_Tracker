@@ -1,0 +1,79 @@
+.background-pane {
+    -fx-background-color: linear-gradient(from 40% 40% to 100% 100%, white, rgb(163, 163, 163));
+}
+
+.small-pane {
+    -fx-background-color: transparent;
+}
+
+.list-view {
+    -fx-base: #e2e2e2;
+}
+
+.right-list-view {
+    -fx-base: #9a9a9a;
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-base: #2f40ff;
+    -fx-text-fill: white;
+}
+
+.grey-text-button {
+    -fx-text-fill: #4c4c4c;
+    -fx-background-color: transparent;
+}
+
+.grey-button {
+    -fx-base: #4c4c4c;
+}
+
+.red-text-button {
+    -fx-text-fill: #aa0000;
+    -fx-background-color: transparent;
+}
+
+.payment-button {
+    -fx-base: #151bb0;
+}
+
+.red-button {
+    -fx-base: #aa0000;
+}
+
+.main-text {
+    -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #0234ff, #006fff);
+}
+
+.sub-text {
+    -fx-opacity: 0.8;
+}
+
+.grey-text {
+    -fx-fill: #4c4c4c;
+}
+
+.progress-text {
+    -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
+}
+
+.red-progress-text {
+    -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #740004, #3c0004);
+}
+
+.name-label {
+    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
+}
+
+.red-name-label {
+    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #740004, #3c0004);
+}
+
+.progress-indicator {
+    -fx-accent: linear-gradient(from 0% 0% to 0% 100%, #0031ff, #00c9ff);
+}
+
+.red-progress {
+    -fx-accent: linear-gradient(from 0% 0% to 0% 100%, #ff0001, #7b0001);
+}

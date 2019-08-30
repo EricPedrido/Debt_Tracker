@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.*;
+import model.listCell.CustomListCell;
 
 import java.net.URL;
 import java.util.ArrayList;
