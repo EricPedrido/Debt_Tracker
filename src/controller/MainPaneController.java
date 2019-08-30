@@ -54,9 +54,10 @@ public class MainPaneController extends MainController {
     private static MainPaneController INSTANCE;
 
     private enum Styles{
-        RED("red-button", "red-progress", "red-progress-text", "red-name-label"),
+        DEFAULT("button", "progress-indicator", "progress-text","name-label"),
         GREY("grey-button"),
-        DEFAULT("progress-indicator", "progress-text","name-label");
+        RED("red-button", "red-progress", "red-progress-text", "red-name-label"),
+        BLANK("");
 
         String button;
         String progress;
@@ -72,10 +73,6 @@ public class MainPaneController extends MainController {
 
         Styles(String button) {
             this(button, "", "", "");
-        }
-
-        Styles(String progress, String text, String label) {
-            this("", progress, text, label);
         }
     }
 
@@ -231,22 +228,26 @@ public class MainPaneController extends MainController {
         owingProgress.setProgress(payments / debt);
 
         if (_currentName.getNetDebt() == 0) {
-            setStyle("You and " + _currentName + "are even", Styles.DEFAULT);
+            setStyle("You and " + _currentName + "are even");
             owingProgress.setProgress(1);
         } else if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", Styles.RED);
         } else {
-            setStyle(_currentName + "owes you:", Styles.DEFAULT);
+            setStyle(_currentName + "owes you:");
         }
         amountLabel.setVisible(_currentName.getNetDebt() != 0);
     }
 
+    private void setStyle(String text) {
+        setStyle(text, Styles.BLANK);
+    }
+
     private void setStyle(String text, Styles style) {
         label.setText(text);
-        label.getStyleClass().add(style.label);
-        amountLabel.getStyleClass().add(style.text);
-        owingProgress.getStyleClass().add(style.progress);
-        addPayment.getStyleClass().add(style.button);
+        label.getStyleClass().setAll(Styles.DEFAULT.label, style.label);
+        amountLabel.getStyleClass().setAll(Styles.DEFAULT.text, style.text);
+        owingProgress.getStyleClass().setAll(Styles.DEFAULT.progress, style.progress);
+        addPayment.getStyleClass().setAll(Styles.DEFAULT.button, style.button);
     }
 
     public static MainPaneController getPaneInstance() {
