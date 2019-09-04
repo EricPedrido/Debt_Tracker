@@ -92,11 +92,16 @@
          <Font size="42.0" />
       </font>
    </Text>
-   <Pane fx:id="subPane" layoutX="303.0" layoutY="134.0" prefHeight="604.0" prefWidth="674.0" />
+   <Pane fx:id="subPane" layoutX="303.0" layoutY="134.0" prefHeight="587.0" prefWidth="674.0" />
+   <Label fx:id="backButton" layoutX="14.0" layoutY="9.0" onMouseClicked="#backToHome" prefHeight="37.0" prefWidth="204.0" text="⬅  Back to home" visible="false">
+      <styleClass>
+         <String fx:value="name-label" />
+         <String fx:value="back-label" />
+      </styleClass>
+   </Label>
    <Text fx:id="selectPerson" fill="#575757" layoutX="1055.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Person">
       <font>
          <Font size="22.0" />
       </font>
    </Text>
-   <Label layoutX="74.0" layoutY="19.0" styleClass="name-label" text="Label" />
 </AnchorPane>

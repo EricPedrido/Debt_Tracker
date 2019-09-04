@@ -31,6 +31,8 @@ public class MainController extends Controller {
     public Button addPeople, addPeopleEmpty, addItemEmpty, addItem;
     @FXML
     public Text peopleEmpty, itemEmpty, selectPerson;
+    @FXML
+    public Label backButton;
 
     private List<String> _names;
 
@@ -49,8 +51,21 @@ public class MainController extends Controller {
         _names = NAMES.getNames();
         updatePeople();
 
+        backButton.setOnMouseEntered(event -> backButton.getStyleClass().add("back-label-hovered"));
+        backButton.setOnMouseExited(event -> backButton.getStyleClass().remove("back-label-hovered"));
+
         setAddButtonHover(addPeople);
         setAddButtonHover(addItem);
+    }
+
+    @FXML
+    public void backToHome(MouseEvent mouseEvent) {
+        _selectedName = null;
+        peopleList.getSelectionModel().clearSelection();
+        subPane.getChildren().clear();
+        startingText.setVisible(true);
+        backButton.setVisible(false);
+        clearItemList(true);
     }
 
     /**
@@ -72,10 +87,12 @@ public class MainController extends Controller {
             addItem.setDisable(true);
             addItemEmpty.setDisable(true);
             selectPerson.setVisible(true);
+            backButton.setVisible(false);
         } else {
             addItem.setDisable(false);
             selectPerson.setVisible(false);
             startingText.setVisible(false);
+            backButton.setVisible(true);
 
             if (_selectedName == null || !selection.toString().equals(_selectedName.toString())) {
                 _selectedName = NAMES.findName(selection.toString());

@@ -92,6 +92,14 @@
     -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #740004, #3c0004);
 }
 
+.back-label {
+    -fx-font-size: 20px;
+}
+
+.back-label-hovered {
+    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #0234ff, #006fff);
+}
+
 .progress-indicator {
     -fx-accent: linear-gradient(from 0% 0% to 0% 100%, #0031ff, #00c9ff);
 }
