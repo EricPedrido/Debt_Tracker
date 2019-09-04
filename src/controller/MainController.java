@@ -48,6 +48,9 @@ public class MainController extends Controller {
         INSTANCE = this;
         _names = NAMES.getNames();
         updatePeople();
+
+        setAddButtonHover(addPeople);
+        setAddButtonHover(addItem);
     }
 
     /**
@@ -74,10 +77,12 @@ public class MainController extends Controller {
             selectPerson.setVisible(false);
             startingText.setVisible(false);
 
-            _selectedName = NAMES.findName(selection.toString());
-            updateItems(_selectedName.getItems());
+            if (_selectedName == null || !selection.toString().equals(_selectedName.toString())) {
+                _selectedName = NAMES.findName(selection.toString());
+                updateItems(_selectedName.getItems());
 
-            loadPane(SubPane.MAIN);
+                loadPane(SubPane.MAIN);
+            }
         }
     }
 
@@ -229,6 +234,11 @@ public class MainController extends Controller {
         addItem.setDisable(noName);
 
         setItemList(new ArrayList<>());
+    }
+
+    private void setAddButtonHover(Button button) {
+        button.setOnMouseEntered(event -> addPeople.getStyleClass().remove("add-button-exited"));
+        button.setOnMouseExited(event -> addPeople.getStyleClass().add("add-button-exited"));
     }
 
     public static MainController getInstance() {

@@ -30,10 +30,14 @@
          <String fx:value="sub-text" />
       </styleClass>
    </Text>
-   <Button fx:id="addPeople" layoutX="230.0" layoutY="86.0" mnemonicParsing="false" onAction="#addPeople" text="Add new" textFill="WHITE">
+   <Button fx:id="addPeople" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="260.0" layoutY="77.0" mnemonicParsing="false" onAction="#addPeople" prefHeight="43.0" prefWidth="42.0" text="+" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
+      <styleClass>
+         <String fx:value="add-button" />
+         <String fx:value="add-button-exited" />
+      </styleClass>
    </Button>
    <Text fx:id="peopleEmpty" fill="#575757" layoutX="68.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your list is empty">
       <font>
@@ -65,17 +69,21 @@
          <Font name="System Bold" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="addItem" disable="true" layoutX="977.0" layoutY="84.0" mnemonicParsing="false" onAction="#addItem" text="Add new" textFill="WHITE">
+   <Button fx:id="addItem" disable="true" layoutX="977.0" layoutY="75.0" mnemonicParsing="false" onAction="#addItem" text="+" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
+      <styleClass>
+         <String fx:value="add-button" />
+         <String fx:value="add-button-exited" />
+      </styleClass>
    </Button>
    <Text fx:id="startingText" fill="#b2b2b2" layoutX="427.0" layoutY="406.0" opacity="0.6" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Select a name to begin">
       <font>
          <Font size="42.0" />
       </font>
    </Text>
-   <Pane fx:id="subPane" layoutX="303.0" layoutY="120.0" prefHeight="604.0" prefWidth="674.0" />
+   <Pane fx:id="subPane" layoutX="303.0" layoutY="134.0" prefHeight="604.0" prefWidth="674.0" />
    <Text fx:id="selectPerson" fill="#575757" layoutX="1055.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Person">
       <font>
          <Font size="22.0" />

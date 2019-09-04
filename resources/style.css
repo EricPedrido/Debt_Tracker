@@ -16,8 +16,18 @@
 
 .button {
     -fx-background-radius: 0;
-    -fx-base: #2f40ff;
+    -fx-base: #131dff;
     -fx-text-fill: white;
+}
+
+.add-button {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 20px;
+}
+
+.add-button-exited {
+    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #0234ff, #006fff);
+    -fx-background-color: transparent;
 }
 
 .grey-text-button {
