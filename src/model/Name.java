@@ -86,6 +86,10 @@ public class Name {
         return sumItemPrices(_payments);
     }
 
+    public double getPreviousPaymentAmount(Payment excluded) {
+        return sumItemPrices(_payments) - excluded._price;
+    }
+
     public double getNetDebt() {
         return new Double(
                 new DecimalFormat("#.##").format(getDebtAmount() - getPaymentsAmount()));

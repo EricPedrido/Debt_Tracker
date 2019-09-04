@@ -61,7 +61,6 @@ public class AddPaymentController extends MainPaneController {
             getPaneInstance().paymentTable.getItems().add(payment);
             getPaneInstance()._currentName.addPayment(payment);
             getPaneInstance().updateRemainingDebt();
-
             close();
         }
     }

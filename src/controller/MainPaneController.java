@@ -1,5 +1,8 @@
 package controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,10 +11,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import model.listCell.AmountTableCell;
+import javafx.util.Duration;
 import model.DebtElement;
 import model.Name;
 import model.Payment;
+import model.listCell.AmountTableCell;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,17 +40,6 @@ public class MainPaneController extends MainController {
     public TableColumn<Payment, String> amountColumn;
     @FXML
     public Label label;
-
-//    private final static String GREY_BUTTON = "grey-button";
-//    private final static String RED_BUTTON = "red-button";
-//
-//    private final static String RED_PROGRESS_STYLE = "red-progress";
-//    private final static String RED_TEXT = "red-progress-text";
-//    private final static String RED_LABEL = "red-name-label";
-//
-//    private final static String DEFAULT_TEXT = "progress-text";
-//    private final static String DEFAULT_PROGRESS = "progress-indicator";
-//    private final static String DEFAULT_LABEL= "name-label";
 
     protected Name _currentName;
     private Payment _selected;
@@ -223,19 +216,31 @@ public class MainPaneController extends MainController {
         double debt = _currentName.getDebtAmount();
         double payments = _currentName.getPaymentsAmount();
         double netDebt = _currentName.getNetDebt();
+        double finalVal;
 
         amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
-        owingProgress.setProgress(payments / debt);
+        finalVal = payments/debt;
 
         if (_currentName.getNetDebt() == 0) {
             setStyle("You and " + _currentName + "are even");
-            owingProgress.setProgress(1);
+            finalVal = 1;
         } else if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", Styles.RED);
         } else {
             setStyle(_currentName + "owes you:");
         }
+        progressAnimation(finalVal);
         amountLabel.setVisible(_currentName.getNetDebt() != 0);
+    }
+
+    private void progressAnimation(double endVal) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(owingProgress.progressProperty(), 0)),
+                new KeyFrame(Duration.millis(500), e -> {
+                }, new KeyValue(owingProgress.progressProperty(), endVal))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     private void setStyle(String text) {
