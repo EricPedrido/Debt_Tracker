@@ -2,6 +2,11 @@
     -fx-background-color: linear-gradient(from 40% 40% to 100% 100%, white, rgb(163, 163, 163));
 }
 
+.text {
+    -fx-font-family: Calibri;
+    -fx-font-weight: Bold;
+}
+
 .small-pane {
     -fx-background-color: transparent;
 }
@@ -18,6 +23,7 @@
     -fx-background-radius: 0;
     -fx-base: #131dff;
     -fx-text-fill: white;
+    -fx-font-size: 18px;
 }
 
 .add-button {
@@ -33,6 +39,10 @@
 .grey-text-button {
     -fx-text-fill: #4c4c4c;
     -fx-background-color: transparent;
+}
+
+.minor-button {
+    -fx-font-size: 13px;
 }
 
 .grey-button {
@@ -66,6 +76,7 @@
 
 .progress-text {
     -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
+    -fx-font-size: 35px;
 }
 
 .red-progress-text {
@@ -74,6 +85,7 @@
 
 .name-label {
     -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
+    -fx-font-size: 37px;
 }
 
 .red-name-label {
@@ -86,4 +98,8 @@
 
 .red-progress {
     -fx-accent: linear-gradient(from 0% 0% to 0% 100%, #ff0001, #7b0001);
+}
+
+.radio-button {
+    -fx-font-size: 17px;
 }
