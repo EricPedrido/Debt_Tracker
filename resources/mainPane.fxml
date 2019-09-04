@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="675.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
+<AnchorPane prefHeight="576.0" prefWidth="675.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPaneController">
     <ProgressIndicator fx:id="owingProgress" layoutX="237.0" layoutY="101.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="215.0" prefWidth="201.0" progress="0.63" />
     <Text fx:id="amountLabel" fill="#155400" layoutX="248.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="progress-text" text="\$XXX.XX" textAlignment="CENTER" wrappingWidth="179.826171875">
         <font>
@@ -50,9 +55,26 @@
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
-   <Label fx:id="label" alignment="CENTER" contentDisplay="TOP" layoutX="1.0" prefHeight="108.0" prefWidth="674.0" styleClass="name-label" text="MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" textAlignment="CENTER" textFill="#eeeeee" wrapText="true">
+   <Label fx:id="label" alignment="CENTER" contentDisplay="TOP" layoutX="1.0" prefHeight="108.0" prefWidth="674.0" styleClass="name-label" text="Name Text placeholder" textAlignment="CENTER" textFill="#eeeeee" wrapText="true">
       <font>
          <Font name="System Bold" size="37.0" />
       </font>
    </Label>
+   <Circle fx:id="switchCircle" layoutX="338.0" layoutY="200.0" opacity="0.0" radius="98.0" stroke="transparent" />
+   <Button fx:id="switchButton" layoutX="246.0" layoutY="113.0" mnemonicParsing="false" onAction="#switchOwingStatus" opacity="0.0" rotate="-46.1" styleClass="grey-text-button">
+      <graphic>
+          <ImageView fx:id="switchImage" fitHeight="166.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+              <cursor>
+                  <Cursor fx:constant="HAND" />
+              </cursor>
+              <Image url="@switchImage.jpg" />
+            <effect>
+               <ColorAdjust brightness="1.0" />
+            </effect>
+          </ImageView>
+      </graphic>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
 </AnchorPane>

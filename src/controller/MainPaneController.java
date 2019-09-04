@@ -1,14 +1,15 @@
 package controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 
 public class MainPaneController extends MainController {
     @FXML
-    public Text nameLabel, amountLabel;
+    public Text amountLabel;
     @FXML
     public ProgressIndicator owingProgress;
     @FXML
@@ -40,9 +41,18 @@ public class MainPaneController extends MainController {
     public TableColumn<Payment, String> amountColumn;
     @FXML
     public Label label;
+    @FXML
+    public ImageView switchImage;
+    @FXML
+    public Circle switchCircle;
+    @FXML
+    public Button switchButton;
+    @FXML
+
 
     protected Name _currentName;
     private Payment _selected;
+    private Tooltip tt = new Tooltip();
 
     private static MainPaneController INSTANCE;
 
@@ -56,6 +66,8 @@ public class MainPaneController extends MainController {
         String progress;
         String text;
         String label;
+        private static final String DEFAULT_GRADIENT = "linear-gradient(from 0% 0% to 0% 100%, #0031ff, #00c9ff)";
+        private static final String RED_GRADIENT = "linear-gradient(from 0% 0% to 0% 100%, #ff0001, #7b0001)";
 
         Styles(String button, String progress, String text, String label) {
             this.button = button;
@@ -66,6 +78,14 @@ public class MainPaneController extends MainController {
 
         Styles(String button) {
             this(button, "", "", "");
+        }
+
+        static Paint getDefaultGradient() {
+            return Paint.valueOf(DEFAULT_GRADIENT);
+        }
+
+        static Paint getRedGradient() {
+            return Paint.valueOf(RED_GRADIENT);
         }
     }
 
@@ -99,6 +119,11 @@ public class MainPaneController extends MainController {
     @FXML
     public void addPayment(ActionEvent actionEvent) {
         customPopUp(SubPane.ADD_PAYMENT, "Add Payment");
+    }
+
+    @FXML
+    public void switchOwingStatus(ActionEvent actionEvent) {
+        _currentName.switchDebtStatus();
     }
 
     @FXML
@@ -217,18 +242,26 @@ public class MainPaneController extends MainController {
         double payments = _currentName.getPaymentsAmount();
         double netDebt = _currentName.getNetDebt();
         double finalVal;
+        boolean visible = true;
 
         amountLabel.setText("$" + DebtElement.convertPriceToText(netDebt));
         finalVal = payments/debt;
 
+        switchCircle.setFill(Styles.getDefaultGradient());
+        tt.setText("Switch to me owing " + _currentName);
         if (_currentName.getNetDebt() == 0) {
             setStyle("You and " + _currentName + "are even");
             finalVal = 1;
+            visible = false;
         } else if (_currentName.isInDebt()) {
             setStyle("You owe " + _currentName + ":", Styles.RED);
+            switchCircle.setFill(Styles.getRedGradient());
+            tt.setText("Switch to " +_currentName + "owing me");
         } else {
             setStyle(_currentName + "owes you:");
         }
+
+        setButtonEvents(tt, visible);
         progressAnimation(finalVal);
         amountLabel.setVisible(_currentName.getNetDebt() != 0);
     }
@@ -253,6 +286,46 @@ public class MainPaneController extends MainController {
         amountLabel.getStyleClass().setAll(Styles.DEFAULT.text, style.text);
         owingProgress.getStyleClass().setAll(Styles.DEFAULT.progress, style.progress);
         addPayment.getStyleClass().setAll(Styles.DEFAULT.button, style.button);
+    }
+
+    private void switchAnimation(boolean entered) {
+        double start = 1;
+        double end = 0;
+
+        if (entered) {
+            start = 0;
+            end = 1;
+        }
+
+        Duration duration = Duration.millis(250);
+        FadeTransition imageFade = new FadeTransition(duration, switchButton);
+        FadeTransition circleFade = new FadeTransition(duration, switchCircle);
+        RotateTransition rotate = new RotateTransition(duration, switchButton);
+
+        imageFade.setFromValue(start);
+        imageFade.setToValue(end);
+
+        circleFade.setFromValue(start);
+        circleFade.setToValue(end);
+
+        rotate.setToAngle(switchButton.rotateProperty().getValue() - 180);
+
+        ParallelTransition pt = new ParallelTransition(imageFade, circleFade, rotate);
+        pt.play();
+    }
+
+    private void setButtonEvents(final Tooltip tooltip, boolean visible){
+        switchButton.setVisible(visible);
+        if (visible) {
+            switchButton.setOnMouseMoved(event -> tooltip.show(switchButton, event.getScreenX(), event.getScreenY() + 15));
+            switchButton.setOnMouseEntered(event -> switchAnimation(true));
+            switchButton.setOnMouseExited(event -> {
+                tooltip.hide();
+                switchAnimation(false);
+            });
+        } else {
+            tooltip.hide();
+        }
     }
 
     public static MainPaneController getPaneInstance() {
