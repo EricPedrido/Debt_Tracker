@@ -2,17 +2,13 @@
     -fx-background-color: linear-gradient(from 40% 40% to 100% 100%, white, rgb(163, 163, 163));
 }
 
-.text {
-    -fx-font-family: Calibri;
-    -fx-font-weight: Bold;
-}
-
 .small-pane {
     -fx-background-color: transparent;
 }
 
 .list-view {
     -fx-base: #e2e2e2;
+    -fx-text-fill: black;
 }
 
 .right-list-view {
@@ -23,7 +19,7 @@
     -fx-background-radius: 0;
     -fx-base: #131dff;
     -fx-text-fill: white;
-    -fx-font-size: 18px;
+    -fx-font-weight: Bold;
 }
 
 .add-button {
@@ -39,10 +35,6 @@
 .grey-text-button {
     -fx-text-fill: #4c4c4c;
     -fx-background-color: transparent;
-}
-
-.minor-button {
-    -fx-font-size: 13px;
 }
 
 .grey-button {
@@ -62,8 +54,32 @@
     -fx-base: #aa0000;
 }
 
+.split-button {
+    -fx-font-size: 25px;
+}
+
+.big-button {
+    -fx-font-size: 18px;
+}
+
+.empty-button {
+    -fx-font-size: 13px;
+}
+
 .main-text {
     -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #0234ff, #006fff);
+}
+
+.pane-text {
+    -fx-font-weight: Bold;
+    -fx-font-size: 43px;
+}
+
+
+
+.amount-text {
+    -fx-fill: #14ab00;
+    -fx-font-size: 19px;
 }
 
 .sub-text {
@@ -76,7 +92,6 @@
 
 .progress-text {
     -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
-    -fx-font-size: 35px;
 }
 
 .red-progress-text {
@@ -84,16 +99,22 @@
 }
 
 .name-label {
-    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
     -fx-font-size: 37px;
+    -fx-font-weight: Bold;
+    -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #032090, #001e52);
 }
 
 .red-name-label {
     -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #740004, #3c0004);
 }
 
+.label-text {
+    -fx-font-weight: Bold;
+    -fx-font-size: 24px;
+}
+
 .back-label {
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
 }
 
 .back-label-hovered {
@@ -108,6 +129,24 @@
     -fx-accent: linear-gradient(from 0% 0% to 0% 100%, #ff0001, #7b0001);
 }
 
-.radio-button {
-    -fx-font-size: 17px;
+.owes-me {
+    -fx-background-color: #91ff8b;
+    -fx-text-fill: #0a4e00;
+}
+
+.owing {
+    -fx-background-color: #ff8689;
+    -fx-text-fill: white;
+}
+.owes-me:selected {
+    -fx-background-color: #0a4e00;
+    -fx-text-fill: white;
+}
+
+.owing:selected {
+    -fx-background-color: #8d0006;
+}
+
+.required-text-field {
+    -fx-base: red;
 }

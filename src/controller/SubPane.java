@@ -11,7 +11,8 @@ package controller;
 public enum SubPane {
     MAIN("/mainPane.fxml"),
     ADD_NAME("/addName.fxml"),
-    ADD_PAYMENT("/addPayment.fxml");
+    ADD_PAYMENT("/addPayment.fxml"),
+    SPLIT_PAYMENT("/splitPane.fxml");
 
     String _name;
 

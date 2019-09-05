@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class AddPaymentController extends MainPaneController {
+public class AddPaymentController extends MainPaneController implements LiveText{
 
     @FXML public DatePicker datePicker;
     @FXML public TextField amountText;
@@ -34,17 +34,7 @@ public class AddPaymentController extends MainPaneController {
 
         datePicker.setValue(LocalDate.now());
 
-        amountText.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!(newValue.matches("[0-9]*[.][0-9]{0,2}") || newValue.matches("[0-9]*"))) {
-                if (amountText.getText().isEmpty()) {
-                    amountText.setText("");
-                } else {
-                    amountText.setText(amountText.getText().substring(0, amountText.getText().length() - 1));
-                }
-            } else if (!newValue.equals("")){
-                setRemainingText(Double.parseDouble(newValue));
-            }
-        });
+        addLiveText(this);
     }
 
     @FXML
@@ -70,8 +60,13 @@ public class AddPaymentController extends MainPaneController {
         close();
     }
 
-    private void setRemainingText(double payment) {
+    @Override
+    public TextField getTextField() {
+        return amountText;
+    }
 
+    @Override
+    public void setRemainingText(double payment) {
         double net = _remaining - payment;
         double amount = new Double(new DecimalFormat("#.##").format(net));
 

@@ -6,7 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,6 +20,9 @@ import java.util.List;
 public abstract class Controller implements Initializable {
     @FXML public Pane subPane;
     @FXML public Text startingText;
+    @FXML public AnchorPane anchorPane;
+    @FXML public Button splitButton;
+
 
     protected Stage _stage;
 
@@ -49,12 +55,30 @@ public abstract class Controller implements Initializable {
         return list.stream().anyMatch(x -> x.equalsIgnoreCase(text));
     }
 
+    protected void addLiveText(LiveText controller) {
+        TextField textField = controller.getTextField();
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!(newValue.matches("[0-9]*[.][0-9]{0,2}") || newValue.matches("[0-9]*"))) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText("");
+                } else {
+                    textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                }
+            } else if (!newValue.equals("")){
+                controller.setRemainingText(Double.parseDouble(newValue));
+            }
+        });
+    }
+
     /**
      * Loads an FXML file into the {@link #subPane}
      *
      * @param pane which FXML file to load
      */
     protected void loadPane(SubPane pane) {
+        startingText.setVisible(false);
+        anchorPane.getChildren().remove(splitButton);
+
         Parent newPane;
         try {
             newPane = FXMLLoader.load(getClass().getResource(pane.getName()));
@@ -65,6 +89,9 @@ public abstract class Controller implements Initializable {
     }
 
     protected void clearPane() {
+        if (!anchorPane.getChildren().contains(splitButton)) {
+            anchorPane.getChildren().add(splitButton);
+        }
         startingText.setVisible(true);
         subPane.getChildren().clear();
     }

@@ -39,9 +39,6 @@ public class AddNameController extends MainController {
     private String _selected;
     private List<Item> _items;
 
-    private final static String DEFAULT_STYLE = "-fx-background-radius: 0; -fx-base: #515151";
-    private final static String REQUIRED_STYLE = "-fx-background-radius: 0; -fx-base: RED";
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getInstance().clearItemList(getInstance()._personRequested);
@@ -72,14 +69,14 @@ public class AddNameController extends MainController {
                     add.setDisable(disable || maxLength);
                     personExists.setVisible(disable || maxLength);
                     if (disable || maxLength) {
-                        name.setStyle(REQUIRED_STYLE);
+                        name.getStyleClass().add("required-text-field");
                         if (maxLength) {
                             personExists.setText("*Character limit has been met!");
                         } else {
                             personExists.setText("*This person already exists!");
                         }
                     } else {
-                        name.setStyle(DEFAULT_STYLE);
+                        name.getStyleClass().remove("required-text-field");
                     }
                 }
             });
@@ -202,14 +199,14 @@ public class AddNameController extends MainController {
             itemNameEmpty.setVisible(emptyItemName);
             priceEmpty.setVisible(emptyItemPrice);
 
-            if (emptyItemName) itemName.setStyle(REQUIRED_STYLE);
-            if (emptyItemPrice) itemPrice.setStyle(REQUIRED_STYLE);
+            if (emptyItemName) itemName.getStyleClass().add("required-text-field");
+            if (emptyItemPrice) itemPrice.getStyleClass().add("required-text-field");
         } else {
             itemNameEmpty.setVisible(false);
             priceEmpty.setVisible(false);
 
-            itemName.setStyle(DEFAULT_STYLE);
-            itemPrice.setStyle(DEFAULT_STYLE);
+            itemName.getStyleClass().setAll("text-field");
+            itemPrice.getStyleClass().setAll("text-field");
 
             String nameOfItem = itemName.getText();
             double priceOfItem = Double.parseDouble(itemPrice.getText());
@@ -239,7 +236,7 @@ public class AddNameController extends MainController {
         Name nameToAdd;
 
         if (name.getText().isEmpty()) {
-            name.setStyle(REQUIRED_STYLE);
+            name.getStyleClass().add("required-text-field");
             personExists.setVisible(true);
             personExists.setText("*Required");
         } else {

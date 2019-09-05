@@ -10,66 +10,77 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="674.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNameController">
-   <Text fill="#eeeeee" layoutX="85.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Add/Edit" textAlignment="CENTER" wrappingWidth="522.30126953125">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="674.0" styleClass="small-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNameController">
+   <Text fill="#eeeeee" layoutX="76.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add/Edit" textAlignment="CENTER" wrappingWidth="522.30126953125">
       <font>
          <Font name="System Bold" size="43.0" />
       </font>
+      <styleClass>
+         <String fx:value="main-text" />
+         <String fx:value="pane-text" />
+      </styleClass>
    </Text>
-   <Text fill="#14ab00" layoutX="27.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Name:" textAlignment="RIGHT" wrappingWidth="115.68359375">
+   <Text fill="#14ab00" layoutX="21.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" textAlignment="RIGHT" wrappingWidth="115.68359375">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
+      <styleClass>
+         <String fx:value="main-text" />
+         <String fx:value="label-text" />
+      </styleClass>
    </Text>
-   <TextField fx:id="name" layoutX="156.0" layoutY="170.0" onAction="#nameEnterPressed" prefHeight="25.0" prefWidth="380.0" promptText="e.g &quot;John Smith&quot;" />
-   <TextField fx:id="itemName" layoutX="156.0" layoutY="221.0" onAction="#itemEnterPressed" prefHeight="25.0" prefWidth="278.0" promptText="e.g &quot;3 Pepperoni Pizzas&quot;" />
-   <TextField fx:id="itemPrice" layoutX="434.0" layoutY="221.0" onAction="#priceEnterPressed" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;15.99&quot;" />
-   <Button fx:id="addItem" layoutX="546.0" layoutY="222.0" mnemonicParsing="false" onAction="#addNewItem" prefHeight="19.0" prefWidth="68.0" styleClass="minor-button" text="Add" textFill="WHITE">
+   <TextField fx:id="name" layoutX="147.0" layoutY="160.0" onAction="#nameEnterPressed" prefHeight="25.0" prefWidth="380.0" promptText="e.g &quot;John Smith&quot;" />
+   <TextField fx:id="itemName" layoutX="147.0" layoutY="211.0" onAction="#itemEnterPressed" prefHeight="25.0" prefWidth="278.0" promptText="e.g &quot;3 Pepperoni Pizzas&quot;" />
+   <TextField fx:id="itemPrice" layoutX="425.0" layoutY="211.0" onAction="#priceEnterPressed" prefHeight="25.0" prefWidth="102.0" promptText="e.g &quot;15.99&quot;" />
+   <Button fx:id="addItem" layoutX="537.0" layoutY="214.0" mnemonicParsing="false" onAction="#addNewItem" prefHeight="19.0" prefWidth="68.0" text="Add" textFill="WHITE">
       <font>
          <Font name="System Bold" size="11.0" />
       </font>
    </Button>
-   <Button fx:id="delete" disable="true" layoutX="546.0" layoutY="254.0" mnemonicParsing="false" onAction="#delete" prefHeight="19.0" prefWidth="68.0" text="Delete" textFill="WHITE">
+   <Button fx:id="delete" disable="true" layoutX="537.0" layoutY="246.0" mnemonicParsing="false" onAction="#delete" prefHeight="19.0" prefWidth="68.0" text="Delete" textFill="WHITE">
       <font>
          <Font name="System Bold" size="11.0" />
       </font>
       <styleClass>
          <String fx:value="red-button" />
-         <String fx:value="minor-button" />
       </styleClass>
    </Button>
-   <ListView fx:id="itemList" layoutX="156.0" layoutY="245.0" onMouseClicked="#itemClicked" prefHeight="181.0" prefWidth="380.0" />
-   <Button fx:id="add" disable="true" layoutX="179.0" layoutY="501.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" text="Confirm" textFill="WHITE">
+   <ListView fx:id="itemList" layoutX="147.0" layoutY="235.0" onMouseClicked="#itemClicked" prefHeight="181.0" prefWidth="380.0" />
+   <Button fx:id="add" disable="true" layoutX="170.0" layoutY="485.0" mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="145.0" text="Confirm" textFill="WHITE">
       <font>
          <Font name="System Bold" size="19.0" />
       </font>
    </Button>
-   <Button fx:id="cancel" layoutX="369.0" layoutY="501.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" text="Cancel" textFill="WHITE">
+   <Button fx:id="cancel" layoutX="360.0" layoutY="485.0" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="145.0" text="Cancel" textFill="WHITE">
       <font>
          <Font name="System Bold" size="19.0" />
       </font>
    </Button>
-   <Text fx:id="itemText" fill="#14ab00" layoutX="27.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Items:" textAlignment="RIGHT" wrappingWidth="115.68359375">
+   <Text fx:id="itemText" fill="#14ab00" layoutX="21.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items:" textAlignment="RIGHT" wrappingWidth="115.68359375">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
+      <styleClass>
+         <String fx:value="main-text" />
+         <String fx:value="label-text" />
+      </styleClass>
    </Text>
-   <Text fx:id="personExists" fill="WHITE" layoutX="156.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
+   <Text fx:id="personExists" fill="WHITE" layoutX="147.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*This person already exists!" visible="false" wrappingWidth="197.13671875">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text fx:id="itemNameEmpty" fill="WHITE" layoutX="156.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="277.9999980032444">
+   <Text fx:id="itemNameEmpty" fill="WHITE" layoutX="147.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="277.9999980032444">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text fx:id="priceEmpty" fill="WHITE" layoutX="434.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="188.9999980032444">
+   <Text fx:id="priceEmpty" fill="WHITE" layoutX="425.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Required" visible="false" wrappingWidth="188.9999980032444">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <RadioButton fx:id="oweMe" layoutX="189.0" layoutY="452.0" mnemonicParsing="false" selected="true" styleClass="name-label" text="They owe me" textFill="#eeeeee">
+   <RadioButton fx:id="oweMe" layoutX="189.0" layoutY="440.0" mnemonicParsing="false" selected="true" text="They owe me" textFill="#000279">
       <toggleGroup>
          <ToggleGroup fx:id="owing" />
       </toggleGroup>
@@ -77,7 +88,7 @@
          <Font size="15.0" />
       </font>
    </RadioButton>
-   <RadioButton fx:id="oweThem" layoutX="383.0" layoutY="452.0" mnemonicParsing="false" styleClass="red-name-label" text="I owe them" textFill="#eeeeee" toggleGroup="$owing">
+   <RadioButton fx:id="oweThem" layoutX="383.0" layoutY="440.0" mnemonicParsing="false" styleClass="red-name-label" text="I owe them" textFill="#eeeeee" toggleGroup="$owing">
       <font>
          <Font size="15.0" />
       </font>

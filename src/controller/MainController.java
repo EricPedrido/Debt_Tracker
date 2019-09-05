@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import model.*;
+import model.Item;
+import model.Name;
+import model.Names;
 import model.listCell.CustomListCell;
 
 import java.net.URL;
@@ -34,8 +36,7 @@ public class MainController extends Controller {
     @FXML
     public Label backButton;
 
-    private List<String> _names;
-
+    protected List<String> _names;
     protected boolean _personRequested;
     protected boolean _editRequested;
     protected String _nameRequested;
@@ -61,11 +62,14 @@ public class MainController extends Controller {
     @FXML
     public void backToHome(MouseEvent mouseEvent) {
         _selectedName = null;
-        peopleList.getSelectionModel().clearSelection();
-        subPane.getChildren().clear();
-        startingText.setVisible(true);
         backButton.setVisible(false);
+        clearPane();
         clearItemList(true);
+    }
+
+    @FXML
+    public void splitPayment(ActionEvent actionEvent) {
+        loadPane(SubPane.SPLIT_PAYMENT);
     }
 
     /**
@@ -73,7 +77,6 @@ public class MainController extends Controller {
      */
     @FXML
     public void addPeople(ActionEvent actionEvent) {
-        startingText.setVisible(false);
         _personRequested = true;
         _editRequested = false;
         loadPane(SubPane.ADD_NAME);
@@ -88,11 +91,13 @@ public class MainController extends Controller {
             addItemEmpty.setDisable(true);
             selectPerson.setVisible(true);
             backButton.setVisible(false);
+            splitButton.setVisible(true);
         } else {
             addItem.setDisable(false);
             selectPerson.setVisible(false);
             startingText.setVisible(false);
             backButton.setVisible(true);
+            splitButton.setVisible(false);
 
             if (_selectedName == null || !selection.toString().equals(_selectedName.toString())) {
                 _selectedName = NAMES.findName(selection.toString());
@@ -105,7 +110,6 @@ public class MainController extends Controller {
 
     @FXML
     public void addItem(ActionEvent actionEvent) {
-        startingText.setVisible(false);
         _personRequested = false;
         _editRequested = false;
         loadPane(SubPane.ADD_NAME);
@@ -120,12 +124,14 @@ public class MainController extends Controller {
         if (_names.isEmpty()) {
             peopleEmpty.setVisible(true);
             addPeopleEmpty.setVisible(true);
+            splitButton.setDisable(true);
         } else {
             peopleEmpty.setVisible(false);
             addPeopleEmpty.setVisible(false);
+            splitButton.setDisable(false);
 
             List<CustomListCell> list = CustomListCell.convertToCustomList(_names);
-            setPeopleList(list);
+            setPeopleList(list, peopleList);
         }
     }
 
@@ -141,25 +147,29 @@ public class MainController extends Controller {
         }
     }
 
-    private void setPeopleList(List<CustomListCell> list) {
-        ObservableList<CustomListCell> people = FXCollections.observableArrayList(list);
-        FilteredList<CustomListCell> filteredList = new FilteredList<>(people, s -> true);
-
-        peopleList.setItems(filteredList);
-        peopleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        setSearch(filteredList);
+    private <T> void setPeopleList(List<T> list, ListView<T> listView) {
+        setPeopleList(list, listView, search);
     }
 
-    private void setSearch(FilteredList<CustomListCell> filteredList) {
-        search.textProperty().addListener((observable, oldValue, newValue) -> {
+    protected <T> void setPeopleList(List<T> list, ListView<T> listView, TextField searchBar) {
+        ObservableList<T> people = FXCollections.observableArrayList(list);
+        FilteredList<T> filteredList = new FilteredList<>(people, s -> true);
+
+        listView.setItems(filteredList);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        setSearch(filteredList, listView, searchBar);
+    }
+
+    private <T> void setSearch(FilteredList<T> filteredList, ListView<T> listView, TextField searchBar) {
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(customListCell -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 return customListCell.toString().toUpperCase().contains(newValue.toUpperCase());
             });
-            peopleList.setItems(filteredList);
+            listView.setItems(filteredList);
         });
     }
 
@@ -228,7 +238,7 @@ public class MainController extends Controller {
         names.remove(cellItem);
 
         if (names.isEmpty()) {
-            setPeopleList(new ArrayList<>());
+            setPeopleList(new ArrayList<>(), peopleList);
         } else {
             for (CustomListCell name : names) {
                 newList.add(name.toString());
@@ -245,6 +255,7 @@ public class MainController extends Controller {
     protected void clearItemList(boolean noName) {
         itemEmpty.setVisible(!noName);
         selectPerson.setVisible(noName);
+        splitButton.setVisible(noName);
 
         addItemEmpty.setVisible(true);
         addItemEmpty.setDisable(noName);
@@ -254,8 +265,8 @@ public class MainController extends Controller {
     }
 
     private void setAddButtonHover(Button button) {
-        button.setOnMouseEntered(event -> addPeople.getStyleClass().remove("add-button-exited"));
-        button.setOnMouseExited(event -> addPeople.getStyleClass().add("add-button-exited"));
+        button.setOnMouseEntered(event -> button.getStyleClass().remove("add-button-exited"));
+        button.setOnMouseExited(event -> button.getStyleClass().add("add-button-exited"));
     }
 
     public static MainController getInstance() {
