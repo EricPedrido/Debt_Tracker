@@ -263,6 +263,7 @@ public class MainPaneController extends MainController {
 
         setButtonEvents(tt, visible);
         progressAnimation(finalVal);
+        updateListView(getInstance().peopleList);
         amountLabel.setVisible(_currentName.getNetDebt() != 0);
     }
 

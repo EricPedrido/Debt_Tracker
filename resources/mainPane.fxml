@@ -55,7 +55,7 @@
          <Font name="System Bold" size="12.0" />
       </font>
    </Button>
-   <Button fx:id="reset" layoutX="356.0" layoutY="381.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" styleClass="grey-button" text="Reset" textFill="#515151">
+   <Button fx:id="reset" alignment="CENTER" contentDisplay="CENTER" layoutX="356.0" layoutY="381.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" styleClass="grey-button" text="Reset" textFill="#515151">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
@@ -66,7 +66,7 @@
       </font>
    </Label>
    <Circle fx:id="switchCircle" layoutX="338.0" layoutY="200.0" opacity="0.0" radius="98.0" stroke="transparent" />
-   <Button fx:id="switchButton" layoutX="246.0" layoutY="113.0" mnemonicParsing="false" onAction="#switchOwingStatus" opacity="0.0" rotate="-46.1" styleClass="grey-text-button">
+   <Button fx:id="switchButton" layoutX="246.0" layoutY="113.0" mnemonicParsing="false" onAction="#switchOwingStatus" opacity="0.0" rotate="-46.1" styleClass="transparent-button">
       <graphic>
           <ImageView fx:id="switchImage" fitHeight="166.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
               <cursor>

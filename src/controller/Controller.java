@@ -1,14 +1,12 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -68,6 +66,12 @@ public abstract class Controller implements Initializable {
                 controller.setRemainingText(Double.parseDouble(newValue));
             }
         });
+    }
+
+    protected <T> void updateListView(ListView<T> listView) {
+        ObservableList<T> list = listView.getItems();
+        listView.setItems(null);
+        listView.setItems(list);
     }
 
     /**

@@ -52,6 +52,28 @@ public class MainController extends Controller {
         _names = NAMES.getNames();
         updatePeople();
 
+        peopleList.setCellFactory(param -> new ListCell<CustomListCell>() {
+            @Override
+            protected void updateItem(CustomListCell item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                    getStyleClass().setAll("list-cell");
+                } else {
+                    Name name = NAMES.findName(item.toString());
+                    String style = "owes-me";
+                    if (name.getNetDebt() == 0) {
+                        style = "even";
+                    } else if (name.isInDebt()) {
+                        style = "owing";
+                    }
+                    setGraphic(item);
+                    getStyleClass().setAll("list-cell", style);
+                    item.setLabelStyle(style);
+                }
+            }
+        });
+
         backButton.setOnMouseEntered(event -> backButton.getStyleClass().add("back-label-hovered"));
         backButton.setOnMouseExited(event -> backButton.getStyleClass().remove("back-label-hovered"));
 

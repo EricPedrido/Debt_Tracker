@@ -16,8 +16,9 @@ public class CustomListCell extends HBox {
     private final Button _editButton = new Button("Edit");
     private final Button _deleteButton = new Button("❌");
 
+    private final static String TRANSPARENT_BUTTON = "transparent-button";
     private final static String RED_TEXT = "red-text-button";
-    private final static String GREY_TEXT = "grey-text-button";
+    private final static String WHITE_TEXT = "white-text-button";
 
     private final static String RED = "red-button";
 
@@ -38,14 +39,14 @@ public class CustomListCell extends HBox {
     private void setupButtons() {
         CustomListCell item = this;
 
-        _deleteButton.getStyleClass().addAll(RED, RED_TEXT);
-        _deleteButton.setOnMouseEntered(event -> _deleteButton.getStyleClass().remove(RED_TEXT));
-        _deleteButton.setOnMouseExited(event -> _deleteButton.getStyleClass().add(RED_TEXT));
+        _deleteButton.getStyleClass().addAll(RED, RED_TEXT, TRANSPARENT_BUTTON);
+        _deleteButton.setOnMouseEntered(event -> _deleteButton.getStyleClass().removeAll(RED_TEXT, TRANSPARENT_BUTTON));
+        _deleteButton.setOnMouseExited(event -> _deleteButton.getStyleClass().addAll(RED_TEXT, TRANSPARENT_BUTTON));
         _deleteButton.setOnAction(event -> MainController.getInstance().delete(item));
 
-        _editButton.getStyleClass().add(GREY_TEXT);
-        _editButton.setOnMouseEntered(event -> _editButton.getStyleClass().remove(GREY_TEXT));
-        _editButton.setOnMouseExited(event -> _editButton.getStyleClass().add(GREY_TEXT));
+        _editButton.getStyleClass().addAll(WHITE_TEXT, TRANSPARENT_BUTTON);
+        _editButton.setOnMouseEntered(event -> _editButton.getStyleClass().removeAll(WHITE_TEXT, TRANSPARENT_BUTTON));
+        _editButton.setOnMouseExited(event -> _editButton.getStyleClass().addAll(WHITE_TEXT, TRANSPARENT_BUTTON));
         _editButton.setOnAction(event -> MainController.getInstance().edit(item));
     }
 
@@ -58,6 +59,11 @@ public class CustomListCell extends HBox {
         }
 
         return out;
+    }
+
+    public void setLabelStyle(String style) {
+        _label.getStyleClass().setAll("label", "list-label", TRANSPARENT_BUTTON, style);
+
     }
 
     @Override

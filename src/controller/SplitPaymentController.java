@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SplitPaymentController extends MainController implements LiveText{
+public class SplitPaymentController extends MainController implements LiveText {
     @FXML
     public ListView<String> selectListView, splittingListView;
     @FXML
@@ -85,12 +85,6 @@ public class SplitPaymentController extends MainController implements LiveText{
             splittingListView.getSelectionModel().select(selected);
             updateAmountText();
         });
-    }
-
-    private void updateListView(ListView<String> listView) {
-        ObservableList<String> list = listView.getItems();
-        listView.setItems(null);
-        listView.setItems(list);
     }
 
     private void updateAmountText() {

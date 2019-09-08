@@ -32,18 +32,21 @@
     -fx-background-color: transparent;
 }
 
-.grey-text-button {
-    -fx-text-fill: #4c4c4c;
-    -fx-background-color: transparent;
+.white-text-button {
+    -fx-font-weight: bold;
+}
+
+.white-text-button .text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( three-pass-box , black , 5 , 0.0 , 1 , 1 );
+}
+
+.red-text-button .text {
+    -fx-fill: #aa0000;
 }
 
 .grey-button {
     -fx-base: #4c4c4c;
-}
-
-.red-text-button {
-    -fx-text-fill: #aa0000;
-    -fx-background-color: transparent;
 }
 
 .payment-button {
@@ -74,8 +77,6 @@
     -fx-font-weight: Bold;
     -fx-font-size: 43px;
 }
-
-
 
 .amount-text {
     -fx-fill: #14ab00;
@@ -130,23 +131,41 @@
 }
 
 .owes-me {
-    -fx-background-color: #91ff8b;
+    -fx-background-color: #56ff51;
     -fx-text-fill: #0a4e00;
 }
 
 .owing {
-    -fx-background-color: #ff8689;
-    -fx-text-fill: white;
-}
-.owes-me:selected {
-    -fx-background-color: #0a4e00;
+    -fx-background-color: #ff6262;
     -fx-text-fill: white;
 }
 
-.owing:selected {
-    -fx-background-color: #8d0006;
+.even {
+    -fx-background-color: #5e98ff;
+    -fx-text-fill: white;
+}
+
+.owes-me:hover {
+    -fx-background-color: #10a600;
+    -fx-text-fill: white;
+}
+
+.owing:hover {
+    -fx-background-color: #d70006;
+}
+
+.even:hover {
+    -fx-background-color: #2d49ff;
 }
 
 .required-text-field {
     -fx-base: red;
+}
+
+.transparent-button {
+    -fx-background-color: transparent;
+}
+
+.list-label:hover {
+    -fx-background-color: transparent;
 }

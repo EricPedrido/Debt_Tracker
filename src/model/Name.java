@@ -20,7 +20,7 @@ public class Name {
     private List<Item> _items;
     private List<Payment> _payments;
     private Path _path;
-    private boolean _inDebt;
+    private boolean _inDebt; // A person is inDebt if they owe another person money
 
     public Name(String name, boolean inDebt) {
         this(name, new ArrayList<>(), new ArrayList<>(), inDebt);
