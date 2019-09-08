@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -16,7 +18,7 @@
          <Font name="System Bold" size="50.0" />
       </font>
    </Text>
-   <ListView fx:id="peopleList" layoutY="151.0" onMouseClicked="#personSelected" prefHeight="569.0" prefWidth="303.0" styleClass="test" />
+   <ListView fx:id="peopleList" layoutY="151.0" onMouseClicked="#personSelected" prefHeight="569.0" prefWidth="303.0" />
    <TextField fx:id="search" layoutY="120.0" prefHeight="29.0" prefWidth="303.0" promptText="Search" style="-fx-background-radius: 0;">
       <font>
          <Font size="15.0" />
@@ -105,4 +107,12 @@
          <Font size="22.0" />
       </font>
    </Text>
+   <MenuButton fx:id="filterMenu" layoutX="220.0" layoutY="120.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="31.0" prefWidth="83.0" text="Filter By">
+     <items>
+         <MenuItem fx:id="noFilter" mnemonicParsing="false" styleClass="even" text="Show All" />
+       <MenuItem fx:id="owingFilter" mnemonicParsing="false" styleClass="even" text="Owing" />
+       <MenuItem fx:id="owesFilter" mnemonicParsing="false" styleClass="even" text="Owes me" />
+         <MenuItem fx:id="evenFilter" mnemonicParsing="false" styleClass="even" text="Even" />
+     </items>
+   </MenuButton>
 </AnchorPane>

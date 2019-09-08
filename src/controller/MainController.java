@@ -35,6 +35,10 @@ public class MainController extends Controller {
     public Text peopleEmpty, itemEmpty, selectPerson;
     @FXML
     public Label backButton;
+    @FXML
+    public MenuButton filterMenu;
+    @FXML
+    public MenuItem owingFilter, owesFilter, evenFilter, noFilter;
 
     protected List<String> _names;
     protected boolean _personRequested;
@@ -45,6 +49,22 @@ public class MainController extends Controller {
 
     private static MainController INSTANCE;
     protected final static Names NAMES = Names.getInstance();
+
+    private enum FilterType {
+        OWING, OWES_ME, EVEN, NONE;
+
+        boolean matches(Name name) {
+            if (this.equals(EVEN)) {
+                return name.getNetDebt() == 0;
+            } else if (this.equals(OWING)) {
+                return name.isInDebt();
+            }  else if (this.equals(OWES_ME)) {
+                return !(name.isInDebt() || name.getNetDebt() == 0);
+            }  else {
+                return true;
+            }
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,9 +82,9 @@ public class MainController extends Controller {
                 } else {
                     Name name = NAMES.findName(item.toString());
                     String style = "owes-me";
-                    if (name.getNetDebt() == 0) {
+                    if (FilterType.EVEN.matches(name)) {
                         style = "even";
-                    } else if (name.isInDebt()) {
+                    } else if (FilterType.OWING.matches(name)) {
                         style = "owing";
                     }
                     setGraphic(item);
@@ -77,8 +97,26 @@ public class MainController extends Controller {
         backButton.setOnMouseEntered(event -> backButton.getStyleClass().add("back-label-hovered"));
         backButton.setOnMouseExited(event -> backButton.getStyleClass().remove("back-label-hovered"));
 
+        owingFilter.setOnAction(event -> filterBy(FilterType.OWING));
+        owesFilter.setOnAction(event -> filterBy(FilterType.OWES_ME));
+        evenFilter.setOnAction(event -> filterBy(FilterType.EVEN));
+        noFilter.setOnAction(event -> filterBy(FilterType.NONE));
+
         setAddButtonHover(addPeople);
         setAddButtonHover(addItem);
+    }
+
+    private void filterBy(FilterType ft) {
+        List<String> filteredNames = new ArrayList<>();
+
+        for (String person : NAMES.getNames()) {
+            Name name = NAMES.findName(person);
+            if (ft.matches(name)) {
+                filteredNames.add(name.toString());
+            }
+        }
+        _names = filteredNames;
+        updatePeople();
     }
 
     @FXML

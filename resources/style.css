@@ -169,3 +169,9 @@
 .list-label:hover {
     -fx-background-color: transparent;
 }
+
+.menu-button {
+    -fx-background-radius: 0;
+    -fx-font-weight: bold;
+    -fx-base: #0234ff;
+}
