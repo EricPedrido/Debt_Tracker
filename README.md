@@ -2,7 +2,7 @@
 *Debt Tracker* helps with keeping track of people who owe you money, along with people who you might owe money to. Makes it easy to see how much of the debt is remaining and the details pertaining to each item/payment. This application is intended for anyone who lends money or borrows money themselves. There is no longer an excuse for your friend to forget how much lunch was and shortchanging you. Keep track of your debts with *Debt Tracker*.
 
 ## Still Under Development
-First official release is planned for 13/09/19.
+First official release is planned for 21/09/19.
 Run instructions and application usage will be added after release.
 
 ## Existing Features
