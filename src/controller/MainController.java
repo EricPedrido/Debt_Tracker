@@ -201,6 +201,7 @@ public class MainController extends Controller {
         } else {
             itemEmpty.setVisible(false);
             addItemEmpty.setVisible(false);
+            selectPerson.setVisible(false);
 
             setItemList(CustomListCell.convertToCustomList(items));
         }

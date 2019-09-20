@@ -187,8 +187,12 @@ public class AddNameController extends MainController {
      */
     @FXML
     public void cancel(ActionEvent actionEvent) {
-        getInstance().clearPane();
-        getInstance().clearItemList(true);
+        if(getInstance()._selectedName == null) {
+            getInstance().clearPane();
+            getInstance().clearItemList(true);
+        } else {
+            getInstance().loadPane(SubPane.MAIN);
+        }
     }
 
     private void addNewItem() {
@@ -277,7 +281,6 @@ public class AddNameController extends MainController {
                 nameToAdd.updateItems();
 
                 getInstance().updateItems(_items);
-                getInstance().selectPerson.setVisible(false);
 
                 if (getInstance()._selectedName != null) {
                     getInstance().loadPane(SubPane.MAIN);
