@@ -205,8 +205,8 @@ public class AddNameController extends MainController {
             itemNameEmpty.setVisible(false);
             priceEmpty.setVisible(false);
 
-            itemName.getStyleClass().setAll("text-field");
-            itemPrice.getStyleClass().setAll("text-field");
+            itemName.getStyleClass().remove("required-text-field");
+            itemPrice.getStyleClass().remove("required-text-field");
 
             String nameOfItem = itemName.getText();
             double priceOfItem = Double.parseDouble(itemPrice.getText());

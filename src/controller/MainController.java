@@ -189,10 +189,9 @@ public class MainController extends Controller {
             peopleEmpty.setVisible(false);
             addPeopleEmpty.setVisible(false);
             splitButton.setDisable(false);
-
-            List<CustomListCell> list = CustomListCell.convertToCustomList(_names);
-            setPeopleList(list, peopleList);
         }
+        List<CustomListCell> list = CustomListCell.convertToCustomList(_names);
+        setPeopleList(list, peopleList);
     }
 
     public void updateItems(List<Item> items) {
@@ -281,11 +280,8 @@ public class MainController extends Controller {
 
     private void deleteItem(CustomListCell cellItem) {
         List<CustomListCell> items = new ArrayList<>(itemList.getItems());
-        String personText = peopleList.getSelectionModel().getSelectedItem().toString();
-        Name person = NAMES.findName(personText);
 
-        person.removeItem(cellItem.toString());
-
+        _selectedName.removeItem(cellItem.toString());
 
         items.remove(cellItem);
         setItemList(items);

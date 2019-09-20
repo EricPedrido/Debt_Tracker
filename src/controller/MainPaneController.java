@@ -60,6 +60,7 @@ public class MainPaneController extends MainController {
         DEFAULT("button", "progress-indicator", "progress-text","name-label"),
         GREY("grey-button"),
         RED("red-button", "red-progress", "red-progress-text", "red-name-label"),
+        PAYMENT("big-button"),
         BLANK("");
 
         String button;
@@ -286,7 +287,7 @@ public class MainPaneController extends MainController {
         label.getStyleClass().setAll(Styles.DEFAULT.label, style.label);
         amountLabel.getStyleClass().setAll(Styles.DEFAULT.text, style.text);
         owingProgress.getStyleClass().setAll(Styles.DEFAULT.progress, style.progress);
-        addPayment.getStyleClass().setAll(Styles.DEFAULT.button, style.button);
+        addPayment.getStyleClass().setAll(Styles.DEFAULT.button, style.button, Styles.PAYMENT.button);
     }
 
     private void switchAnimation(boolean entered) {

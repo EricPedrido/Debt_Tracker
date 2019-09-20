@@ -22,15 +22,6 @@
           <Font name="System Bold" size="35.0" />
         </font>
     </Text>
-    <Button fx:id="addPayment" layoutX="236.0" layoutY="327.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" text="Add new payment" textFill="WHITE">
-        <font>
-          <Font name="System Bold" size="18.0" />
-        </font>
-      <styleClass>
-         <String fx:value="payment-button" />
-         <String fx:value="big-button" />
-      </styleClass>
-    </Button>
     <TableView fx:id="paymentTable" editable="true" layoutY="421.0" onMouseClicked="#tableClicked" prefHeight="155.0" prefWidth="674.0" styleClass="right-list-view">
         <columns>
           <TableColumn fx:id="dateColumn" editable="false" prefWidth="75.0" text="Date" />
@@ -81,5 +72,14 @@
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
+   </Button>
+   <Button fx:id="addPayment" layoutX="237.0" layoutY="328.0" mnemonicParsing="false" onAction="#addPayment" prefHeight="39.0" prefWidth="201.0" text="Add new payment" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+      <styleClass>
+         <String fx:value="payment-button" />
+         <String fx:value="big-button" />
+      </styleClass>
    </Button>
 </AnchorPane>
