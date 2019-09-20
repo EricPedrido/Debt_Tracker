@@ -302,6 +302,7 @@ public class MainController extends Controller {
             }
         }
 
+        _selectedName = null;
         _names = newList;
         updatePeople();
         clearItemList(true);
